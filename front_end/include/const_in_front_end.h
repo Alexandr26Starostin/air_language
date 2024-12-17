@@ -110,9 +110,9 @@ enum base_func_t
 
 	RETURN = 71,      // return
 
-	//BREAK    = 72,
-	//CONTINUE = 73,
-	//ABORT    = 74,
+	BREAK    = 72,
+	CONTINUE = 73,
+	ABORT    = 74,
 
 	//-------------------------------------------------------------------------------
 	/*other*/
@@ -258,7 +258,7 @@ union node_value_t
 	size_t       value_function_definition;
 	double       value_parameters;            //not value_parameters
 	size_t       value_var_declaration;
-	double       value_call;                 //not value_call
+	double       value_call;                  //not value_call
 };
 
 struct node_t
@@ -273,11 +273,31 @@ struct node_t
 //--------------------------------------------------------------------------------------
 /*recursive_descent*/
 
+enum status_of_position_t
+{
+	SIMPLY_POSITION = 0,
+	IN_WHILE        = 1,
+	IN_FUNC         = 2
+};
+
+enum print_error_in_get_operation_t
+{
+	NOT_PRINT_ERROR = 0,
+	PRINT_ERROR     = 1
+};
+
+enum check_declaration_t
+{
+	NOT_CHECK_DECLARATION = 0,
+	CHECK_DECLARATION     = 1
+};
+
 struct syntactic_parameters_t
 {
-	array_of_tokens_t* tokens;
-	size_t             index_token;
-	long               scope;
+	array_of_tokens_t*    tokens;
+	size_t                index_token;
+	long                  scope;
+	status_of_position_t  position;
 };
 
 //---------------------------------------------------------------------------------------
