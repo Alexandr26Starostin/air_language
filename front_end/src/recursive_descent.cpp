@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include <math.h>
 
 #include "const_in_front_end.h"
 #include "operations_with_files.h"
@@ -9,8 +8,6 @@
 #include "tokens.h"
 #include "tree.h"
 #include "recursive_descent.h"
-
-//TODO      дописать функции    флажок в переменной и операторах
 
 static front_end_error_t get_grammar                   (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
 static front_end_error_t get_operation                 (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node, print_error_in_get_operation_t status_print_error);       // 
@@ -22,13 +19,14 @@ static front_end_error_t get_printf                    (syntactic_parameters_t* 
 static front_end_error_t get_scanf                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
 static front_end_error_t get_interruption              (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
 static front_end_error_t get_empty_operation           (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-// static front_end_error_t get_definition_func           (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);
-// static front_end_error_t get_return                    (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);
+static front_end_error_t get_definition_func           (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
+static front_end_error_t get_return                    (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
 static front_end_error_t get_logical                   (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
 static front_end_error_t get_and                       (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
 static front_end_error_t get_not                       (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
 static front_end_error_t get_or                        (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-// static front_end_error_t get_parameters_for_definition (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);
+static front_end_error_t get_parameters_for_definition (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
+static front_end_error_t get_parameters_for_call       (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
 static front_end_error_t get_expression                (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
 static front_end_error_t get_term                      (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
 static front_end_error_t get_power                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       // 
@@ -37,7 +35,7 @@ static front_end_error_t get_round                     (syntactic_parameters_t* 
 static front_end_error_t get_element                   (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
 static front_end_error_t get_constant                  (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
 static front_end_error_t get_variable                  (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node, check_declaration_t status_check_declaration);       //
-// static front_end_error_t get_call_func                 (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);
+static front_end_error_t get_call_func                 (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
 
 #define error_massage_ printf ("Error in %s:%d\n\n", __FILE__, __LINE__);
 
@@ -171,8 +169,8 @@ static front_end_error_t get_operation (syntactic_parameters_t* syntactic_parame
 	try_perform_operation_(get_printf,          SKIP_GET_PRINTF)
 	try_perform_operation_(get_scanf,           SKIP_GET_SCANF)
 	try_perform_operation_(get_interruption,    SKIP_GET_INTERRUPTION)
-	// try_perform_operation_(get_definition_func, SKIP_GET_DEFINITION_FUNC)
-	// try_perform_operation_(get_return,          SKIP_GET_RETURN)
+	try_perform_operation_(get_definition_func, SKIP_GET_DEFINITION_FUNC)
+	try_perform_operation_(get_return,          SKIP_GET_RETURN)
 
 	status = get_empty_operation (syntactic_parameters, ptr_node);
 	if (status == NOT_ERROR) {return status;}
@@ -473,7 +471,7 @@ static front_end_error_t get_element (syntactic_parameters_t* syntactic_paramete
 	if (check_token_type_(0, NUM) && check_token_type_(1, OP)) {return get_constant (syntactic_parameters, ptr_node);}
 
 	if (check_token_type_(0, ID) && check_token_type_(1, OP) && check_op_value_(1, ROUND_BEGIN)) 
-		{return NOT_ERROR;} //get_call_func (tokens, ptr_index_token, ptr_node, ptr_scope);
+		{return get_call_func (syntactic_parameters, ptr_node);}
 
 	if (check_token_type_(0, ID) && check_token_type_(1, OP)) {return get_variable (syntactic_parameters, ptr_node, CHECK_DECLARATION);}
 
@@ -872,3 +870,332 @@ static front_end_error_t get_scanf (syntactic_parameters_t* syntactic_parameters
 
 	return NOT_ERROR;
 }
+
+static front_end_error_t get_definition_func (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+{
+	ASSERTS_IN_RECURSIVE_DESCENT_
+
+	front_end_error_t status = NOT_ERROR;
+	
+	node_t* parameters_node = NULL;
+
+	node_t* operation_node = keyword_node_(OP, NULL, NULL);
+	if (operation_node == NULL) {error_massage_; return NOT_MEMORY_FOR_NEW_NODE;}
+
+	node_t* new_root_node = operation_node;
+
+	if (! (check_token_type_(0, OP) && check_op_value_(0, INT) &&
+		   check_token_type_(1, ID) &&
+		   check_token_type_(2, OP) && check_op_value_(2, ROUND_BEGIN)))
+	{
+		return SKIP_GET_DEFINITION_FUNC;
+	}
+
+	syntactic_parameters -> index_token += 1;  //пропуск типа функции <==> double 
+
+	size_t index_id_in_name_table = token_value_id_(0);
+
+	if ((syntactic_parameters -> tokens -> name_table)[index_id_in_name_table].status)
+	{
+		error_massage_
+		printf ("Error from 'get_definition_func': repeated declaration of func (index_id in name_table == %ld) in position in tokens == %ld\n\n", 
+				index_id_in_name_table, syntactic_parameters -> index_token);
+
+		return ERROR_IN_GET_DEFINITION_FUNC;
+	}
+
+	(syntactic_parameters -> tokens -> name_table)[index_id_in_name_table].status = DEFINITE;
+	(syntactic_parameters -> tokens -> name_table)[index_id_in_name_table].type   = NAME_FUNC;
+
+	syntactic_parameters -> index_token += 2;  //пропуск имени функции и (
+
+	status = get_parameters_for_definition (syntactic_parameters, &parameters_node);
+	if (status) {return status;}
+
+	if (! (check_token_type_(0, OP) && check_op_value_(0, ROUND_END)))
+	{
+		error_massage_
+		printf ("Error from 'get_definition_func': in position in tokens == %ld: wait ) ('лети'), but not find it\n\n", 
+			syntactic_parameters -> index_token);
+
+		free (parameters_node);
+
+		return ERROR_IN_GET_DEFINITION_FUNC;
+	}
+
+	syntactic_parameters -> index_token += 1;  //пропуск ) 
+
+	get_empty_operation (syntactic_parameters, ptr_node);
+
+	if (! (check_token_type_(0, OP) && check_op_value_(0, CURLY_BEGIN)))
+	{
+		error_massage_
+		printf ("Error from 'get_definition_func': in position in tokens == %ld: wait { ('взлёт'), but not find it\n\n", 
+			syntactic_parameters -> index_token);
+
+		free (parameters_node);
+
+		return ERROR_IN_GET_DEFINITION_FUNC;
+	}
+
+	status_of_position_t old_position = syntactic_parameters -> position;
+
+	syntactic_parameters -> index_token += 1;  //пропуск {
+
+	syntactic_parameters -> position = IN_FUNC;
+
+	while (status != ERROR_IN_GET_OPERATION)
+	{
+		status = get_operation (syntactic_parameters, &operation_node, NOT_PRINT_ERROR);
+		if (status != NOT_ERROR && status != ERROR_IN_GET_OPERATION) {free (parameters_node); free (new_root_node); return status;}
+	}
+
+	if (! (check_token_type_(0, OP) && check_op_value_(0, CURLY_END)))
+	{
+		error_massage_
+		printf ("Error from 'get_definition_func': in position in tokens == %ld: wait } ('приземление'), but not find it\n\n", 
+			syntactic_parameters -> index_token);
+
+		free (parameters_node);
+		free (new_root_node);
+
+		return ERROR_IN_GET_DEFINITION_FUNC;
+	}
+
+	syntactic_parameters -> index_token += 1;  //пропуск }
+
+	syntactic_parameters -> position = old_position;
+
+	*ptr_node = function_definition_node_(index_id_in_name_table, keyword_node_(INT, NULL, NULL), parameters_node_(parameters_node, new_root_node));
+	if (*ptr_node == NULL) {error_massage_; free (parameters_node); free (new_root_node); return NOT_MEMORY_FOR_NEW_NODE;}
+
+	return NOT_ERROR;
+}
+
+static front_end_error_t get_parameters_for_definition (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+{
+	ASSERTS_IN_RECURSIVE_DESCENT_
+
+	*ptr_node = keyword_node_(COMMA, NULL, NULL);
+	if (*ptr_node == NULL) {error_massage_; return NOT_MEMORY_FOR_NEW_NODE;}
+
+	if (check_token_type_(0, OP) && check_op_value_(0, ROUND_END))
+	{
+		return NOT_ERROR;
+	}
+
+	if (! (check_token_type_(0, OP) && check_op_value_(0, INT) && check_token_type_(1, ID)))
+	{
+		error_massage_
+		printf ("Error from 'get_parameters_for_definition': in position in tokens == %ld and %ld wait: double <name_var>, but not find it\n\n", 
+			syntactic_parameters -> index_token, syntactic_parameters -> index_token + 1);
+
+		return ERROR_IN_GET_DEFINITION_FUNC;	
+	}
+
+	syntactic_parameters -> index_token += 1;  //пропуск double
+
+	node_t* new_root_node        = *ptr_node;
+	node_t* var_declaration_node = var_declaration_node_(token_value_id_(0), keyword_node_(INT, NULL, NULL), identifier_node_(token_value_id_(0)));
+	if (var_declaration_node == NULL) {error_massage_; free (*ptr_node); return NOT_MEMORY_FOR_NEW_NODE;}
+
+	(*ptr_node)          -> right  = var_declaration_node;
+	var_declaration_node -> parent = *ptr_node;
+
+	(*ptr_node) -> left = keyword_node_(COMMA, NULL, NULL);
+	if ((*ptr_node) -> left == NULL) {error_massage_; free (*ptr_node); return NOT_MEMORY_FOR_NEW_NODE;}
+
+	(*ptr_node) -> left -> parent = *ptr_node;
+
+	syntactic_parameters -> index_token += 1;  //пропуск <name_var>
+
+	while (check_token_type_(0, OP) && check_op_value_(0, COMMA))
+	{
+		syntactic_parameters -> index_token += 1;  //пропуск comma
+
+		if (! (check_token_type_(0, OP) && check_op_value_(0, INT) && check_token_type_(1, ID)))
+		{
+			error_massage_
+			printf ("Error from 'get_parameters_for_definition': in position in tokens == %ld and %ld wait: double <name_var>, but not find it\n\n", 
+				syntactic_parameters -> index_token, syntactic_parameters -> index_token + 1);
+
+			return ERROR_IN_GET_DEFINITION_FUNC;	
+		}
+
+		syntactic_parameters -> index_token += 1;  //пропуск double
+
+		*ptr_node = (*ptr_node) -> left;
+
+		var_declaration_node = var_declaration_node_(token_value_id_(0), keyword_node_(INT, NULL, NULL), identifier_node_(token_value_id_(0)));
+		if (var_declaration_node == NULL) {error_massage_; free (new_root_node); return NOT_MEMORY_FOR_NEW_NODE;}
+
+		(*ptr_node)          -> right  = var_declaration_node;
+		var_declaration_node -> parent = *ptr_node;
+
+		(*ptr_node) -> left = keyword_node_(COMMA, NULL, NULL);
+		if ((*ptr_node) -> left == NULL) {error_massage_; free (new_root_node); return NOT_MEMORY_FOR_NEW_NODE;}
+
+		(*ptr_node) -> left -> parent = *ptr_node;
+
+		syntactic_parameters -> index_token += 1;  //пропуск <name_var>
+	}
+
+	*ptr_node = new_root_node;
+
+	return NOT_ERROR;
+}
+
+static front_end_error_t get_return (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+{
+	ASSERTS_IN_RECURSIVE_DESCENT_
+
+	if (! (check_token_type_(0, OP) && check_op_value_(0, RETURN)))
+	{
+		return SKIP_GET_RETURN;
+	}
+
+	syntactic_parameters -> index_token += 1;  //пропуск return
+
+	front_end_error_t status          = NOT_ERROR;
+	node_t*           expression_node = NULL;
+
+	status = get_expression (syntactic_parameters, &expression_node);
+	if (status) {return status;}
+
+	if (! (check_token_type_(0, OP) && check_op_value_(0, OPERATOR)))
+	{
+		error_massage_;
+		printf ("Error from 'get_return': in position in tokens == %ld: wait ; ('\\n'), but not find it\n\n", 
+			syntactic_parameters -> index_token);
+
+		free (expression_node);
+
+		return ERROR_IN_GET_RETURN;
+	}
+
+	syntactic_parameters -> index_token += 1;  //пропуск ; <==> \n
+
+	*ptr_node = keyword_node_(RETURN, NULL, expression_node);
+	if (*ptr_node == NULL) {error_massage_; free (expression_node); return NOT_MEMORY_FOR_NEW_NODE;}
+
+	return NOT_ERROR;
+}
+
+static front_end_error_t get_call_func (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+{
+	ASSERTS_IN_RECURSIVE_DESCENT_
+
+	size_t index_id_in_name_table = token_value_id_(0);
+
+	node_t*           parameters_node = NULL;
+	front_end_error_t status          = NOT_ERROR;
+
+	if ((syntactic_parameters -> tokens -> name_table)[index_id_in_name_table].status == NOT_DEFINITE)
+	{
+		error_massage_
+		printf ("Error from 'get_call_func': not have declaration of func (index_id in name_table == %ld) in position in tokens == %ld\n\n", 
+				index_id_in_name_table, syntactic_parameters -> index_token);
+
+		return ERROR_IN_GET_CALL_FUNC;
+	}
+
+	syntactic_parameters -> index_token += 2;  //пропуск <name func> (
+
+	status = get_parameters_for_call (syntactic_parameters, &parameters_node);
+	if (status) {return status;}
+
+	if (! (check_token_type_(0, OP) && check_op_value_(0, ROUND_END)))
+	{
+		error_massage_;
+		printf ("Error from 'get_call_func': in position in tokens == %ld: wait ) ('лети'), but not find it\n\n", 
+			syntactic_parameters -> index_token);
+
+		free (parameters_node);
+
+		return ERROR_IN_GET_CALL_FUNC;
+	}
+
+	syntactic_parameters -> index_token += 1;  //пропуск )
+
+	*ptr_node = call_node_(parameters_node, identifier_node_(index_id_in_name_table));
+	if (*ptr_node == NULL) {error_massage_; free (parameters_node); return NOT_MEMORY_FOR_NEW_NODE;}
+
+	return NOT_ERROR;
+}
+
+static front_end_error_t get_parameters_for_call (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+{
+	ASSERTS_IN_RECURSIVE_DESCENT_
+
+	*ptr_node = keyword_node_(COMMA, NULL, NULL);
+	if (*ptr_node == NULL) {error_massage_; return NOT_MEMORY_FOR_NEW_NODE;}
+
+	node_t* new_root_node = *ptr_node;
+
+	if (check_token_type_(0, OP) && check_op_value_(0, ROUND_END))
+	{
+		return NOT_ERROR;
+	}
+
+	node_t*           expression_node = NULL;
+	front_end_error_t status          = NOT_ERROR;
+
+	status = get_expression (syntactic_parameters, &expression_node);
+	if (status) {return status;}
+
+	(*ptr_node)     -> right  = expression_node;
+	expression_node -> parent = *ptr_node;
+
+	(*ptr_node) -> left = keyword_node_(COMMA, NULL, NULL);
+	if ((*ptr_node) -> left == NULL) {error_massage_; free (new_root_node); return NOT_MEMORY_FOR_NEW_NODE;}
+
+	(*ptr_node) -> left -> parent = *ptr_node;
+
+	*ptr_node = (*ptr_node) -> left;
+
+	while (check_token_type_(0, OP) && check_op_value_(0, COMMA))
+	{
+		syntactic_parameters -> index_token += 1;  //пропуск , <==> и
+
+		status = get_expression (syntactic_parameters, &expression_node);
+		if (status) {return status;}
+
+		(*ptr_node)     -> right  = expression_node;
+		expression_node -> parent = *ptr_node;
+
+		(*ptr_node) -> left = keyword_node_(COMMA, NULL, NULL);
+		if ((*ptr_node) -> left == NULL) {error_massage_; free (new_root_node); return NOT_MEMORY_FOR_NEW_NODE;}
+
+		(*ptr_node) -> left -> parent = *ptr_node;
+
+		*ptr_node = (*ptr_node) -> left;
+	}
+
+	*ptr_node = new_root_node;
+
+	return NOT_ERROR;
+}
+
+
+
+
+// for (int i = 0; i > -1; i++)
+// {
+// 	printf("FUUUCK YOU NVIDIAA\n");
+// }
+
+// while("i want to eat")
+// {
+// 	printf("i want to eat. Give me food\n");
+// }
+
+// return food
+// relax i dont want to think
+// if you ever gonna touch such a beautiful pristin
+// So brillaiant and unforgettable
+// i dedicate my night to sleep
+
+// Nothing what i do is great
+// Except for this 
+
+

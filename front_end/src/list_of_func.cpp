@@ -100,6 +100,7 @@ static front_end_error_t fill_list_of_func (list_of_func_t* list_of_func)
 			FILL_LIST_OF_FUNC_(BREAK,       "сломать");
 			FILL_LIST_OF_FUNC_(CONTINUE,    "продолжи");
 			FILL_LIST_OF_FUNC_(ABORT,       "прекрати");
+			FILL_LIST_OF_FUNC_(COMMA,       "и");
 
 			default:    //Встретилось значение не существующего значения enum
 			{
