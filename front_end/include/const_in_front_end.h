@@ -6,18 +6,23 @@
 
 enum front_end_error_t
 {
-	NOT_ERROR 				               = 0,
-	NOT_MEMORY_FOR_LIST_OF_FUNC            = 1,
-	NOT_MEMORY_FOR_REALLOC_LIST_OF_FUNC    = 2,
-	NOT_FIND_FILE_WITH_PROGRAM             = 3,
-	NOT_MEMORY_FOR_STR_WITH_PROGRAM        = 4,
-	NOT_MEMORY_FOR_NAME_TABLE              = 5,
-	NOT_MEMORY_FOR_REALLOC_NAME_TABLE      = 6,
-	NOT_MEMORY_FOR_ARRAY_OF_TOKENS         = 7,
-	NOT_MEMORY_FOR_REALLOC_ARRAY_OF_TOKENS = 8,
-	NOT_MEMORY_FOR_NEW_NODE                = 9,
-	NOT_FIND_TREE_DOT                      = 10,
-	NOT_FIND_TREE_HTML                     = 11,
+	NOT_ERROR 				                 		 = 0,
+	NOT_MEMORY_FOR_LIST_OF_FUNC              		 = 1,
+	NOT_MEMORY_FOR_REALLOC_LIST_OF_FUNC      		 = 2,
+	NOT_FIND_FILE_WITH_PROGRAM               		 = 3,
+	NOT_MEMORY_FOR_STR_WITH_PROGRAM          		 = 4,
+	NOT_MEMORY_FOR_NAME_TABLE                		 = 5,
+	NOT_MEMORY_FOR_REALLOC_NAME_TABLE        		 = 6,
+	NOT_MEMORY_FOR_ARRAY_OF_TOKENS           		 = 7,
+	NOT_MEMORY_FOR_REALLOC_ARRAY_OF_TOKENS   		 = 8,
+	NOT_MEMORY_FOR_NEW_NODE                  		 = 9,
+	NOT_FIND_TREE_DOT                                = 10,
+	NOT_FIND_TREE_HTML                               = 11,
+	NOT_MEMORY_FOR_ARRAY_OF_LOCAL_NAME_TABLE         = 12,
+	NOT_MEMORY_FOR_ARRAY_OF_LOCAL_NAMES              = 13,
+	NOT_MEMORY_FOR_REALLOC_ARRAY_OF_LOCAL_NAME_TABLE = 14,
+	NOT_MEMORY_FOR_REALLOC_ARRAY_OF_LOCAL_NAMES      = 15,
+	NOT_FIND_LOCAL_NAME_TABLE_WITH_SCOPE             = 16,
 
 	ERROR_IN_GET_GRAMMAR                   = 30,
 	ERROR_IN_GET_OPERATION                 = 31,
@@ -168,8 +173,9 @@ enum type_id_t
 
 enum status_of_declaration_t
 {
-	NOT_DEFINITE = 0,
-	DEFINITE     = 1
+	NOT_DEFINITE       = 0,
+	DEFINITE_IN_GLOBAL = 1,
+	DEFINITE_IN_FUNC   = 2
 };
 
 struct name_t
@@ -182,7 +188,7 @@ struct name_t
 
 struct name_table_t
 {
-	name_t* name_table;
+	name_t* array_names;
 	size_t  size_of_name_table;
 	size_t  free_index;
 };
@@ -216,7 +222,6 @@ struct token_t
 struct array_of_tokens_t
 {
 	token_t* array_of_tokens;
-	name_t*  name_table;
 	size_t   size_of_array;
 	size_t   index_free;
 };
@@ -269,6 +274,46 @@ struct node_t
 	node_t*      parent;
 };
 
+struct dump_tree_t 
+{
+	char*              str_for_system; 
+	char*              str_with_program; 
+	size_t             index_picture;
+	FILE*              tree_html; 
+	array_of_tokens_t* tokens; 
+	list_of_func_t*    list_of_func; 
+	name_table_t*      name_table;
+};
+
+//--------------------------------------------------------------------------------------
+/*local_name_table*/
+
+const size_t MIN_SIZE_ARRAY_OF_LOCAL_NAME_TABLE = 1;
+const size_t MIN_SIZE_ARRAY_OF_LOCAL_NAMES      = 1;
+const long   GLOBAL_SCOPE                       = -1;
+const long   NOT_DEFINITE_SCOPE                 = -2;
+
+struct local_name_t
+{
+	size_t    index_id_in_name_table;
+	type_id_t type_id;
+};
+
+struct local_name_table_t
+{
+	local_name_t* array_of_local_names;
+	size_t        size_local_name_table;
+	size_t        free_index_in_local_name_table;
+	long          scope_of_local_name_table;
+};
+
+struct list_of_local_name_tables_t
+{
+	local_name_table_t* array_of_local_name_table;
+	size_t              size_list;
+	size_t              free_index_in_list;
+};
+
 //--------------------------------------------------------------------------------------
 /*recursive_descent*/
 
@@ -293,10 +338,12 @@ enum check_declaration_t
 
 struct syntactic_parameters_t
 {
-	array_of_tokens_t*    tokens;
-	size_t                index_token;
-	long                  scope;
-	status_of_position_t  position;
+	array_of_tokens_t*           tokens;
+	name_t*                      array_names;
+	list_of_local_name_tables_t* list_of_local_name_tables;
+	size_t                       index_token;
+	long                         scope;
+	status_of_position_t         position;
 };
 
 //---------------------------------------------------------------------------------------

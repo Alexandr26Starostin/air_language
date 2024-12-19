@@ -15,9 +15,9 @@ front_end_error_t create_name_table (name_table_t* name_table)
 {
 	assert (name_table);
 
-	name_table -> name_table = (name_t*) calloc (SIZE_NAME_TABLE, sizeof (name_t));
+	name_table -> array_names = (name_t*) calloc (SIZE_NAME_TABLE, sizeof (name_t));
 
-	if (name_table -> name_table == NULL)
+	if (name_table -> array_names == NULL)
 	{
 		printf ("\nError in %s:%d\nNot memory for name_table\n\n", __FILE__, __LINE__);
 		return NOT_MEMORY_FOR_NAME_TABLE;
@@ -33,7 +33,7 @@ front_end_error_t delete_name_table (name_table_t* name_table)
 {
 	assert (name_table);
 
-	free (name_table -> name_table);
+	free (name_table -> array_names);
 
 	name_table -> size_of_name_table = 0;
 	name_table -> free_index         = 0;
@@ -50,10 +50,10 @@ front_end_error_t add_name_in_table (name_table_t* name_table, size_t index_to_n
 
 	if (position_name_in_table == name_table -> free_index)
 	{
-		(name_table -> name_table)[name_table -> free_index].index_to_name_in_str = index_to_name_in_str;
-		(name_table -> name_table)[name_table -> free_index].len_name             = len_name;
-		(name_table -> name_table)[name_table -> free_index].type                 = UNKNOW_TYPE;
-		(name_table -> name_table)[name_table -> free_index].status               = NOT_DEFINITE;
+		(name_table -> array_names)[name_table -> free_index].index_to_name_in_str = index_to_name_in_str;
+		(name_table -> array_names)[name_table -> free_index].len_name             = len_name;
+		(name_table -> array_names)[name_table -> free_index].type                 = UNKNOW_TYPE;
+		(name_table -> array_names)[name_table -> free_index].status               = NOT_DEFINITE;
 
 		name_table -> free_index += 1;
 
@@ -73,9 +73,9 @@ static front_end_error_t realloc_name_table (name_table_t* name_table)
 
 	name_table -> size_of_name_table *= 2;
 
-	name_table -> name_table = (name_t*) realloc (name_table -> name_table, sizeof (name_t) * name_table -> size_of_name_table);
+	name_table -> array_names = (name_t*) realloc (name_table -> array_names, sizeof (name_t) * name_table -> size_of_name_table);
 
-	if (name_table -> name_table == NULL)
+	if (name_table -> array_names == NULL)
 	{
 		printf ("\nError in %s:%d\nNot memory for realloc of name_table\n\n", __FILE__, __LINE__);
 		return NOT_MEMORY_FOR_REALLOC_NAME_TABLE;
@@ -93,8 +93,8 @@ size_t find_position_name (name_table_t* name_table, size_t find_index, size_t l
 
 	for (; index < name_table -> free_index; index++)
 	{
-		if (strncmp  (str_with_program + (name_table -> name_table)[index].index_to_name_in_str, str_with_program + find_index, 
-		                        max_len ((name_table -> name_table)[index].len_name, len_name)) == 0)
+		if (strncmp  (str_with_program + (name_table -> array_names)[index].index_to_name_in_str, str_with_program + find_index, 
+		                        max_len ((name_table -> array_names)[index].len_name, len_name)) == 0)
 		{
 			return index ;
 		}
@@ -120,10 +120,10 @@ front_end_error_t dump_name_table   (name_table_t* name_table, char* str_with_pr
 
 		for (size_t index = 0; index < name_table -> free_index; index++)
 		{	
-			printf ("%5ld    %20ld    %8ld    %4d    %21d\n", index, (name_table -> name_table)[index].index_to_name_in_str, 
-													  (name_table -> name_table)[index].len_name, 
-													  (name_table -> name_table)[index].type,
-													  (name_table -> name_table)[index].status);
+			printf ("%5ld    %20ld    %8ld    %4d    %21d\n", index, (name_table -> array_names)[index].index_to_name_in_str, 
+																	 (name_table -> array_names)[index].len_name, 
+																	 (name_table -> array_names)[index].type,
+																	 (name_table -> array_names)[index].status);
 		}
 	}
 
@@ -134,13 +134,13 @@ front_end_error_t dump_name_table   (name_table_t* name_table, char* str_with_pr
 		for (size_t index = 0; index < name_table -> free_index; index++)
 		{
 			
-			printf ("%5ld    %20ld    %8ld    %4d    %21d    ", index, (name_table -> name_table)[index].index_to_name_in_str, 
-													    (name_table -> name_table)[index].len_name, 
-														(name_table -> name_table)[index].type, 
-														(name_table -> name_table)[index].status);
+			printf ("%5ld    %20ld    %8ld    %4d    %21d    ", index, (name_table -> array_names)[index].index_to_name_in_str, 
+																	   (name_table -> array_names)[index].len_name, 
+																	   (name_table -> array_names)[index].type, 
+																	   (name_table -> array_names)[index].status);
 
-			print_symbols_from_str (str_with_program + (name_table -> name_table)[index].index_to_name_in_str, 
-			                                           (name_table -> name_table)[index].len_name);
+			print_symbols_from_str (str_with_program + (name_table -> array_names)[index].index_to_name_in_str, 
+			                                           (name_table -> array_names)[index].len_name);
 		}
 	}
 

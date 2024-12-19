@@ -177,3 +177,27 @@ long find_word_in_list_of_func (list_of_func_t* list_of_func, char* find_word)
 
 	return WORD_IS_NOT_FUNC;
 }
+
+front_end_error_t print_name_func_in_file_by_code (FILE* file, list_of_func_t* list_of_func, base_func_t code_find_func)
+{
+	assert (list_of_func);
+	assert (file);
+
+	for (size_t index = 0; index < list_of_func -> free_index; index++)
+	{
+		if ((list_of_func -> array_of_func)[index].code_func == code_find_func)
+		{
+			if (code_find_func == OPERATOR)
+			{
+				fprintf (file, "\\\\n");
+				return NOT_ERROR;
+			}
+
+			fprintf (file, "%s", (list_of_func -> array_of_func)[index].name_func);
+			return NOT_ERROR;
+		}
+	}
+
+	printf ("print_name_func_in_file_by_code not find name_func with code == code_find == %d\n", code_find_func);
+	return NOT_ERROR;
+}

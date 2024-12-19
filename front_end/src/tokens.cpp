@@ -10,10 +10,9 @@ static front_end_error_t realloc_array_of_tokens (array_of_tokens_t* tokens);
 
 //----------------------------------------------------------------------------------------------------
 
-front_end_error_t create_tokens (array_of_tokens_t* tokens, name_t* name_table)
+front_end_error_t create_tokens (array_of_tokens_t* tokens)
 {
 	assert (tokens);
-	assert (name_table);
 
 	tokens -> array_of_tokens = (token_t*) calloc (SIZE_ARRAY_OF_TOKENS, sizeof (token_t));
 
@@ -25,7 +24,6 @@ front_end_error_t create_tokens (array_of_tokens_t* tokens, name_t* name_table)
 
 	tokens -> size_of_array = SIZE_ARRAY_OF_TOKENS;
 	tokens -> index_free    = 0;
-	tokens -> name_table    = name_table;
 
 	return NOT_ERROR;
 }
@@ -38,7 +36,6 @@ front_end_error_t delete_tokens (array_of_tokens_t* tokens)
 
 	tokens -> size_of_array = 0;
 	tokens -> index_free    = 0;
-	tokens -> name_table    = NULL;
 
 	return NOT_ERROR;
 }

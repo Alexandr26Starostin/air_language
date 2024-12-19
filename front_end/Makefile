@@ -1,6 +1,6 @@
 CC=g++
 FLAGS=-Iinclude -Wshadow -Winit-self -Wredundant-decls -Wcast-align -Wundef -Wfloat-equal -Winline -Wunreachable-code -Wmissing-declarations -Wmissing-include-dirs -Wswitch-enum -Wswitch-default -Weffc++ -Wmain -Wextra -Wall -g -pipe -fexceptions -Wcast-qual -Wconversion -Wctor-dtor-privacy -Wempty-body -Wformat-security -Wformat=2 -Wignored-qualifiers -Wlogical-op -Wmissing-field-initializers -Wnon-virtual-dtor -Woverloaded-virtual -Wpointer-arith -Wsign-promo -Wstack-usage=8192 -Wstrict-aliasing -Wstrict-null-sentinel -Wtype-limits -Wwrite-strings -D_DEBUG -D_EJUDGE_CLIENT_SIDE -D_EJC
-FILES=main.o list_of_func.o launch_front_end.o lexical_analysis.o operations_with_files.o name_table.o tokens.o tree.o recursive_descent.o
+FILES=main.o list_of_func.o launch_front_end.o lexical_analysis.o operations_with_files.o name_table.o tokens.o tree.o recursive_descent.o local_name_table.o
 TARGET=front_end
 
 # pathsub
@@ -44,6 +44,9 @@ tree.o: src/tree.cpp
 
 recursive_descent.o: src/recursive_descent.cpp
 	@$(CC) -c $(FLAGS) src/recursive_descent.cpp -o build/recursive_descent.o
+
+local_name_table.o: src/local_name_table.cpp
+	@$(CC) -c $(FLAGS) src/local_name_table.cpp -o build/local_name_table.o
 
 clean:
 	rm -rf $(TARGET)

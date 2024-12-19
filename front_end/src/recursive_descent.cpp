@@ -7,37 +7,45 @@
 #include "name_table.h"
 #include "tokens.h"
 #include "tree.h"
+#include "local_name_table.h"
 #include "recursive_descent.h"
 
-static front_end_error_t get_grammar                   (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_operation                 (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node, print_error_in_get_operation_t status_print_error);       // 
-static front_end_error_t get_assign                    (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_var_declaration           (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_if                        (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_while                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_printf                    (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_scanf                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_interruption              (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_empty_operation           (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_definition_func           (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_return                    (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_logical                   (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_and                       (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_not                       (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_or                        (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_parameters_for_definition (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_parameters_for_call       (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_expression                (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_term                      (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_power                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       // 
-static front_end_error_t get_base_func                 (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_round                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_element                   (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_constant                  (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
-static front_end_error_t get_variable                  (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node, check_declaration_t status_check_declaration);       //
-static front_end_error_t get_call_func                 (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       //
+static front_end_error_t get_grammar                   (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_operation                 (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node, print_error_in_get_operation_t status_print_error);        
+static front_end_error_t get_assign                    (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_var_declaration           (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_if                        (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_while                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_printf                    (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_scanf                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_interruption              (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_empty_operation           (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_definition_func           (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_return                    (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_logical                   (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_and                       (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_not                       (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_or                        (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_parameters_for_definition (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_parameters_for_call       (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_expression                (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_term                      (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_power                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_base_func                 (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_round                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_element                   (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_constant                  (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static front_end_error_t get_variable                  (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node, check_declaration_t status_check_declaration);       
+static front_end_error_t get_call_func                 (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);    
+static front_end_error_t delete_local_scope_after_func (syntactic_parameters_t* syntactic_parameters);
 
-#define error_massage_ printf ("Error in %s:%d\n\n", __FILE__, __LINE__);
+// #define error_massage_(...) do{ 								
+// 	fprintf (stderr, "Error in %s:%d\n\n", __FILE__, __LINE__);	
+// 	fprintf(stderr, __VA_ARGS__);								
+// while(0)														
+
+#define error_massage_ printf ("Error in %s:%d\n\n", __FILE__, __LINE__);	
+
 
 #define token_type_(index)      (syntactic_parameters -> tokens -> array_of_tokens)[syntactic_parameters -> index_token + index].type
 #define token_value_num_(index) (syntactic_parameters -> tokens -> array_of_tokens)[syntactic_parameters -> index_token + index].value.value_num
@@ -97,25 +105,24 @@ static front_end_error_t get_call_func                 (syntactic_parameters_t* 
 	assert (syntactic_parameters -> tokens);									\
 	assert (ptr_node);															\
 	assert (syntactic_parameters -> tokens -> array_of_tokens);					\
-	assert (syntactic_parameters -> tokens -> name_table);		
+	assert (syntactic_parameters -> array_names);		
 
 //--------------------------------------------------------------------------------
 
-front_end_error_t recursive_descent (array_of_tokens_t* tokens, node_t* root_node)
+front_end_error_t recursive_descent (array_of_tokens_t* tokens, name_table_t* name_table, list_of_local_name_tables_t* list_of_local_name_tables, node_t* root_node)
 {
 	assert (tokens);
 	assert (root_node);
-	assert (tokens -> array_of_tokens);
-	assert (tokens -> name_table);
-
-	size_t index_token = 0;
-	long   scope       = -1;
+	assert (name_table);
+	assert (list_of_local_name_tables);
 
 	syntactic_parameters_t syntactic_parameters = {};
 
-	syntactic_parameters.index_token = index_token;
-	syntactic_parameters.scope       = scope;
-	syntactic_parameters.tokens      = tokens;
+	syntactic_parameters.index_token               = 0;
+	syntactic_parameters.scope                     = GLOBAL_SCOPE;
+	syntactic_parameters.tokens                    = tokens;
+	syntactic_parameters.array_names               = name_table -> array_names;
+	syntactic_parameters.list_of_local_name_tables = list_of_local_name_tables;
 
 	front_end_error_t status = get_grammar (&syntactic_parameters, &root_node);
 
@@ -193,7 +200,10 @@ static front_end_error_t get_assign (syntactic_parameters_t* syntactic_parameter
 	node_t*           variable_node   = NULL;
 	front_end_error_t status          = NOT_ERROR;
 
-	if (check_token_type_(0, OP) && check_op_value_(0, INT) && check_token_type_(2, OP) &&  ! check_op_value_(2, ROUND_BEGIN))  //double <var> ==  
+	if ( check_token_type_(0, OP) && 
+		 check_op_value_(0, INT)  && 
+		 check_token_type_(2, OP) &&  
+		!check_op_value_(2, ROUND_BEGIN))  //double <var> ==  
 	{
 		status = get_var_declaration (syntactic_parameters, ptr_node);
 		if (status) {return status;}
@@ -205,7 +215,7 @@ static front_end_error_t get_assign (syntactic_parameters_t* syntactic_parameter
 	
 	size_t index_id_in_name_table = token_value_id_(0);
 
-	if ((syntactic_parameters -> tokens -> name_table)[index_id_in_name_table].status == NOT_DEFINITE)
+	if ((syntactic_parameters -> array_names)[index_id_in_name_table].status == NOT_DEFINITE)
 	{
 		error_massage_
 		printf ("Error from 'get_assign': not have declaration of var (index_id in name_table == %ld) in position in tokens == %ld\n\n", 
@@ -268,17 +278,40 @@ static front_end_error_t get_var_declaration (syntactic_parameters_t* syntactic_
 
 	size_t index_id_in_name_table =  token_value_id_(1);
 
-	if ((syntactic_parameters -> tokens -> name_table)[index_id_in_name_table].status)
+	if ((syntactic_parameters -> array_names)[index_id_in_name_table].status != NOT_DEFINITE)
 	{
 		error_massage_
-		printf ("Error from 'get_var_declaration': repeated declaration of var (index_id in name_table == %ld) in position in tokens == %ld\n\n", 
-				index_id_in_name_table, syntactic_parameters -> index_token + 1);
+		printf ("Error from 'get_var_declaration': repeated declaration of var in scope == %ld (index_id in name_table == %ld) in position in tokens == %ld\n", 
+				syntactic_parameters -> scope, index_id_in_name_table, syntactic_parameters -> index_token + 1);
+
+		if ((syntactic_parameters -> array_names)[index_id_in_name_table].status == DEFINITE_IN_GLOBAL)
+			printf ("var - global\n\n");
+
+		else
+			printf ("var - local\n\n");	
 
 		return ERROR_IN_GET_VAR_DECLARATION;
 	}
 
-	(syntactic_parameters -> tokens -> name_table)[index_id_in_name_table].status = DEFINITE;
-	(syntactic_parameters -> tokens -> name_table)[index_id_in_name_table].type   = NAME_VAR;
+	if (syntactic_parameters -> scope == GLOBAL_SCOPE)
+		(syntactic_parameters -> array_names)[index_id_in_name_table].status = DEFINITE_IN_GLOBAL;
+
+	else
+		(syntactic_parameters -> array_names)[index_id_in_name_table].status = DEFINITE_IN_FUNC;
+
+	if ((syntactic_parameters -> array_names)[index_id_in_name_table].type == NAME_FUNC)
+	{
+		error_massage_
+		printf ("Error from 'get_var_declaration': type_id == %d (NAME_FUNC) (index_id in name_table == %ld) in position in tokens == %ld\n\n", 
+				(syntactic_parameters -> array_names)[index_id_in_name_table].type, index_id_in_name_table, syntactic_parameters -> index_token + 1);
+
+		return ERROR_IN_GET_VAR_DECLARATION;
+	}
+
+	(syntactic_parameters -> array_names)[index_id_in_name_table].type = NAME_VAR;
+
+	status = add_new_name_in_local_name_table (syntactic_parameters -> list_of_local_name_tables, syntactic_parameters -> scope, index_id_in_name_table, NAME_VAR);
+	if (status) {return status;}
 
 	if (check_token_type_(2, OP) && check_op_value_(2, ASSIGN))
 	{
@@ -499,7 +532,7 @@ static front_end_error_t get_variable (syntactic_parameters_t* syntactic_paramet
 
 	size_t index_id_in_name_table = token_value_id_(0);
 
-	if (status_check_declaration == CHECK_DECLARATION && (syntactic_parameters -> tokens -> name_table)[index_id_in_name_table].status == NOT_DEFINITE)
+	if (status_check_declaration == CHECK_DECLARATION && (syntactic_parameters -> array_names)[index_id_in_name_table].status == NOT_DEFINITE)
 	{
 		error_massage_
 		printf ("Error from 'get_assign': not have declaration of var (index_id in name_table == %ld) in position in tokens == %ld\n\n", 
@@ -879,7 +912,7 @@ static front_end_error_t get_definition_func (syntactic_parameters_t* syntactic_
 	
 	node_t* parameters_node = NULL;
 
-	node_t* operation_node = keyword_node_(OP, NULL, NULL);
+	node_t* operation_node = keyword_node_(OPERATOR, NULL, NULL);
 	if (operation_node == NULL) {error_massage_; return NOT_MEMORY_FOR_NEW_NODE;}
 
 	node_t* new_root_node = operation_node;
@@ -891,21 +924,48 @@ static front_end_error_t get_definition_func (syntactic_parameters_t* syntactic_
 		return SKIP_GET_DEFINITION_FUNC;
 	}
 
+	if (syntactic_parameters -> scope != GLOBAL_SCOPE)
+	{
+		error_massage_
+		printf ("Error from 'get_definition_func': can't definition func in scope == %ld (not GLOBAL_SCOPE) (index_id in name_table == %ld) in position in tokens == %ld\n\n", 
+				syntactic_parameters -> scope, token_value_id_(0), syntactic_parameters -> index_token);
+
+		return ERROR_IN_GET_DEFINITION_FUNC;
+	}
+
 	syntactic_parameters -> index_token += 1;  //пропуск типа функции <==> double 
 
 	size_t index_id_in_name_table = token_value_id_(0);
 
-	if ((syntactic_parameters -> tokens -> name_table)[index_id_in_name_table].status)
+	if ((syntactic_parameters -> array_names)[index_id_in_name_table].status != NOT_DEFINITE)   //status == DEFINITE_IN_GLOBAL
 	{
 		error_massage_
-		printf ("Error from 'get_definition_func': repeated declaration of func (index_id in name_table == %ld) in position in tokens == %ld\n\n", 
+		printf ("Error from 'get_definition_func': repeated declaration of func in scope == -1 (GLOBAL_SCOPE) (index_id in name_table == %ld) in position in tokens == %ld\n\n", 
 				index_id_in_name_table, syntactic_parameters -> index_token);
 
 		return ERROR_IN_GET_DEFINITION_FUNC;
 	}
 
-	(syntactic_parameters -> tokens -> name_table)[index_id_in_name_table].status = DEFINITE;
-	(syntactic_parameters -> tokens -> name_table)[index_id_in_name_table].type   = NAME_FUNC;
+	(syntactic_parameters -> array_names)[index_id_in_name_table].status = DEFINITE_IN_GLOBAL;
+
+	if ((syntactic_parameters -> array_names)[index_id_in_name_table].type != UNKNOW_TYPE)
+	{
+		error_massage_
+		printf ("Error from 'get_definition_func': type_id == %d (not UNKNOW_TYPE) (index_id in name_table == %ld) in position in tokens == %ld\n\n", 
+				(syntactic_parameters -> array_names)[index_id_in_name_table].type, index_id_in_name_table, syntactic_parameters -> index_token);
+
+		return ERROR_IN_GET_DEFINITION_FUNC;
+	}
+
+	(syntactic_parameters -> array_names)[index_id_in_name_table].type = NAME_FUNC;
+
+	status = add_new_name_in_local_name_table (syntactic_parameters -> list_of_local_name_tables, GLOBAL_SCOPE, index_id_in_name_table, NAME_FUNC);
+	if (status) {return status;}
+
+	syntactic_parameters -> scope = (long) index_id_in_name_table;
+
+	status = add_new_local_name_table_in_list (syntactic_parameters -> list_of_local_name_tables, (long) index_id_in_name_table);
+	if (status) {return status;}
 
 	syntactic_parameters -> index_token += 2;  //пропуск имени функции и (
 
@@ -966,6 +1026,8 @@ static front_end_error_t get_definition_func (syntactic_parameters_t* syntactic_
 
 	syntactic_parameters -> position = old_position;
 
+	delete_local_scope_after_func (syntactic_parameters);
+
 	*ptr_node = function_definition_node_(index_id_in_name_table, keyword_node_(INT, NULL, NULL), parameters_node_(parameters_node, new_root_node));
 	if (*ptr_node == NULL) {error_massage_; free (parameters_node); free (new_root_node); return NOT_MEMORY_FOR_NEW_NODE;}
 
@@ -975,6 +1037,8 @@ static front_end_error_t get_definition_func (syntactic_parameters_t* syntactic_
 static front_end_error_t get_parameters_for_definition (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_
+
+	front_end_error_t status = NOT_ERROR;
 
 	*ptr_node = keyword_node_(COMMA, NULL, NULL);
 	if (*ptr_node == NULL) {error_massage_; return NOT_MEMORY_FOR_NEW_NODE;}
@@ -995,8 +1059,41 @@ static front_end_error_t get_parameters_for_definition (syntactic_parameters_t* 
 
 	syntactic_parameters -> index_token += 1;  //пропуск double
 
+	size_t index_id_in_name_table = token_value_id_(0);
+
+	if ((syntactic_parameters -> array_names)[index_id_in_name_table].status != NOT_DEFINITE)
+	{
+		error_massage_
+		printf ("Error from 'get_parameters_for_definition ': repeated declaration of var in scope == %ld (index_id in name_table == %ld) in position in tokens == %ld\n", 
+				syntactic_parameters -> scope, index_id_in_name_table, syntactic_parameters -> index_token);
+
+		if ((syntactic_parameters -> array_names)[index_id_in_name_table].status == DEFINITE_IN_GLOBAL)
+			printf ("var - global\n\n");
+
+		else
+			printf ("var - local\n\n");	
+
+		return ERROR_IN_GET_VAR_DECLARATION;
+	}
+
+	(syntactic_parameters -> array_names)[index_id_in_name_table].status = DEFINITE_IN_FUNC;
+
+	if ((syntactic_parameters -> array_names)[index_id_in_name_table].type == NAME_FUNC)
+	{
+		error_massage_
+		printf ("Error from 'get_var_declaration': type_id == %d (== NAME_FUNC) (index_id in name_table == %ld) in position in tokens == %ld\n\n", 
+				(syntactic_parameters -> array_names)[index_id_in_name_table].type, index_id_in_name_table, syntactic_parameters -> index_token);
+
+		return ERROR_IN_GET_VAR_DECLARATION;
+	}
+
+	(syntactic_parameters -> array_names)[index_id_in_name_table].type = NAME_VAR;
+
+	status = add_new_name_in_local_name_table (syntactic_parameters -> list_of_local_name_tables, syntactic_parameters -> scope, index_id_in_name_table, NAME_VAR);
+	if (status) {return status;}
+
 	node_t* new_root_node        = *ptr_node;
-	node_t* var_declaration_node = var_declaration_node_(token_value_id_(0), keyword_node_(INT, NULL, NULL), identifier_node_(token_value_id_(0)));
+	node_t* var_declaration_node = var_declaration_node_(index_id_in_name_table, keyword_node_(INT, NULL, NULL), identifier_node_(index_id_in_name_table));
 	if (var_declaration_node == NULL) {error_massage_; free (*ptr_node); return NOT_MEMORY_FOR_NEW_NODE;}
 
 	(*ptr_node)          -> right  = var_declaration_node;
@@ -1023,6 +1120,39 @@ static front_end_error_t get_parameters_for_definition (syntactic_parameters_t* 
 		}
 
 		syntactic_parameters -> index_token += 1;  //пропуск double
+
+		index_id_in_name_table = token_value_id_(0);
+
+		if ((syntactic_parameters -> array_names)[index_id_in_name_table].status != NOT_DEFINITE)
+		{
+			error_massage_
+			printf ("Error from 'get_parameters_for_definition ': repeated declaration of var in scope == %ld (index_id in name_table == %ld) in position in tokens == %ld\n", 
+					syntactic_parameters -> scope, index_id_in_name_table, syntactic_parameters -> index_token);
+
+			if ((syntactic_parameters -> array_names)[index_id_in_name_table].status == DEFINITE_IN_GLOBAL)
+				printf ("var - global\n\n");
+
+			else
+				printf ("var - local\n\n");	
+
+			return ERROR_IN_GET_VAR_DECLARATION;
+		}
+
+		(syntactic_parameters -> array_names)[index_id_in_name_table].status = DEFINITE_IN_FUNC;
+
+		if ((syntactic_parameters -> array_names)[index_id_in_name_table].type == NAME_FUNC)
+		{
+			error_massage_
+			printf ("Error from 'get_var_declaration': type_id == %d (== NAME_FUNC) (index_id in name_table == %ld) in position in tokens == %ld\n\n", 
+					(syntactic_parameters -> array_names)[index_id_in_name_table].type, index_id_in_name_table, syntactic_parameters -> index_token);
+
+			return ERROR_IN_GET_VAR_DECLARATION;
+		}
+
+		(syntactic_parameters -> array_names)[index_id_in_name_table].type = NAME_VAR;
+
+		status = add_new_name_in_local_name_table (syntactic_parameters -> list_of_local_name_tables, syntactic_parameters -> scope, index_id_in_name_table, NAME_VAR);
+		if (status) {return status;}
 
 		*ptr_node = (*ptr_node) -> left;
 
@@ -1090,7 +1220,7 @@ static front_end_error_t get_call_func (syntactic_parameters_t* syntactic_parame
 	node_t*           parameters_node = NULL;
 	front_end_error_t status          = NOT_ERROR;
 
-	if ((syntactic_parameters -> tokens -> name_table)[index_id_in_name_table].status == NOT_DEFINITE)
+	if ((syntactic_parameters -> array_names)[index_id_in_name_table].status == NOT_DEFINITE)
 	{
 		error_massage_
 		printf ("Error from 'get_call_func': not have declaration of func (index_id in name_table == %ld) in position in tokens == %ld\n\n", 
@@ -1172,6 +1302,31 @@ static front_end_error_t get_parameters_for_call (syntactic_parameters_t* syntac
 	}
 
 	*ptr_node = new_root_node;
+
+	return NOT_ERROR;
+}
+
+static front_end_error_t delete_local_scope_after_func (syntactic_parameters_t* syntactic_parameters)
+{
+	assert (syntactic_parameters);
+
+	size_t position_of_local_table = find_position_of_local_table (syntactic_parameters -> list_of_local_name_tables, syntactic_parameters -> scope);
+
+	size_t position_id_in_name_table = 0;
+
+	local_name_table_t* local_table = &((syntactic_parameters -> list_of_local_name_tables -> array_of_local_name_table)[position_of_local_table]); 
+
+	for (size_t index_in_local_table = 0; index_in_local_table < local_table -> free_index_in_local_name_table; index_in_local_table++)
+	{
+		position_id_in_name_table = (local_table -> array_of_local_names)[index_in_local_table].index_id_in_name_table;
+
+		if ((syntactic_parameters -> array_names)[position_id_in_name_table].status == DEFINITE_IN_FUNC)
+		{
+			(syntactic_parameters -> array_names)[position_id_in_name_table].status = NOT_DEFINITE;
+		}
+	}
+
+	syntactic_parameters -> scope = GLOBAL_SCOPE;
 
 	return NOT_ERROR;
 }

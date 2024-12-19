@@ -75,6 +75,8 @@ front_end_error_t lexical_analysis (array_of_tokens_t* tokens, name_table_t* nam
 			if (status) {return status;}
 
 			index_str += shift_index_str;
+
+			//printf ("%ld\n", index_str);
 			continue;
 		}
 

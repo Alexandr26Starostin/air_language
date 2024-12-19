@@ -4,9 +4,11 @@
 #include <math.h>
 
 #include "const_in_front_end.h"
+#include "list_of_func.h"
 #include "tree.h"
 
-static front_end_error_t print_edge (node_t* node, FILE* file_tree);
+static front_end_error_t print_edge                     (node_t* node, FILE* file_tree, dump_tree_t* tree_dump);
+static front_end_error_t print_symbols_from_str_in_file (char* str, size_t count_of_symbols, FILE* file_tree);
 
 //---------------------------------------------------------------------------------------------------------------------------
 
@@ -76,98 +78,138 @@ front_end_error_t delete_node (node_t* node)
 	return NOT_ERROR;
 }
 
-front_end_error_t dump_tree (node_t* node, char* str_for_system, size_t* ptr_index_picture, FILE* tree_html)
+front_end_error_t dump_tree (node_t* node, dump_tree_t* tree_dump)
 {
 	assert (node);
-	assert (str_for_system);
-	assert (ptr_index_picture);
-	assert (tree_html);
+	assert (tree_dump);
 
 	FILE* file_tree = fopen ("tree.dot", "w");
 	if (file_tree == NULL) {printf ("Not find diff.dot\n"); return NOT_FIND_TREE_DOT;}
 
 	fprintf (file_tree, "digraph\n{\n\tnode[fontsize=9]\n\n\t");
 
-	print_edge (node, file_tree);
+	print_edge (node, file_tree, tree_dump);
 
 	fprintf (file_tree, "}");
 
 	fclose (file_tree);
 
-	system (str_for_system);
+	system (tree_dump -> str_for_system);
 
-	fprintf (tree_html, "---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n"
+	fprintf (tree_dump -> tree_html, "---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n"
 						"<img src=\"pictures/diff_%c%c%c%c.svg\" style=\"width: 100%%\">\n", 
-						str_for_system[INDEX_NUMBER_OF_PICTURE + 0], 
-						str_for_system[INDEX_NUMBER_OF_PICTURE + 1], 
-						str_for_system[INDEX_NUMBER_OF_PICTURE + 2], 
-						str_for_system[INDEX_NUMBER_OF_PICTURE + 3]);
+						(tree_dump -> str_for_system)[INDEX_NUMBER_OF_PICTURE + 0], 
+						(tree_dump -> str_for_system)[INDEX_NUMBER_OF_PICTURE + 1], 
+						(tree_dump -> str_for_system)[INDEX_NUMBER_OF_PICTURE + 2], 
+						(tree_dump -> str_for_system)[INDEX_NUMBER_OF_PICTURE + 3]);
 
-	*ptr_index_picture += 1;
-	size_t copy_index = *ptr_index_picture;
+	tree_dump -> index_picture += 1;
+	size_t copy_index = tree_dump -> index_picture;
 
-	str_for_system[INDEX_NUMBER_OF_PICTURE + 0] = '0' + (char) (copy_index / 1000);
+	(tree_dump -> str_for_system)[INDEX_NUMBER_OF_PICTURE + 0] = '0' + (char) (copy_index / 1000);
 	copy_index                                 %= 1000;
 
-	str_for_system[INDEX_NUMBER_OF_PICTURE + 1] = '0' + (char) (copy_index / 100);
+	(tree_dump -> str_for_system)[INDEX_NUMBER_OF_PICTURE + 1] = '0' + (char) (copy_index / 100);
 	copy_index                                 %= 100;
 
-	str_for_system[INDEX_NUMBER_OF_PICTURE + 2] = '0' + (char) (copy_index / 10);
+	(tree_dump -> str_for_system)[INDEX_NUMBER_OF_PICTURE + 2] = '0' + (char) (copy_index / 10);
 	copy_index                                 %= 10;
 
-	str_for_system[INDEX_NUMBER_OF_PICTURE + 3] = '0' + (char) (copy_index / 1);
+	(tree_dump -> str_for_system)[INDEX_NUMBER_OF_PICTURE + 3] = '0' + (char) (copy_index / 1);
 	copy_index                                 %= 1;
 
 	return NOT_ERROR;
 }
 
-static front_end_error_t print_edge (node_t* node, FILE* file_tree)
+static front_end_error_t print_edge (node_t* node, FILE* file_tree, dump_tree_t* tree_dump)
 {
 	assert (file_tree);
+	assert (tree_dump);
 
 	if (node != NULL)
 	{ 
+		//printf ("node -> type == %d\n", node -> type);
+
 		switch (node -> type)
 		{
 			case CONSTANT:
-				fprintf (file_tree, "node_%p [shape=record, label = \"{%lg| {type = %d (CONSTANT) | left = %p | node = %p | parent = %p | right = %p}}\" "
-									"style=\"filled\",fillcolor=\"blue\"]\n\n\t", 
+				fprintf (file_tree, "node_%p [shape=record, label = \"{%lg| type = %d (CONSTANT) | {left = %p | node = %p | parent = %p | right = %p}}\" "
+									"style=\"filled\",fillcolor=\"#1AC6D9\"]\n\n\t", 
 									node, (node -> value).value_constant, node -> type, node -> left, node, node -> parent, node -> right);
 				break;
 
 			case IDENTIFIER:
-				fprintf (file_tree, "node_%p [shape=record, label = \"{%ld| {type = %d (IDENTIFIER) | left = %p | node = %p | parent = %p | right = %p}}\" "
-									"style=\"filled\",fillcolor=\"blue\"]\n\n\t", 
-									node, (node -> value).value_identifier.index_id_in_name_table, node -> type, node -> left, node, node -> parent, node -> right);
+			{
+				fprintf (file_tree, "node_%p [shape=record, label = \"{%ld (", 
+									node, (node -> value).value_identifier.index_id_in_name_table);
+
+				// printf ("\n\nindex_id_in_name_table == %ld\n", (node -> value).value_identifier.index_id_in_name_table);
+				// printf ("index_to_name_in_str == %ld\n",     (name_table -> array_names)[(node -> value).value_identifier.index_id_in_name_table].index_to_name_in_str);
+				// printf ("len_name == %ld\n\n",   (name_table -> array_names)[(node -> value).value_identifier.index_id_in_name_table].len_name);
+
+				print_symbols_from_str_in_file (tree_dump -> str_with_program + (tree_dump -> name_table -> array_names)[(node -> value).value_identifier.index_id_in_name_table].index_to_name_in_str, 
+				                                                   (tree_dump -> name_table -> array_names)[(node -> value).value_identifier.index_id_in_name_table].len_name, file_tree);
+
+								
+				fprintf (file_tree, ")| type = %d (IDENTIFIER) | {left = %p | node = %p | parent = %p | right = %p}}\" "
+									"style=\"filled\",fillcolor=\"#F0FF4F\"]\n\n\t", 
+									node -> type, node -> left, node, node -> parent, node -> right);
+
 				break;
+			}
 			
 			case KEYWORD:
-				fprintf (file_tree, "node_%p [shape=record, label = \"{%d| {type = %d (KEYWORD) | left = %p | node = %p | parent = %p | right = %p}}\" "
-									"style=\"filled\",fillcolor=\"blue\"]\n\n\t", 
-									node, (node -> value).value_keyword, node -> type, node -> left, node, node -> parent, node -> right);
+			{
+				fprintf (file_tree, "node_%p [shape=record, label = \"{%d (", 
+									node, (node -> value).value_keyword);
+
+				print_name_func_in_file_by_code (file_tree, tree_dump -> list_of_func, (node -> value).value_keyword);
+
+				fprintf (file_tree, ")| type = %d (KEYWORD) | {left = %p | node = %p | parent = %p | right = %p}}\" "
+									"style=\"filled\",fillcolor=\"#BDEF9E\"]\n\n\t", 
+									node -> type, node -> left, node, node -> parent, node -> right);
+
 				break;
+			}
 			
 			case FUNCTION_DEFINITION:
-				fprintf (file_tree, "node_%p [shape=record, label = \"{%ld| {type = %d (FUNCTION_DEFINITION) | left = %p | node = %p | parent = %p | right = %p}}\" "
-									"style=\"filled\",fillcolor=\"blue\"]\n\n\t", 
-									node, (node -> value).value_function_definition, node -> type, node -> left, node, node -> parent, node -> right);
+			{
+				fprintf (file_tree, "node_%p [shape=record, label = \"{%ld (", 
+									node, (node -> value).value_function_definition);
+
+				print_symbols_from_str_in_file (tree_dump -> str_with_program + (tree_dump ->name_table -> array_names)[(node -> value).value_function_definition].index_to_name_in_str, 
+				                                                   (tree_dump -> name_table -> array_names)[(node -> value).value_function_definition].len_name, file_tree);
+
+				fprintf (file_tree, ")| type = %d (FUNCTION_DEFINITION) | {left = %p | node = %p | parent = %p | right = %p}}\" "
+									"style=\"filled\",fillcolor=\"#68F10D\"]\n\n\t", 
+									node -> type, node -> left, node, node -> parent, node -> right);
 				break;
+			}
 			
 			case PARAMETERS:
-				fprintf (file_tree, "node_%p [shape=record, label = \"{%lg| {type = %d (PARAMETERS) | left = %p | node = %p | parent = %p | right = %p}}\" "
-									"style=\"filled\",fillcolor=\"blue\"]\n\n\t", 
+				fprintf (file_tree, "node_%p [shape=record, label = \"{%lg| type = %d (PARAMETERS) | {left = %p | node = %p | parent = %p | right = %p}}\" "
+									"style=\"filled\",fillcolor=\"#FF91DA\"]\n\n\t", 
 									node, (node -> value).value_parameters, node -> type, node -> left, node, node -> parent, node -> right);
 				break;
 			
 			case VAR_DECLARATION:
-				fprintf (file_tree, "node_%p [shape=record, label = \"{%ld| {type = %d (VAR_DECLARATION) | left = %p | node = %p | parent = %p | right = %p}}\" "
-									"style=\"filled\",fillcolor=\"blue\"]\n\n\t", 
-									node, (node -> value).value_function_definition, node -> type, node -> left, node, node -> parent, node -> right);
+			{
+				fprintf (file_tree, "node_%p [shape=record, label = \"{%ld (", 
+									node, (node -> value).value_var_declaration);
+								
+				print_symbols_from_str_in_file (tree_dump -> str_with_program + (tree_dump -> name_table -> array_names)[(node -> value).value_var_declaration].index_to_name_in_str, 
+				                                                   (tree_dump -> name_table -> array_names)[(node -> value).value_var_declaration].len_name, file_tree);
+
+				fprintf (file_tree, ")| type = %d (VAR_DECLARATION) | {left = %p | node = %p | parent = %p | right = %p}}\" "
+									"style=\"filled\",fillcolor=\"#B93CDC\"]\n\n\t", 
+									node -> type, node -> left, node, node -> parent, node -> right);
+
 				break;
+			}
 			
 			case CALL:
-				fprintf (file_tree, "node_%p [shape=record, label = \"{%lg| {type = %d (PARAMETERS) | left = %p | node = %p | parent = %p | right = %p}}\" "
-									"style=\"filled\",fillcolor=\"blue\"]\n\n\t", 
+				fprintf (file_tree, "node_%p [shape=record, label = \"{%lg| type = %d (CALL) | {left = %p | node = %p | parent = %p | right = %p}}\" "
+									"style=\"filled\",fillcolor=\"#E33A3A\"]\n\n\t", 
 									node, (node -> value).value_call, node -> type, node -> left, node, node -> parent, node -> right);
 				break;
 
@@ -179,11 +221,25 @@ static front_end_error_t print_edge (node_t* node, FILE* file_tree)
 			fprintf (file_tree, "edge[color=\"black\",fontsize=12]\n\tnode_%p -> node_%p\n\n\t", node -> parent, node);
 		}
 
-		print_edge (node -> left,  file_tree);
-		print_edge (node -> right, file_tree);
-
+		print_edge (node -> left,  file_tree, tree_dump);
+		print_edge (node -> right, file_tree, tree_dump);
 	}
 		
 	return NOT_ERROR;
 }
 
+static front_end_error_t print_symbols_from_str_in_file (char* str, size_t count_of_symbols, FILE* file_tree)
+{
+	assert (str);
+	assert (file_tree);
+
+	//printf ("begin print_symbols_from_str_in_file\n");
+
+	for (size_t index = 0; index < count_of_symbols; index++)
+	{	
+		//printf ("%c", str[index]);
+		fprintf (file_tree, "%c", str[index]);
+	}
+
+	return NOT_ERROR;
+}

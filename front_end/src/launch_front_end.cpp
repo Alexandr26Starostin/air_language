@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <string.h>
 
 #include "const_in_front_end.h"
 #include "list_of_func.h"
@@ -10,6 +11,7 @@
 #include "lexical_analysis.h"
 #include "tree.h"
 #include "recursive_descent.h"
+#include "local_name_table.h"
 #include "launch_front_end.h"
 
 front_end_error_t launch_front_end (int argc, char** argv)
@@ -46,12 +48,14 @@ front_end_error_t launch_front_end (int argc, char** argv)
 
 	dump_name_table (&name_table, str_with_program);
 
+	printf ("len_str_with_program == %ld\n\n", strlen (str_with_program));
+
 	//-------------------------------------------------------------------------
 	/*create tokens*/
 
 	array_of_tokens_t tokens = {};
 
-	status = create_tokens (&tokens, name_table.name_table);
+	status = create_tokens (&tokens);
 	if (status) {return status;}
 
 	dump_array_of_tokens (&tokens);
@@ -77,20 +81,49 @@ front_end_error_t launch_front_end (int argc, char** argv)
 	//node_t* root_node = NULL;
 
 	node_t* root_node = create_node (KEYWORD, OPERATOR, NULL, NULL, NULL);
-	if (root_node == NULL) return NOT_MEMORY_FOR_NEW_NODE;\
+	if (root_node == NULL) return NOT_MEMORY_FOR_NEW_NODE;
 
 	FILE* tree_html = fopen ("tree.html", "w");
 	if (tree_html == NULL) {printf ("Not find tree.html\n"); return NOT_FIND_TREE_HTML;}
 
-	dump_tree (root_node, str_for_system, &index_picture, tree_html);
+	dump_tree_t tree_dump = {};
+
+	tree_dump.index_picture    = index_picture;
+	tree_dump.list_of_func     = &list_of_func;
+	tree_dump.name_table       = &name_table;
+	tree_dump.str_for_system   = str_for_system;
+	tree_dump.str_with_program = str_with_program;
+	tree_dump.tokens           = &tokens;
+	tree_dump.tree_html        = tree_html;
+
+	dump_tree (root_node, &tree_dump);
+
+	//------------------------------------------------------------------------
+	/*list_of_local_name_tables*/
+
+	list_of_local_name_tables_t list_of_local_name_tables = {};
+
+	status = create_list_of_local_name_tables (&list_of_local_name_tables);
+	if (status) {return status;}
+
+	status = add_new_local_name_table_in_list  (&list_of_local_name_tables, GLOBAL_SCOPE);
+	if (status) {return status;}
+
+	dump_list_of_local_name_tables (&list_of_local_name_tables);
 
 	//------------------------------------------------------------------------
 	/*recursive descent*/
 
-	status = recursive_descent (&tokens, root_node);
+	status = recursive_descent (&tokens, &name_table, &list_of_local_name_tables, root_node);
 	if (status) {return status;}
 
-	dump_tree (root_node, str_for_system, &index_picture, tree_html);
+	printf ("\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nrecursive_descent\n\n");
+
+	dump_name_table (&name_table, str_with_program);
+
+	dump_list_of_local_name_tables (&list_of_local_name_tables);
+
+	dump_tree (root_node, &tree_dump);
 
 	//------------------------------------------------------------------------
 	/*write AST, name_table and local name_tables in files*/
