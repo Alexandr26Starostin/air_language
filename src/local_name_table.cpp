@@ -2,18 +2,18 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include "const_in_front_end.h"
+#include "const_language.h"
 #include "local_name_table.h"
 
-static front_end_error_t create_local_name_table           (local_name_table_t* local_name_table, long scope_of_local_name_table);
-static front_end_error_t realloc_list_of_local_name_tables (list_of_local_name_tables_t* list_of_local_name_tables);
-static front_end_error_t realloc_local_name_table          (local_name_table_t* local_name_table);
-static front_end_error_t delete_local_name_table           (local_name_table_t* local_name_table);
-static front_end_error_t dump_local_name_table             (local_name_table_t* local_name_table);
+static language_error_t create_local_name_table           (local_name_table_t* local_name_table, long scope_of_local_name_table);
+static language_error_t realloc_list_of_local_name_tables (list_of_local_name_tables_t* list_of_local_name_tables);
+static language_error_t realloc_local_name_table          (local_name_table_t* local_name_table);
+static language_error_t delete_local_name_table           (local_name_table_t* local_name_table);
+static language_error_t dump_local_name_table             (local_name_table_t* local_name_table);
 
 //------------------------------------------------------------------------------------------------------------------------------------------
 
-front_end_error_t create_list_of_local_name_tables (list_of_local_name_tables_t* list_of_local_name_tables)
+language_error_t create_list_of_local_name_tables (list_of_local_name_tables_t* list_of_local_name_tables)
 {
 	assert (list_of_local_name_tables);
 
@@ -31,7 +31,7 @@ front_end_error_t create_list_of_local_name_tables (list_of_local_name_tables_t*
 	return NOT_ERROR;
 }
 
-front_end_error_t create_local_name_table (local_name_table_t* local_name_table, long scope_of_local_name_table)
+language_error_t create_local_name_table (local_name_table_t* local_name_table, long scope_of_local_name_table)
 {
 	assert (local_name_table);
 
@@ -50,13 +50,13 @@ front_end_error_t create_local_name_table (local_name_table_t* local_name_table,
 	return NOT_ERROR;
 }
 
-front_end_error_t add_new_local_name_table_in_list (list_of_local_name_tables_t* list_of_local_name_tables, long scope_of_local_name_table)
+language_error_t add_new_local_name_table_in_list (list_of_local_name_tables_t* list_of_local_name_tables, long scope_of_local_name_table)
 {
 	assert (list_of_local_name_tables);
 
 	//printf ("%p\n", &((list_of_local_name_tables -> array_of_local_name_table)[list_of_local_name_tables -> free_index_in_list]));
 
-	front_end_error_t status = create_local_name_table (&((list_of_local_name_tables -> array_of_local_name_table)[list_of_local_name_tables -> free_index_in_list]), 
+	language_error_t status = create_local_name_table (&((list_of_local_name_tables -> array_of_local_name_table)[list_of_local_name_tables -> free_index_in_list]), 
 	                                                    scope_of_local_name_table);
 													
 	if (status) {return status;}
@@ -72,7 +72,7 @@ front_end_error_t add_new_local_name_table_in_list (list_of_local_name_tables_t*
 	return NOT_ERROR;
 }
 
-front_end_error_t realloc_list_of_local_name_tables (list_of_local_name_tables_t* list_of_local_name_tables)
+language_error_t realloc_list_of_local_name_tables (list_of_local_name_tables_t* list_of_local_name_tables)
 {
 	assert (list_of_local_name_tables);
 
@@ -91,7 +91,7 @@ front_end_error_t realloc_list_of_local_name_tables (list_of_local_name_tables_t
 	return NOT_ERROR;
 }
 
-front_end_error_t add_new_name_in_local_name_table (list_of_local_name_tables_t* list_of_local_name_tables, long scope_of_local_name_table, size_t index_id_in_name_table, type_id_t type_id)
+language_error_t add_new_name_in_local_name_table (list_of_local_name_tables_t* list_of_local_name_tables, long scope_of_local_name_table, size_t index_id_in_name_table, type_id_t type_id)
 {
 	assert (list_of_local_name_tables);
 
@@ -120,7 +120,7 @@ front_end_error_t add_new_name_in_local_name_table (list_of_local_name_tables_t*
 	return NOT_FIND_LOCAL_NAME_TABLE_WITH_SCOPE;
 }
 
-front_end_error_t realloc_local_name_table (local_name_table_t* local_name_table)
+language_error_t realloc_local_name_table (local_name_table_t* local_name_table)
 {
 	assert (local_name_table);
 
@@ -139,7 +139,7 @@ front_end_error_t realloc_local_name_table (local_name_table_t* local_name_table
 	return NOT_ERROR;
 }
 
-front_end_error_t delete_list_of_local_name_tables (list_of_local_name_tables_t* list_of_local_name_tables)
+language_error_t delete_list_of_local_name_tables (list_of_local_name_tables_t* list_of_local_name_tables)
 {
 	assert (list_of_local_name_tables);
 
@@ -156,7 +156,7 @@ front_end_error_t delete_list_of_local_name_tables (list_of_local_name_tables_t*
 	return NOT_ERROR;
 }
 
-front_end_error_t delete_local_name_table (local_name_table_t* local_name_table)
+language_error_t delete_local_name_table (local_name_table_t* local_name_table)
 {
 	assert (local_name_table);
 
@@ -169,7 +169,7 @@ front_end_error_t delete_local_name_table (local_name_table_t* local_name_table)
 	return NOT_ERROR;
 }
 
-front_end_error_t dump_list_of_local_name_tables (list_of_local_name_tables_t* list_of_local_name_tables)
+language_error_t dump_list_of_local_name_tables (list_of_local_name_tables_t* list_of_local_name_tables)
 {
 	assert (list_of_local_name_tables);
 
@@ -190,7 +190,7 @@ front_end_error_t dump_list_of_local_name_tables (list_of_local_name_tables_t* l
 	return NOT_ERROR;
 }
 
-front_end_error_t dump_local_name_table (local_name_table_t* local_name_table)
+language_error_t dump_local_name_table (local_name_table_t* local_name_table)
 {
 	assert (local_name_table);
 

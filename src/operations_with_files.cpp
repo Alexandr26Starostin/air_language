@@ -3,8 +3,9 @@
 #include <assert.h>
 #include <string.h>
 
-#include "const_in_front_end.h"
+#include "const_language.h"
 #include "name_table.h"
+#include "tree.h"
 #include "operations_with_files.h"
 
 #define PRINT_EXAMPLE_OF_USING_FRONT_END_																			\
@@ -46,38 +47,39 @@
 			return file;																										\
 		}
 
-static size_t            count_len_file                          (FILE* file);
-static front_end_error_t print_node_in_file                      (FILE* file_for_tree, node_t* node);
-static front_end_error_t print_name_table_in_file                (FILE* file_for_table, name_table_t* name_table, char* str_with_program);
-static front_end_error_t print_list_of_local_name_tables_in_file (FILE* file_for_table, list_of_local_name_tables_t* list_of_local_name_tables);
-static front_end_error_t print_local_name_tables_in_file         (FILE* file_for_table, local_name_table_t* local_name_table);
+static size_t           count_len_file                          (FILE* file);
+static language_error_t print_node_in_file                      (FILE* file_for_tree, node_t* node);
+static language_error_t print_name_table_in_file                (FILE* file_for_table, name_table_t* name_table, char* str_with_program);
+static language_error_t print_list_of_local_name_tables_in_file (FILE* file_for_table, list_of_local_name_tables_t* list_of_local_name_tables);
+static language_error_t print_local_name_tables_in_file         (FILE* file_for_table, local_name_table_t* local_name_table);
+static language_error_t skip_spaces                             (char* str_with_tree, size_t* ptr_index_in_str);
 
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
-front_end_error_t read_program_file (int argc, char** argv, char** ptr_str_with_program)
+language_error_t read_file_to_str (int argc, char** argv, char** ptr_str, operation_with_file_t operation_with_file, language_error_t error_of_search)
 {
 	assert (argv);
-	assert (ptr_str_with_program);
+	assert (ptr_str);
 
-	FILE* program_file = find_program_file (argc, argv, FIND_FILE_WITH_PROGRAM);
-	if (program_file == NULL) {return NOT_FIND_FILE_WITH_PROGRAM;}
+	FILE* file = find_program_file (argc, argv, operation_with_file);
+	if (file == NULL) {return error_of_search;}
 
-	size_t len_file = count_len_file (program_file);
+	size_t len_file = count_len_file (file);
 
-	*ptr_str_with_program = (char*) calloc (len_file + 1, sizeof (char));
-	if (*ptr_str_with_program == NULL)
+	*ptr_str = (char*) calloc (len_file + 1, sizeof (char));
+	if (*ptr_str == NULL)
 	{
 		printf ("\n\nError in %s:%d\n"
-		        "not memory for str_with_program\n\n", __FILE__, __LINE__);
+		        "not memory for str\n\n", __FILE__, __LINE__);
 
-		fclose (program_file);
+		fclose (file);
 
-		return NOT_MEMORY_FOR_STR_WITH_PROGRAM;
+		return NOT_MEMORY_FOR_STR;
 	}
 
-	fread (*ptr_str_with_program, sizeof (char), len_file, program_file);
+	fread (*ptr_str, sizeof (char), len_file, file);
 
-	fclose (program_file);
+	fclose (file);
 
 	return NOT_ERROR;
 }
@@ -113,7 +115,7 @@ static size_t count_len_file (FILE* file)
     return count_memory;
 }
 
-front_end_error_t write_tree_in_file (int argc, char** argv, node_t* root_node)
+language_error_t write_tree_in_file (int argc, char** argv, node_t* root_node)
 {
 	assert (argv);
 	assert (root_node);
@@ -128,12 +130,13 @@ front_end_error_t write_tree_in_file (int argc, char** argv, node_t* root_node)
 	return NOT_ERROR;
 }
 
-static front_end_error_t print_node_in_file (FILE* file_for_tree, node_t* node)
+static language_error_t print_node_in_file (FILE* file_for_tree, node_t* node)
 {
 	assert (file_for_tree);
 
 	if (node != NULL && node -> type == KEYWORD && (node -> value).value_keyword == OPERATOR && node -> left == NULL)
 	{
+		fprintf (file_for_tree, "_ ");
 		return NOT_ERROR;
 	}
 
@@ -185,7 +188,7 @@ static front_end_error_t print_node_in_file (FILE* file_for_tree, node_t* node)
 	return NOT_ERROR;
 }
 
-front_end_error_t write_table_in_file (int argc, char** argv, list_of_local_name_tables_t* list_of_local_name_tables, name_table_t* name_table, char* str_with_program)
+language_error_t write_table_in_file (int argc, char** argv, list_of_local_name_tables_t* list_of_local_name_tables, name_table_t* name_table, char* str_with_program)
 {
 	assert (argv);
 	assert (list_of_local_name_tables);
@@ -207,7 +210,7 @@ front_end_error_t write_table_in_file (int argc, char** argv, list_of_local_name
 }
 
 
-static front_end_error_t print_name_table_in_file (FILE* file_for_table, name_table_t* name_table, char* str_with_program)
+static language_error_t print_name_table_in_file (FILE* file_for_table, name_table_t* name_table, char* str_with_program)
 {
 	assert (file_for_table);
 	assert (name_table);
@@ -226,7 +229,7 @@ static front_end_error_t print_name_table_in_file (FILE* file_for_table, name_ta
 	return NOT_ERROR;
 }
 
-static front_end_error_t print_list_of_local_name_tables_in_file (FILE* file_for_table, list_of_local_name_tables_t* list_of_local_name_tables)
+static language_error_t print_list_of_local_name_tables_in_file (FILE* file_for_table, list_of_local_name_tables_t* list_of_local_name_tables)
 {
 	assert (file_for_table);
 	assert (list_of_local_name_tables);
@@ -243,7 +246,7 @@ static front_end_error_t print_list_of_local_name_tables_in_file (FILE* file_for
 	return NOT_ERROR;
 }
 
-static front_end_error_t print_local_name_tables_in_file (FILE* file_for_table, local_name_table_t* local_name_table)
+static language_error_t print_local_name_tables_in_file (FILE* file_for_table, local_name_table_t* local_name_table)
 {
 	assert (file_for_table);
 	assert (local_name_table);
@@ -260,6 +263,156 @@ static front_end_error_t print_local_name_tables_in_file (FILE* file_for_table, 
 	}
 
 	fprintf (file_for_table, "\n\n");
+
+	return NOT_ERROR;
+}
+
+language_error_t create_tree_from_str (char* str_with_tree, node_t** ptr_node, size_t* ptr_index_in_str)
+{
+	assert (str_with_tree);
+	assert (ptr_node);
+	assert (ptr_index_in_str);
+
+	language_error_t status = NOT_ERROR;
+
+	int shift_in_str = 0;
+	
+	skip_spaces (str_with_tree, ptr_index_in_str);
+	if (str_with_tree[*ptr_index_in_str] == '\0') {return ERROR_IN_CREATE_TREE_FROM_STR;}
+
+	if (str_with_tree[*ptr_index_in_str] != '(')
+	{
+		printf ("Error in %s:%d\n'create_tree_from_str' wait '(' in index_str = %ld, but find it: %c\n\n", 
+			__FILE__, __LINE__, *ptr_index_in_str, str_with_tree[*ptr_index_in_str]);
+		return ERROR_IN_CREATE_TREE_FROM_STR;
+	}
+
+	*ptr_index_in_str += 1;  //skip '(' 
+
+	skip_spaces (str_with_tree, ptr_index_in_str);
+	if (str_with_tree[*ptr_index_in_str] == '\0') {return ERROR_IN_CREATE_TREE_FROM_STR;}
+
+	int number_of_type = 0;
+
+	sscanf (str_with_tree + *ptr_index_in_str, "%d%n", &number_of_type, &shift_in_str);
+
+	//printf ("shift_in_str == %d\n", shift_in_str);
+
+	node_type_t type = (node_type_t) number_of_type;
+
+	*ptr_index_in_str += shift_in_str;
+
+	skip_spaces (str_with_tree, ptr_index_in_str);
+	if (str_with_tree[*ptr_index_in_str] == '\0') {return ERROR_IN_CREATE_TREE_FROM_STR;}
+
+	double value_node = 0;
+
+	if (type != PARAMETERS && type != CALL)
+	{
+		sscanf (str_with_tree + *ptr_index_in_str, "%lg%n", &value_node, &shift_in_str);
+
+		//printf ("shift_in_str == %d\n", shift_in_str);
+
+		*ptr_index_in_str += shift_in_str;
+
+		skip_spaces (str_with_tree, ptr_index_in_str);
+		if (str_with_tree[*ptr_index_in_str] == '\0') {return ERROR_IN_CREATE_TREE_FROM_STR;}
+	}
+
+	*ptr_node = create_node (type, value_node, NULL, NULL, NULL);
+	if (*ptr_node == NULL) {printf ("Error in %s:%d", __FILE__, __LINE__); return NOT_MEMORY_FOR_NEW_NODE;}
+
+	//-----------------------------------------------------------------------------------------------------------------
+
+	if (str_with_tree[*ptr_index_in_str] == '(')
+	{
+		status = create_tree_from_str (str_with_tree, &((*ptr_node) -> left), ptr_index_in_str);
+		if (status) {return status;}
+
+		(*ptr_node) -> left -> parent = *ptr_node;
+	}
+
+	else
+	{
+		*ptr_index_in_str += 1;  // skip '_'
+	}
+
+	skip_spaces (str_with_tree, ptr_index_in_str);
+	if (str_with_tree[*ptr_index_in_str] == '\0') {return ERROR_IN_CREATE_TREE_FROM_STR;}
+
+	if (str_with_tree[*ptr_index_in_str] == '(')
+	{
+		status = create_tree_from_str (str_with_tree, &((*ptr_node) -> right), ptr_index_in_str);
+		if (status) {return status;}
+
+		(*ptr_node) -> right -> parent = *ptr_node;
+	}
+
+	else   //str_with_tree[*ptr_index_in_str] == '_'
+	{
+		*ptr_index_in_str += 1;  // skip '_'
+	}
+
+	skip_spaces (str_with_tree, ptr_index_in_str);
+	if (str_with_tree[*ptr_index_in_str] == '\0') {return ERROR_IN_CREATE_TREE_FROM_STR;}
+
+	if (str_with_tree[*ptr_index_in_str] != ')')
+	{
+		printf ("Error in %s:%d\n'create_tree_from_str' wait ')' in index_str = %ld, but find it: %c\n\n", 
+			__FILE__, __LINE__, *ptr_index_in_str, str_with_tree[*ptr_index_in_str]);
+		return ERROR_IN_CREATE_TREE_FROM_STR;
+	}
+
+	*ptr_index_in_str += 1;    //skip ')'
+
+	return NOT_ERROR;
+}
+
+static language_error_t skip_spaces (char* str_with_tree, size_t* ptr_index_in_str)
+{
+	assert (str_with_tree);
+	assert (ptr_index_in_str);
+
+	while (str_with_tree[*ptr_index_in_str] == ' ' || str_with_tree[*ptr_index_in_str] == '\n' || str_with_tree[*ptr_index_in_str] == '\t')
+	{
+		*ptr_index_in_str += 1;
+	}
+
+	return NOT_ERROR;
+}
+
+language_error_t create_table_from_str (char* str_with_table, name_table_t* name_table, size_t* ptr_index_in_str)
+{
+	assert (str_with_table);
+	assert (name_table);
+	assert (ptr_index_in_str);
+
+	language_error_t status = NOT_ERROR;
+
+	char word_from_str[MAX_LEN_WORD_FROM_STR] = "\0";
+
+	size_t quantity_of_names = 0;
+	int    shift_in_str      = 0;
+
+	sscanf (str_with_table + *ptr_index_in_str, "%ld%n", &quantity_of_names, &shift_in_str);
+
+	*ptr_index_in_str += shift_in_str;
+
+	skip_spaces (str_with_table, ptr_index_in_str);
+	if (str_with_table[*ptr_index_in_str] == '\0') {return ERROR_IN_CREATE_TABLE_FROM_STR;}
+
+	for (size_t index_name = 0; index_name < quantity_of_names; index_name++)
+	{
+		sscanf (str_with_table + *ptr_index_in_str, "%s%n", word_from_str, &shift_in_str);
+		
+		status = add_name_in_table (name_table, *ptr_index_in_str, shift_in_str, str_with_table);
+		if (status) {return status;}
+
+		*ptr_index_in_str += shift_in_str;
+
+		skip_spaces (str_with_table, ptr_index_in_str);
+		if (str_with_table[*ptr_index_in_str] == '\0') {return ERROR_IN_CREATE_TABLE_FROM_STR;}
+	}
 
 	return NOT_ERROR;
 }

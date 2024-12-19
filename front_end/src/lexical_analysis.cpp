@@ -3,25 +3,26 @@
 #include <assert.h>
 #include <string.h>
 
+#include "const_language.h"
 #include "const_in_front_end.h"
 #include "list_of_func.h"
 #include "name_table.h"
 #include "tokens.h"
 #include "lexical_analysis.h"
 
-static front_end_error_t skip_symbols  (char* str_with_program, size_t* ptr_index_str);
-static front_end_error_t skip_comments (char* str_with_program, size_t* ptr_index_str);
+static language_error_t skip_symbols  (char* str_with_program, size_t* ptr_index_str);
+static language_error_t skip_comments (char* str_with_program, size_t* ptr_index_str);
 
 //------------------------------------------------------------------------------------
 
-front_end_error_t lexical_analysis (array_of_tokens_t* tokens, name_table_t* name_table, list_of_func_t* list_of_func, char* str_with_program)
+language_error_t lexical_analysis (array_of_tokens_t* tokens, name_table_t* name_table, list_of_func_t* list_of_func, char* str_with_program)
 {
 	assert (tokens);
 	assert (name_table);
 	assert (list_of_func);
 	assert (str_with_program);
 
-	front_end_error_t status                    = NOT_ERROR;
+	language_error_t status                    = NOT_ERROR;
 	int               shift_index_str           = 0;
 	size_t            index_str                 = 0;
 	long              value_of_enum_for_word    = 0;
@@ -99,7 +100,7 @@ front_end_error_t lexical_analysis (array_of_tokens_t* tokens, name_table_t* nam
 	return NOT_ERROR;
 }
 
-static front_end_error_t skip_symbols (char* str_with_program, size_t* ptr_index_str)
+static language_error_t skip_symbols (char* str_with_program, size_t* ptr_index_str)
 {
 	assert (str_with_program);
 	assert (ptr_index_str);
@@ -113,7 +114,7 @@ static front_end_error_t skip_symbols (char* str_with_program, size_t* ptr_index
 	return NOT_ERROR;
 }
 
-static front_end_error_t skip_comments (char* str_with_program, size_t* ptr_index_str)
+static language_error_t skip_comments (char* str_with_program, size_t* ptr_index_str)
 {
 	assert (str_with_program);
 	assert (ptr_index_str);

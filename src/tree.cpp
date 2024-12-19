@@ -3,12 +3,12 @@
 #include <assert.h>
 #include <math.h>
 
-#include "const_in_front_end.h"
+#include "const_language.h"
 #include "list_of_func.h"
 #include "tree.h"
 
-static front_end_error_t print_edge                     (node_t* node, FILE* file_tree, dump_tree_t* tree_dump);
-static front_end_error_t print_symbols_from_str_in_file (char* str, size_t count_of_symbols, FILE* file_tree);
+static language_error_t print_edge                     (node_t* node, FILE* file_tree, dump_tree_t* tree_dump);
+static language_error_t print_symbols_from_str_in_file (char* str, size_t count_of_symbols, FILE* file_tree);
 
 //---------------------------------------------------------------------------------------------------------------------------
 
@@ -65,7 +65,7 @@ node_t* create_node (node_type_t type, double value, node_t* left, node_t* right
 	return new_node;
 }
 
-front_end_error_t delete_node (node_t* node)
+language_error_t delete_node (node_t* node)
 {
 	if (node != NULL)
 	{
@@ -78,7 +78,7 @@ front_end_error_t delete_node (node_t* node)
 	return NOT_ERROR;
 }
 
-front_end_error_t dump_tree (node_t* node, dump_tree_t* tree_dump)
+language_error_t dump_tree (node_t* node, dump_tree_t* tree_dump)
 {
 	assert (node);
 	assert (tree_dump);
@@ -121,7 +121,7 @@ front_end_error_t dump_tree (node_t* node, dump_tree_t* tree_dump)
 	return NOT_ERROR;
 }
 
-static front_end_error_t print_edge (node_t* node, FILE* file_tree, dump_tree_t* tree_dump)
+static language_error_t print_edge (node_t* node, FILE* file_tree, dump_tree_t* tree_dump)
 {
 	assert (file_tree);
 	assert (tree_dump);
@@ -228,7 +228,7 @@ static front_end_error_t print_edge (node_t* node, FILE* file_tree, dump_tree_t*
 	return NOT_ERROR;
 }
 
-static front_end_error_t print_symbols_from_str_in_file (char* str, size_t count_of_symbols, FILE* file_tree)
+static language_error_t print_symbols_from_str_in_file (char* str, size_t count_of_symbols, FILE* file_tree)
 {
 	assert (str);
 	assert (file_tree);

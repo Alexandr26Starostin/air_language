@@ -3,15 +3,15 @@
 #include <assert.h>
 #include <string.h>
 
-#include "const_in_front_end.h"
+#include "const_language.h"
 #include "name_table.h"
 
-static front_end_error_t realloc_name_table (name_table_t* name_table);
+static language_error_t realloc_name_table (name_table_t* name_table);
 static size_t            max_len            (size_t len_1, size_t len_2);
 
 //-------------------------------------------------------------------------------------------------------------------------------------------
 
-front_end_error_t create_name_table (name_table_t* name_table)
+language_error_t create_name_table (name_table_t* name_table)
 {
 	assert (name_table);
 
@@ -29,7 +29,7 @@ front_end_error_t create_name_table (name_table_t* name_table)
 	return NOT_ERROR;
 }
 
-front_end_error_t delete_name_table (name_table_t* name_table)
+language_error_t delete_name_table (name_table_t* name_table)
 {
 	assert (name_table);
 
@@ -41,7 +41,7 @@ front_end_error_t delete_name_table (name_table_t* name_table)
 	return NOT_ERROR;
 }
 
-front_end_error_t add_name_in_table (name_table_t* name_table, size_t index_to_name_in_str, size_t len_name, char* str_with_program)
+language_error_t add_name_in_table (name_table_t* name_table, size_t index_to_name_in_str, size_t len_name, char* str_with_program)
 {
 	assert (name_table);
 	assert (str_with_program);
@@ -59,7 +59,7 @@ front_end_error_t add_name_in_table (name_table_t* name_table, size_t index_to_n
 
 		if (name_table -> free_index >= name_table -> size_of_name_table)
 		{
-			front_end_error_t status = realloc_name_table (name_table);
+			language_error_t status = realloc_name_table (name_table);
 			if (status) {return status;}
 		}
 	}
@@ -67,7 +67,7 @@ front_end_error_t add_name_in_table (name_table_t* name_table, size_t index_to_n
 	return NOT_ERROR;
 }
 
-static front_end_error_t realloc_name_table (name_table_t* name_table)
+static language_error_t realloc_name_table (name_table_t* name_table)
 {
 	assert (name_table);
 
@@ -103,7 +103,7 @@ size_t find_position_name (name_table_t* name_table, size_t find_index, size_t l
 	return index;   //index == name_table -> free_index
 }
 
-front_end_error_t dump_name_table   (name_table_t* name_table, char* str_with_program)
+language_error_t dump_name_table   (name_table_t* name_table, char* str_with_program)
 {
 	assert (name_table); 
 
@@ -149,7 +149,7 @@ front_end_error_t dump_name_table   (name_table_t* name_table, char* str_with_pr
 	return NOT_ERROR;
 }
 
-front_end_error_t print_symbols_from_str (char* str, size_t count_of_symbols)
+language_error_t print_symbols_from_str (char* str, size_t count_of_symbols)
 {
 	assert (str);
 
@@ -169,7 +169,7 @@ static size_t max_len (size_t len_1, size_t len_2)
 	return len_2;
 }
 
-front_end_error_t print_symbols_from_str_in_file (FILE* file, char* str, size_t count_of_symbols)
+language_error_t print_symbols_from_str_in_file (FILE* file, char* str, size_t count_of_symbols)
 {
 	assert (str);
 	assert (file);

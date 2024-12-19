@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <string.h>
 
+#include "const_language.h"
 #include "const_in_front_end.h"
 #include "list_of_func.h"
 #include "operations_with_files.h"
@@ -14,7 +15,7 @@
 #include "local_name_table.h"
 #include "launch_front_end.h"
 
-front_end_error_t launch_front_end (int argc, char** argv)
+language_error_t launch_front_end (int argc, char** argv)
 {
 	assert (argv);
 
@@ -23,7 +24,7 @@ front_end_error_t launch_front_end (int argc, char** argv)
 
 	list_of_func_t list_of_func = {};
 
-	front_end_error_t status = create_list_of_func (&list_of_func);
+	language_error_t status = create_list_of_func (&list_of_func);
 	if (status) {return status;}
 	
 	dump_list_of_func (&list_of_func);
@@ -33,10 +34,12 @@ front_end_error_t launch_front_end (int argc, char** argv)
 
 	char* str_with_program = NULL;
 
-	status = read_program_file (argc, argv, &str_with_program);
+	status = read_file_to_str (argc, argv, &str_with_program, FIND_FILE_WITH_PROGRAM, NOT_FIND_FILE_WITH_PROGRAM);
 	if (status) {return status;}
 
 	printf ("%s\n", str_with_program);
+
+	//printf ("len_str_with_program == %ld\n\n", strlen (str_with_program));
 
 	//-------------------------------------------------------------------------
 	/*create name_table*/
@@ -47,8 +50,6 @@ front_end_error_t launch_front_end (int argc, char** argv)
 	if (status) {return status;}
 
 	dump_name_table (&name_table, str_with_program);
-
-	printf ("len_str_with_program == %ld\n\n", strlen (str_with_program));
 
 	//-------------------------------------------------------------------------
 	/*create tokens*/
@@ -93,7 +94,6 @@ front_end_error_t launch_front_end (int argc, char** argv)
 	tree_dump.name_table       = &name_table;
 	tree_dump.str_for_system   = str_for_system;
 	tree_dump.str_with_program = str_with_program;
-	tree_dump.tokens           = &tokens;
 	tree_dump.tree_html        = tree_html;
 
 	dump_tree (root_node, &tree_dump);

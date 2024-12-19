@@ -2,15 +2,15 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include "const_in_front_end.h"
+#include "const_language.h"
 #include "name_table.h"
 #include "tokens.h"
 
-static front_end_error_t realloc_array_of_tokens (array_of_tokens_t* tokens);
+static language_error_t realloc_array_of_tokens (array_of_tokens_t* tokens);
 
 //----------------------------------------------------------------------------------------------------
 
-front_end_error_t create_tokens (array_of_tokens_t* tokens)
+language_error_t create_tokens (array_of_tokens_t* tokens)
 {
 	assert (tokens);
 
@@ -28,7 +28,7 @@ front_end_error_t create_tokens (array_of_tokens_t* tokens)
 	return NOT_ERROR;
 }
 
-front_end_error_t delete_tokens (array_of_tokens_t* tokens)
+language_error_t delete_tokens (array_of_tokens_t* tokens)
 {
 	assert (tokens);
 	
@@ -40,7 +40,7 @@ front_end_error_t delete_tokens (array_of_tokens_t* tokens)
 	return NOT_ERROR;
 }
 
-front_end_error_t add_token_in_array_of_tokens (array_of_tokens_t* tokens, token_type_t type, double value)
+language_error_t add_token_in_array_of_tokens (array_of_tokens_t* tokens, token_type_t type, double value)
 {
 	assert (tokens);
 
@@ -73,14 +73,14 @@ front_end_error_t add_token_in_array_of_tokens (array_of_tokens_t* tokens, token
 
 	if (tokens -> index_free >= tokens -> size_of_array)
 	{
-		front_end_error_t status = realloc_array_of_tokens (tokens);
+		language_error_t status = realloc_array_of_tokens (tokens);
 		if (status) {return status;}
 	}
 
 	return NOT_ERROR;
 }
 
-static front_end_error_t realloc_array_of_tokens (array_of_tokens_t* tokens)
+static language_error_t realloc_array_of_tokens (array_of_tokens_t* tokens)
 {
 	assert (tokens);
 
@@ -97,7 +97,7 @@ static front_end_error_t realloc_array_of_tokens (array_of_tokens_t* tokens)
 	return NOT_ERROR;
 }
 
-front_end_error_t dump_array_of_tokens (array_of_tokens_t* tokens)
+language_error_t dump_array_of_tokens (array_of_tokens_t* tokens)
 {
 	assert (tokens);
 

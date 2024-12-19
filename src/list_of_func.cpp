@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <string.h>
 
-#include "const_in_front_end.h"
+#include "const_language.h"
 #include "list_of_func.h"
 
 #define FILL_LIST_OF_FUNC_(value_code_func, str_with_name_func)                                         \
@@ -14,12 +14,12 @@
 		break;                                                                                          \
 	} 
 
-static front_end_error_t fill_list_of_func    (list_of_func_t* list_of_func);
-static front_end_error_t realloc_list_of_func (list_of_func_t* list_of_func);
+static language_error_t fill_list_of_func    (list_of_func_t* list_of_func);
+static language_error_t realloc_list_of_func (list_of_func_t* list_of_func);
 
 //---------------------------------------------------------------------------------------------------------------------------------
 
-front_end_error_t create_list_of_func (list_of_func_t* list_of_func)
+language_error_t create_list_of_func (list_of_func_t* list_of_func)
 {
 	assert (list_of_func);
 
@@ -34,12 +34,12 @@ front_end_error_t create_list_of_func (list_of_func_t* list_of_func)
 	list_of_func -> free_index   = 0;
 	list_of_func -> size_of_list = SIZE_LIST_OF_FUNC;
 
-	front_end_error_t status = fill_list_of_func (list_of_func);
+	language_error_t status = fill_list_of_func (list_of_func);
 
 	return status;
 }
 
-front_end_error_t delete_list_of_func (list_of_func_t* list_of_func)
+language_error_t delete_list_of_func (list_of_func_t* list_of_func)
 {
 	assert (list_of_func);
 
@@ -51,11 +51,11 @@ front_end_error_t delete_list_of_func (list_of_func_t* list_of_func)
 	return NOT_ERROR;
 }
 
-static front_end_error_t fill_list_of_func (list_of_func_t* list_of_func)
+static language_error_t fill_list_of_func (list_of_func_t* list_of_func)
 {
 	assert (list_of_func);
 
-	front_end_error_t status = NOT_ERROR;
+	language_error_t status = NOT_ERROR;
 
 	size_t value_of_enum = 0;
 
@@ -122,7 +122,7 @@ static front_end_error_t fill_list_of_func (list_of_func_t* list_of_func)
 	return NOT_ERROR;
 }
 
-static front_end_error_t realloc_list_of_func (list_of_func_t* list_of_func)
+static language_error_t realloc_list_of_func (list_of_func_t* list_of_func)
 {
 	assert (list_of_func);
 
@@ -139,7 +139,7 @@ static front_end_error_t realloc_list_of_func (list_of_func_t* list_of_func)
 	return NOT_ERROR;
 }
 
-front_end_error_t dump_list_of_func (list_of_func_t* list_of_func)
+language_error_t dump_list_of_func (list_of_func_t* list_of_func)
 {
 	assert (list_of_func);
 
@@ -178,7 +178,7 @@ long find_word_in_list_of_func (list_of_func_t* list_of_func, char* find_word)
 	return WORD_IS_NOT_FUNC;
 }
 
-front_end_error_t print_name_func_in_file_by_code (FILE* file, list_of_func_t* list_of_func, base_func_t code_find_func)
+language_error_t print_name_func_in_file_by_code (FILE* file, list_of_func_t* list_of_func, base_func_t code_find_func)
 {
 	assert (list_of_func);
 	assert (file);

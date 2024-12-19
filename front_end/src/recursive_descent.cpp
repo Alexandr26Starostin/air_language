@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
+#include "const_language.h"
 #include "const_in_front_end.h"
 #include "operations_with_files.h"
 #include "name_table.h"
@@ -10,34 +11,34 @@
 #include "local_name_table.h"
 #include "recursive_descent.h"
 
-static front_end_error_t get_grammar                   (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_operation                 (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node, print_error_in_get_operation_t status_print_error);        
-static front_end_error_t get_assign                    (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_var_declaration           (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_if                        (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_while                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_printf                    (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_scanf                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_interruption              (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_empty_operation           (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_definition_func           (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_return                    (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_logical                   (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_and                       (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_not                       (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_or                        (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_parameters_for_definition (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_parameters_for_call       (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_expression                (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_term                      (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_power                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_base_func                 (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_round                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_element                   (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_constant                  (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static front_end_error_t get_variable                  (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node, check_declaration_t status_check_declaration);       
-static front_end_error_t get_call_func                 (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);    
-static front_end_error_t delete_local_scope_after_func (syntactic_parameters_t* syntactic_parameters);
+static language_error_t get_grammar                   (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_operation                 (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node, print_error_in_get_operation_t status_print_error);        
+static language_error_t get_assign                    (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_var_declaration           (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_if                        (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_while                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_printf                    (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_scanf                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_interruption              (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_empty_operation           (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_definition_func           (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_return                    (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_logical                   (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_and                       (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_not                       (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_or                        (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_parameters_for_definition (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_parameters_for_call       (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_expression                (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_term                      (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_power                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_base_func                 (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_round                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_element                   (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_constant                  (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
+static language_error_t get_variable                  (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node, check_declaration_t status_check_declaration);       
+static language_error_t get_call_func                 (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);    
+static language_error_t delete_local_scope_after_func (syntactic_parameters_t* syntactic_parameters);
 
 // #define error_massage_(...) do{ 								
 // 	fprintf (stderr, "Error in %s:%d\n\n", __FILE__, __LINE__);	
@@ -109,7 +110,7 @@ static front_end_error_t delete_local_scope_after_func (syntactic_parameters_t* 
 
 //--------------------------------------------------------------------------------
 
-front_end_error_t recursive_descent (array_of_tokens_t* tokens, name_table_t* name_table, list_of_local_name_tables_t* list_of_local_name_tables, node_t* root_node)
+language_error_t recursive_descent (array_of_tokens_t* tokens, name_table_t* name_table, list_of_local_name_tables_t* list_of_local_name_tables, node_t* root_node)
 {
 	assert (tokens);
 	assert (root_node);
@@ -124,16 +125,16 @@ front_end_error_t recursive_descent (array_of_tokens_t* tokens, name_table_t* na
 	syntactic_parameters.array_names               = name_table -> array_names;
 	syntactic_parameters.list_of_local_name_tables = list_of_local_name_tables;
 
-	front_end_error_t status = get_grammar (&syntactic_parameters, &root_node);
+	language_error_t status = get_grammar (&syntactic_parameters, &root_node);
 
 	return status;
 }
 
-static front_end_error_t get_grammar (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_grammar (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_ 
 
-	front_end_error_t status = NOT_ERROR;
+	language_error_t status = NOT_ERROR;
 
 	node_t* grammar_node = *ptr_node;
 
@@ -160,11 +161,11 @@ static front_end_error_t get_grammar (syntactic_parameters_t* syntactic_paramete
 	return status;
 }                
 
-static front_end_error_t get_operation (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node, print_error_in_get_operation_t status_print_error)
+static language_error_t get_operation (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node, print_error_in_get_operation_t status_print_error)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_ 
 
-	front_end_error_t status         = NOT_ERROR;
+	language_error_t status         = NOT_ERROR;
 	size_t            old_index      = syntactic_parameters -> index_token;
 	node_t*           operation_node = NULL;
 
@@ -192,13 +193,13 @@ static front_end_error_t get_operation (syntactic_parameters_t* syntactic_parame
 	return ERROR_IN_GET_OPERATION;
 }
 
-static front_end_error_t get_assign (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_assign (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_ 
 
 	node_t*           expression_node = NULL;
 	node_t*           variable_node   = NULL;
-	front_end_error_t status          = NOT_ERROR;
+	language_error_t status          = NOT_ERROR;
 
 	if ( check_token_type_(0, OP) && 
 		 check_op_value_(0, INT)  && 
@@ -260,11 +261,11 @@ static front_end_error_t get_assign (syntactic_parameters_t* syntactic_parameter
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_var_declaration (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_var_declaration (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_ 
 
-	front_end_error_t status   = NOT_ERROR;
+	language_error_t status   = NOT_ERROR;
 	node_t*           var_node = NULL;
 
 	if (! check_token_type_(1, ID))
@@ -351,11 +352,11 @@ static front_end_error_t get_var_declaration (syntactic_parameters_t* syntactic_
 	}
 }
 
-static front_end_error_t get_expression (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_expression (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_ 
 
-	front_end_error_t status          = NOT_ERROR;
+	language_error_t status          = NOT_ERROR;
 	node_t*           term_node       = NULL;
 	size_t            old_index_token = 0;
 
@@ -379,11 +380,11 @@ static front_end_error_t get_expression (syntactic_parameters_t* syntactic_param
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_term (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_term (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_ 
 
-	front_end_error_t status          = NOT_ERROR;
+	language_error_t status          = NOT_ERROR;
 	node_t*           power_node      = NULL;
 	size_t            old_index_token = 0;
 
@@ -406,11 +407,11 @@ static front_end_error_t get_term (syntactic_parameters_t* syntactic_parameters,
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_power (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_power (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_ 
 
-	front_end_error_t status         = NOT_ERROR;
+	language_error_t status         = NOT_ERROR;
 	node_t*           base_func_node = NULL;
 
 	status = get_base_func (syntactic_parameters, ptr_node);
@@ -430,11 +431,11 @@ static front_end_error_t get_power (syntactic_parameters_t* syntactic_parameters
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_base_func (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_base_func (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_ 
 
-	front_end_error_t status     = NOT_ERROR;
+	language_error_t status     = NOT_ERROR;
 	node_t*           round_node = NULL;
 
 	if (check_token_type_(0, OP))
@@ -468,11 +469,11 @@ static front_end_error_t get_base_func (syntactic_parameters_t* syntactic_parame
 	return get_round (syntactic_parameters, ptr_node);  
 }
 
-static front_end_error_t get_round (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_round (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_ 
 
-	front_end_error_t status = NOT_ERROR;
+	language_error_t status = NOT_ERROR;
 
 	if (check_token_type_(0, OP) && check_op_value_(0, ROUND_BEGIN))
 	{
@@ -497,7 +498,7 @@ static front_end_error_t get_round (syntactic_parameters_t* syntactic_parameters
 	return get_element (syntactic_parameters, ptr_node);
 }
 
-static front_end_error_t get_element (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_element (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_ 
 
@@ -514,7 +515,7 @@ static front_end_error_t get_element (syntactic_parameters_t* syntactic_paramete
 	return ERROR_IN_GET_ELEMENT;
 }
 
-static front_end_error_t get_constant (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_constant (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_ 
 
@@ -526,7 +527,7 @@ static front_end_error_t get_constant (syntactic_parameters_t* syntactic_paramet
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_variable (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node, check_declaration_t status_check_declaration)
+static language_error_t get_variable (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node, check_declaration_t status_check_declaration)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_ 
 
@@ -549,11 +550,11 @@ static front_end_error_t get_variable (syntactic_parameters_t* syntactic_paramet
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_logical (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_logical (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_ 
 
-	front_end_error_t status          = NOT_ERROR;
+	language_error_t status          = NOT_ERROR;
 	node_t*           or_node         = NULL;
 	size_t            old_index_token = 0;
 
@@ -605,11 +606,11 @@ static front_end_error_t get_logical (syntactic_parameters_t* syntactic_paramete
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_or (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_or (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_ 
 
-	front_end_error_t status          = NOT_ERROR;
+	language_error_t status          = NOT_ERROR;
 	node_t*           and_node        = NULL;
 	size_t            old_index_token = 0;
 
@@ -632,11 +633,11 @@ static front_end_error_t get_or (syntactic_parameters_t* syntactic_parameters, n
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_and (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_and (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_ 
 
-	front_end_error_t status          = NOT_ERROR;
+	language_error_t status          = NOT_ERROR;
 	node_t*           not_node        = NULL;
 	size_t            old_index_token = 0;
 
@@ -659,11 +660,11 @@ static front_end_error_t get_and (syntactic_parameters_t* syntactic_parameters, 
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_not (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_not (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_ 
 
-	front_end_error_t status = NOT_ERROR;
+	language_error_t status = NOT_ERROR;
 
 	if (check_token_type_(0, OP) && check_op_value_(0, NOT))
 	{
@@ -679,11 +680,11 @@ static front_end_error_t get_not (syntactic_parameters_t* syntactic_parameters, 
 	return get_expression (syntactic_parameters, ptr_node);
 }
 
-static front_end_error_t get_if (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_if (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_
 
-	front_end_error_t status       = NOT_ERROR;
+	language_error_t status       = NOT_ERROR;
 	node_t*           logical_node = NULL;
 
 	node_t* operation_node = keyword_node_(OPERATOR, NULL, NULL);
@@ -735,7 +736,7 @@ static front_end_error_t get_if (syntactic_parameters_t* syntactic_parameters, n
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_empty_operation (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_empty_operation (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_
 
@@ -750,11 +751,11 @@ static front_end_error_t get_empty_operation (syntactic_parameters_t* syntactic_
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_while (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_while (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_
 
-	front_end_error_t status         = NOT_ERROR;
+	language_error_t status         = NOT_ERROR;
 	node_t*           logical_node   = NULL;
 
 	node_t* operation_node = keyword_node_(OPERATOR, NULL, NULL);
@@ -812,7 +813,7 @@ static front_end_error_t get_while (syntactic_parameters_t* syntactic_parameters
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_interruption (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_interruption (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_
 
@@ -858,11 +859,11 @@ static front_end_error_t get_interruption (syntactic_parameters_t* syntactic_par
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_printf (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_printf (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_
 
-	front_end_error_t status          = NOT_ERROR;
+	language_error_t status          = NOT_ERROR;
 	node_t*           expression_node = NULL;
 
 	if (! (check_token_type_(0, OP) && check_op_value_(0, PRINTF)))
@@ -881,11 +882,11 @@ static front_end_error_t get_printf (syntactic_parameters_t* syntactic_parameter
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_scanf (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_scanf (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_
 
-	front_end_error_t status        = NOT_ERROR;
+	language_error_t status        = NOT_ERROR;
 	node_t*           variable_node = NULL;
 
 	if (! (check_token_type_(0, OP) && check_op_value_(0, SCANF)))
@@ -904,11 +905,11 @@ static front_end_error_t get_scanf (syntactic_parameters_t* syntactic_parameters
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_definition_func (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_definition_func (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_
 
-	front_end_error_t status = NOT_ERROR;
+	language_error_t status = NOT_ERROR;
 	
 	node_t* parameters_node = NULL;
 
@@ -1034,11 +1035,11 @@ static front_end_error_t get_definition_func (syntactic_parameters_t* syntactic_
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_parameters_for_definition (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_parameters_for_definition (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_
 
-	front_end_error_t status = NOT_ERROR;
+	language_error_t status = NOT_ERROR;
 
 	*ptr_node = keyword_node_(COMMA, NULL, NULL);
 	if (*ptr_node == NULL) {error_massage_; return NOT_MEMORY_FOR_NEW_NODE;}
@@ -1175,7 +1176,7 @@ static front_end_error_t get_parameters_for_definition (syntactic_parameters_t* 
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_return (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_return (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_
 
@@ -1186,7 +1187,7 @@ static front_end_error_t get_return (syntactic_parameters_t* syntactic_parameter
 
 	syntactic_parameters -> index_token += 1;  //пропуск return
 
-	front_end_error_t status          = NOT_ERROR;
+	language_error_t status          = NOT_ERROR;
 	node_t*           expression_node = NULL;
 
 	status = get_expression (syntactic_parameters, &expression_node);
@@ -1211,14 +1212,14 @@ static front_end_error_t get_return (syntactic_parameters_t* syntactic_parameter
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_call_func (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_call_func (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_
 
 	size_t index_id_in_name_table = token_value_id_(0);
 
 	node_t*           parameters_node = NULL;
-	front_end_error_t status          = NOT_ERROR;
+	language_error_t status          = NOT_ERROR;
 
 	if ((syntactic_parameters -> array_names)[index_id_in_name_table].status == NOT_DEFINITE)
 	{
@@ -1253,7 +1254,7 @@ static front_end_error_t get_call_func (syntactic_parameters_t* syntactic_parame
 	return NOT_ERROR;
 }
 
-static front_end_error_t get_parameters_for_call (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
+static language_error_t get_parameters_for_call (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_
 
@@ -1268,7 +1269,7 @@ static front_end_error_t get_parameters_for_call (syntactic_parameters_t* syntac
 	}
 
 	node_t*           expression_node = NULL;
-	front_end_error_t status          = NOT_ERROR;
+	language_error_t status          = NOT_ERROR;
 
 	status = get_expression (syntactic_parameters, &expression_node);
 	if (status) {return status;}
@@ -1306,7 +1307,7 @@ static front_end_error_t get_parameters_for_call (syntactic_parameters_t* syntac
 	return NOT_ERROR;
 }
 
-static front_end_error_t delete_local_scope_after_func (syntactic_parameters_t* syntactic_parameters)
+static language_error_t delete_local_scope_after_func (syntactic_parameters_t* syntactic_parameters)
 {
 	assert (syntactic_parameters);
 
