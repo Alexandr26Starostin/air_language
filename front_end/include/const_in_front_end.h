@@ -9,7 +9,6 @@ enum front_end_error_t
 	NOT_ERROR 				                 		 = 0,
 	NOT_MEMORY_FOR_LIST_OF_FUNC              		 = 1,
 	NOT_MEMORY_FOR_REALLOC_LIST_OF_FUNC      		 = 2,
-	NOT_FIND_FILE_WITH_PROGRAM               		 = 3,
 	NOT_MEMORY_FOR_STR_WITH_PROGRAM          		 = 4,
 	NOT_MEMORY_FOR_NAME_TABLE                		 = 5,
 	NOT_MEMORY_FOR_REALLOC_NAME_TABLE        		 = 6,
@@ -23,6 +22,11 @@ enum front_end_error_t
 	NOT_MEMORY_FOR_REALLOC_ARRAY_OF_LOCAL_NAME_TABLE = 14,
 	NOT_MEMORY_FOR_REALLOC_ARRAY_OF_LOCAL_NAMES      = 15,
 	NOT_FIND_LOCAL_NAME_TABLE_WITH_SCOPE             = 16,
+	NOT_FIND_FILE_WITH_PROGRAM               		 = 3,
+	NOT_FIND_FILE_WITH_TREE    					     = 17,   
+	NOT_FIND_FILE_WITH_TABLE                         = 18,   
+	NOT_FIND_FILE_FOR_TREE                           = 19,   
+	NOT_FIND_FILE_FOR_TABLE                          = 20,   
 
 	ERROR_IN_GET_GRAMMAR                   = 30,
 	ERROR_IN_GET_OPERATION                 = 31,
@@ -156,7 +160,14 @@ struct list_of_func_t
 //---------------------------------------------------------------------------------------
 /*operations_with_files*/
 
-const int POSITION_NAME_FILE_IN_ARGV = 1;
+enum operation_with_file_t
+{
+	FIND_FILE_WITH_PROGRAM = 0,   // -read_program
+	FIND_FILE_WITH_TREE    = 1,   // -read_tree
+	FIND_FILE_WITH_TABLE   = 2,   // -read_table
+	FIND_FILE_FOR_TREE     = 3,   // -write_tree
+	FIND_FILE_FOR_TABLE    = 4    // -write_table
+};
 
 //---------------------------------------------------------------------------------------
 /*name_table*/

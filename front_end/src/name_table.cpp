@@ -168,3 +168,17 @@ static size_t max_len (size_t len_1, size_t len_2)
 
 	return len_2;
 }
+
+front_end_error_t print_symbols_from_str_in_file (FILE* file, char* str, size_t count_of_symbols)
+{
+	assert (str);
+	assert (file);
+
+	for (size_t index = 0; index < count_of_symbols; index++)
+	{
+		fprintf (file, "%c", str[index]);
+	}
+	fprintf (file, "\n");
+
+	return NOT_ERROR;
+}

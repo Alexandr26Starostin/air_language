@@ -128,13 +128,20 @@ front_end_error_t launch_front_end (int argc, char** argv)
 	//------------------------------------------------------------------------
 	/*write AST, name_table and local name_tables in files*/
 
+	status = write_tree_in_file (argc, argv, root_node);
+	if (status) {return status;}
+
+	status = write_table_in_file (argc, argv, &list_of_local_name_tables, &name_table, str_with_program);
+	if (status) {return status;}
+
 	//-------------------------------------------------------------------------
 	/*free memory*/
 
-	delete_tokens 	    (&tokens);
-	delete_name_table   (&name_table);
-	delete_list_of_func (&list_of_func);
-	delete_node         (root_node);
+	delete_tokens 	                 (&tokens);
+	delete_name_table                (&name_table);
+	delete_list_of_func              (&list_of_func);
+	delete_node                      (root_node);
+	delete_list_of_local_name_tables (&list_of_local_name_tables);
 
 	free (str_with_program);
 
