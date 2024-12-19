@@ -299,10 +299,10 @@ static front_end_error_t get_var_declaration (syntactic_parameters_t* syntactic_
 	else
 		(syntactic_parameters -> array_names)[index_id_in_name_table].status = DEFINITE_IN_FUNC;
 
-	if ((syntactic_parameters -> array_names)[index_id_in_name_table].type == NAME_FUNC)
+	if ((syntactic_parameters -> array_names)[index_id_in_name_table].type != UNKNOW_TYPE)
 	{
 		error_massage_
-		printf ("Error from 'get_var_declaration': type_id == %d (NAME_FUNC) (index_id in name_table == %ld) in position in tokens == %ld\n\n", 
+		printf ("Error from 'get_var_declaration': type_id == %d (!= UNKNOW_TYPE) (index_id in name_table == %ld) in position in tokens == %ld\n\n", 
 				(syntactic_parameters -> array_names)[index_id_in_name_table].type, index_id_in_name_table, syntactic_parameters -> index_token + 1);
 
 		return ERROR_IN_GET_VAR_DECLARATION;
