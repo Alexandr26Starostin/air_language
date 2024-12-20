@@ -6,6 +6,7 @@
 #include "const_language.h"
 #include "name_table.h"
 #include "tree.h"
+#include "local_name_table.h"
 #include "operations_with_files.h"
 
 #define PRINT_EXAMPLE_OF_USING_FRONT_END_																			\
@@ -53,6 +54,8 @@ static language_error_t print_name_table_in_file                (FILE* file_for_
 static language_error_t print_list_of_local_name_tables_in_file (FILE* file_for_table, list_of_local_name_tables_t* list_of_local_name_tables);
 static language_error_t print_local_name_tables_in_file         (FILE* file_for_table, local_name_table_t* local_name_table);
 static language_error_t skip_spaces                             (char* str_with_tree, size_t* ptr_index_in_str);
+static language_error_t create_local_table_from_str             (char*   str_with_table, list_of_local_name_tables_t* list_of_local_name_tables, 
+                                                                 size_t* ptr_index_in_str, size_t quantity_of_id, long scope);
 
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -97,6 +100,7 @@ FILE* find_program_file (int argc, char** argv, operation_with_file_t operation_
 		FIND_FILE_(FIND_FILE_WITH_TABLE,   "-read_table",   "r");
 		FIND_FILE_(FIND_FILE_FOR_TREE,     "-write_tree",   "w");
 		FIND_FILE_(FIND_FILE_FOR_TABLE,    "-write_table",  "w");
+		FIND_FILE_(FIND_FILE_FOR_ASM,      "-write_asm",    "w");
 		
 		default:
 			PRINT_EXAMPLE_OF_USING_FRONT_END_;
@@ -412,6 +416,89 @@ language_error_t create_table_from_str (char* str_with_table, name_table_t* name
 
 		skip_spaces (str_with_table, ptr_index_in_str);
 		if (str_with_table[*ptr_index_in_str] == '\0') {return ERROR_IN_CREATE_TABLE_FROM_STR;}
+	}
+
+	return NOT_ERROR;
+}
+
+language_error_t create_list_of_local_tables_from_str (char* str_with_table, list_of_local_name_tables_t* list_of_local_name_tables, size_t* ptr_index_in_str)
+{
+	assert (str_with_table);
+	assert (list_of_local_name_tables);
+	assert (ptr_index_in_str);
+
+	language_error_t status = NOT_ERROR;
+
+	size_t quantity_of_scopes = 0;
+	int    shift_in_str       = 0;
+	size_t quantity_of_id     = 0;
+	long   scope              = 0;
+
+	sscanf (str_with_table + *ptr_index_in_str, "%ld%n", &quantity_of_scopes, &shift_in_str);
+	*ptr_index_in_str += shift_in_str;
+
+	skip_spaces (str_with_table, ptr_index_in_str);
+	if (str_with_table[*ptr_index_in_str] == '\0') {return ERROR_IN_CREATE_LIST_OF_LOCAL_TABLES_FROM_STR;}
+
+	for (size_t index_scope = 0; index_scope < quantity_of_scopes; index_scope++)
+	{
+		sscanf (str_with_table + *ptr_index_in_str, "%ld%n", &quantity_of_id, &shift_in_str);
+		*ptr_index_in_str += shift_in_str;
+
+		skip_spaces (str_with_table, ptr_index_in_str);
+		if (str_with_table[*ptr_index_in_str] == '\0') {return ERROR_IN_CREATE_LIST_OF_LOCAL_TABLES_FROM_STR;}
+
+		//------------------------------------------------------------------------------------------------------------------
+
+		sscanf (str_with_table + *ptr_index_in_str, "%ld%n", &scope, &shift_in_str);
+		*ptr_index_in_str += shift_in_str;
+
+		skip_spaces (str_with_table, ptr_index_in_str);
+		if (str_with_table[*ptr_index_in_str] == '\0') {return ERROR_IN_CREATE_LIST_OF_LOCAL_TABLES_FROM_STR;}
+
+		//------------------------------------------------------------------------------------------------------------------
+
+		status = add_new_local_name_table_in_list (list_of_local_name_tables, scope);
+		if (status) {return status;}
+
+		status = create_local_table_from_str (str_with_table, list_of_local_name_tables, ptr_index_in_str, quantity_of_id, scope);
+		if (status) {return status;}
+	}
+
+	return NOT_ERROR;
+}
+
+static language_error_t create_local_table_from_str (char* str_with_table, list_of_local_name_tables_t* list_of_local_name_tables, 
+                                                     size_t* ptr_index_in_str, size_t quantity_of_id, long scope)
+{
+	assert (str_with_table);
+	assert (list_of_local_name_tables);
+	assert (ptr_index_in_str);
+
+	language_error_t status = NOT_ERROR;
+
+	size_t index_id_in_name_table = 0;
+	int    type_id                = 0;  
+	int    shift_in_str           = 0;
+
+	for (size_t index_id = 0; index_id < quantity_of_id; index_id++)
+	{
+		sscanf (str_with_table + *ptr_index_in_str, "%ld%n", &index_id_in_name_table, &shift_in_str);
+		*ptr_index_in_str += shift_in_str;
+
+		skip_spaces (str_with_table, ptr_index_in_str);
+		if (str_with_table[*ptr_index_in_str] == '\0') {return ERROR_IN_CREATE_LOCAL_TABLE_FROM_STR;}
+
+		//------------------------------------------------------------------------------------------------------------------
+
+		sscanf (str_with_table + *ptr_index_in_str, "%d%n", &type_id, &shift_in_str);
+		*ptr_index_in_str += shift_in_str;
+
+		skip_spaces (str_with_table, ptr_index_in_str);
+		if (str_with_table[*ptr_index_in_str] == '\0' && index_id != quantity_of_id - 1) {return ERROR_IN_CREATE_LOCAL_TABLE_FROM_STR;}
+
+		status = add_new_name_in_local_name_table (list_of_local_name_tables, scope, index_id_in_name_table, (type_id_t) type_id);
+		if (status) {return status;}
 	}
 
 	return NOT_ERROR;

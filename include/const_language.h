@@ -29,9 +29,11 @@ enum language_error_t
 	NOT_FIND_FILE_WITH_TABLE                         = 18,   
 	NOT_FIND_FILE_FOR_TREE                           = 19,   
 	NOT_FIND_FILE_FOR_TABLE                          = 20,
-	NOTFIND_FILE_FOR_ASM                             = 21, 
+	NOT_FIND_FILE_FOR_ASM                            = 21, 
 	ERROR_IN_CREATE_TREE_FROM_STR                    = 22, 
 	ERROR_IN_CREATE_TABLE_FROM_STR                   = 23, 
+	ERROR_IN_CREATE_LIST_OF_LOCAL_TABLES_FROM_STR    = 24,
+	ERROR_IN_CREATE_LOCAL_TABLE_FROM_STR             = 25,
 
 	ERROR_IN_GET_GRAMMAR                   = 30,
 	ERROR_IN_GET_OPERATION                 = 31,
@@ -171,8 +173,8 @@ enum operation_with_file_t
 	FIND_FILE_WITH_TREE    = 1,   // -read_tree
 	FIND_FILE_WITH_TABLE   = 2,   // -read_table
 	FIND_FILE_FOR_TREE     = 3,   // -write_tree
-	FIND_FILE_FOR_TABLE    = 4    // -write_table
-	//FIND_FILE_FOR_ASM      = 5    // -write_asm
+	FIND_FILE_FOR_TABLE    = 4,   // -write_table
+	FIND_FILE_FOR_ASM      = 5    // -write_asm
 };
 
 // struct tree_from_str_t

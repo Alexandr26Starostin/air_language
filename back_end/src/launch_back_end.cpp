@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "const_language.h"
 #include "const_in_back_end.h"
@@ -7,10 +8,14 @@
 #include "tree.h"
 #include "list_of_func.h"
 #include "name_table.h"
+#include "local_name_table.h"
+#include "write_tree_in_asm.h"
 #include "launch_back_end.h"
 
 language_error_t launch_back_end (int argc, char** argv)
 {
+	assert (argv);
+
 	//-------------------------------------------------------------------------------------------------------
 	/*read file with tree and create str_with_tree*/
 
@@ -71,6 +76,19 @@ language_error_t launch_back_end (int argc, char** argv)
 
 	dump_name_table (&name_table, str_with_table);
 
+	//------------------------------------------------------------------------
+	/*list_of_local_name_tables*/
+
+	list_of_local_name_tables_t list_of_local_name_tables = {};
+
+	status = create_list_of_local_name_tables (&list_of_local_name_tables);
+	if (status) {return status;}
+
+	status = create_list_of_local_tables_from_str (str_with_table, &list_of_local_name_tables, &index_in_str_with_table);
+	if (status) {return status;}
+
+	dump_list_of_local_name_tables (&list_of_local_name_tables);
+
 	//-------------------------------------------------------------------------------------------------------
 	/*dump tree*/
 
@@ -93,11 +111,18 @@ language_error_t launch_back_end (int argc, char** argv)
 	dump_tree (root_node, &tree_dump);
 
 	//-------------------------------------------------------------------------------------------------------
+	/*write tree in asm*/
+
+	status = write_tree_in_asm (argc, argv, root_node, &name_table, &list_of_local_name_tables);
+	if (status) {return status;}
+
+	//-------------------------------------------------------------------------------------------------------
 	/*free memory*/
 
-	delete_node         (root_node);
-	delete_list_of_func (&list_of_func);
-	delete_name_table   (&name_table);
+	delete_node         			 (root_node);
+	delete_list_of_func 			 (&list_of_func);
+	delete_name_table   			 (&name_table);
+	delete_list_of_local_name_tables (&list_of_local_name_tables);
 
 	free (str_with_tree);
 	free (str_with_table);
