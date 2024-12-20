@@ -20,6 +20,16 @@
 		break;																\
 	}
 
+#define WRITE_COMPARISON_OPERATION_(type_of_comparison,  str_with_comparison, str_with_jmp)           	\
+	if (node -> value.value_keyword == type_of_comparison)           							 		\
+	{																									\
+		fprintf (tree_in_asm -> file_for_asm, str_with_comparison);										\
+		print_tabulation_in_file (tree_in_asm);															\
+		fprintf (tree_in_asm -> file_for_asm, str_with_jmp);											\
+																										\
+		return NOT_ERROR;																				\
+	}
+
 static language_error_t write_node_in_asm                    (node_t* node, tree_in_asm_t* tree_in_asm);
 static language_error_t print_tabulation_in_file             (tree_in_asm_t* tree_in_asm);
 static language_error_t write_constant_node                  (node_t* node, tree_in_asm_t* tree_in_asm);
@@ -33,7 +43,8 @@ static language_error_t write_operator_in_file               (node_t* node, tree
 static language_error_t write_base_func_with_one_arg_in_file (node_t* node, tree_in_asm_t* tree_in_asm);
 static language_error_t write_base_func_with_two_arg_in_file (node_t* node, tree_in_asm_t* tree_in_asm); 
 static language_error_t write_printf_in_file                 (node_t* node, tree_in_asm_t* tree_in_asm);
-static language_error_t write_scanf_in_file                  (node_t* node, tree_in_asm_t* tree_in_asm);
+static language_error_t write_scanf_in_file                  (node_t* node, tree_in_asm_t* tree_in_asm);  
+static language_error_t write_comparison_in_file             (node_t* node, tree_in_asm_t* tree_in_asm);
 
 //------------------------------------------------------------------------------------------------------------------------------------
 
@@ -66,6 +77,8 @@ language_error_t write_tree_in_asm (int argc, char** argv, node_t* root_node, na
 
 	status = write_node_in_asm (root_node, &tree_in_asm);
 	if (status) {return status;}
+
+	fprintf (tree_in_asm.file_for_asm, "hlt\n");
 
 	fclose (file_for_asm);
 
@@ -122,7 +135,7 @@ static language_error_t write_identifier_node (node_t* node, tree_in_asm_t* tree
 		                                tree_in_asm -> str_with_table + (tree_in_asm -> name_table -> array_names)[index_id_in_name_table].index_to_name_in_str,
 																		(tree_in_asm -> name_table -> array_names)[index_id_in_name_table].len_name);
 
-		fprintf (tree_in_asm -> file_for_asm, ":    #создаёт метку с именем функции\n");
+		fprintf (tree_in_asm -> file_for_asm, ":    #создаёт метку с именем функции\n\n");
 
 		return NOT_ERROR;
 	}
@@ -133,12 +146,12 @@ static language_error_t write_identifier_node (node_t* node, tree_in_asm_t* tree
 	{
 		if (tree_in_asm -> position_in_assign == IN_ASSIGN)
 		{
-			fprintf (tree_in_asm -> file_for_asm, "pop [%ld]    #присвоил значение глобальной переменной\n", index_id_in_name_table);
+			fprintf (tree_in_asm -> file_for_asm, "pop [%ld]    #присвоил значение глобальной переменной\n\n", index_id_in_name_table);
 		}
 
 		else
 		{
-			fprintf (tree_in_asm -> file_for_asm, "push [%ld]    #вернул значение глобальной переменной\n", index_id_in_name_table);
+			fprintf (tree_in_asm -> file_for_asm, "push [%ld]    #вернул значение глобальной переменной\n\n", index_id_in_name_table);
 		}
 
 		return NOT_ERROR;
@@ -149,12 +162,12 @@ static language_error_t write_identifier_node (node_t* node, tree_in_asm_t* tree
 
 	if (tree_in_asm -> position_in_assign == IN_ASSIGN)
 	{
-		fprintf (tree_in_asm -> file_for_asm, "pop [BX + %ld]    #присвоил значение локальной переменной\n", index_id_in_name_table);
+		fprintf (tree_in_asm -> file_for_asm, "pop [BX + %ld]    #присвоил значение локальной переменной\n\n", index_id_in_name_table);
 	}
 
 	else
 	{
-		fprintf (tree_in_asm -> file_for_asm, "push [BX + %ld]    #вернул значение локальной переменной\n", index_id_in_name_table);
+		fprintf (tree_in_asm -> file_for_asm, "push [BX + %ld]    #вернул значение локальной переменной\n\n", index_id_in_name_table);
 	}
 
 	return NOT_ERROR;
@@ -203,6 +216,15 @@ static language_error_t write_keyword_node (node_t* node, tree_in_asm_t* tree_in
 	WRITE_NODE_(node -> value.value_keyword, PRINTF,   write_printf_in_file);
 	WRITE_NODE_(node -> value.value_keyword, SCANF,    write_scanf_in_file);
 
+	WRITE_NODE_(node -> value.value_keyword, EQUALLY,     write_comparison_in_file);
+	WRITE_NODE_(node -> value.value_keyword, NOT_EQUALLY, write_comparison_in_file);
+	WRITE_NODE_(node -> value.value_keyword, MORE,        write_comparison_in_file);
+	WRITE_NODE_(node -> value.value_keyword, LESS,        write_comparison_in_file);
+	WRITE_NODE_(node -> value.value_keyword, NO_MORE,     write_comparison_in_file);
+	WRITE_NODE_(node -> value.value_keyword, NO_LESS,     write_comparison_in_file);
+
+
+
 	return NOT_ERROR;
 }
 
@@ -213,7 +235,7 @@ static language_error_t write_if_in_file (node_t* node, tree_in_asm_t* tree_in_a
 
 	language_error_t status = NOT_ERROR;
 
-	fprintf (tree_in_asm -> file_for_asm, "#начало if\n");
+	fprintf (tree_in_asm -> file_for_asm, "#начало if\n\n");
 
 	tree_in_asm -> depth_of_tabulation += 1;
 
@@ -232,7 +254,7 @@ static language_error_t write_if_in_file (node_t* node, tree_in_asm_t* tree_in_a
 	if (status) {return status;}
 
 	print_tabulation_in_file (tree_in_asm);
-	fprintf (tree_in_asm -> file_for_asm, "skip_if_%ld:    #метка для пропуска if\n", tree_in_asm -> index_of_if);
+	fprintf (tree_in_asm -> file_for_asm, "skip_if_%ld:    #метка для пропуска if\n\n", tree_in_asm -> index_of_if);
 
 	tree_in_asm -> depth_of_tabulation -= 1;
 	tree_in_asm -> index_of_if         += 1;
@@ -250,7 +272,7 @@ static language_error_t write_while_in_file (node_t* node, tree_in_asm_t* tree_i
 
 	language_error_t status = NOT_ERROR;
 
-	fprintf (tree_in_asm -> file_for_asm, "#начало while\n");
+	fprintf (tree_in_asm -> file_for_asm, "#начало while\n\n");
 
 	tree_in_asm -> depth_of_tabulation += 1;
 
@@ -275,7 +297,7 @@ static language_error_t write_while_in_file (node_t* node, tree_in_asm_t* tree_i
 	fprintf (tree_in_asm -> file_for_asm, "jmp repeat_while_%ld:    #метка для повторного запуска while\n\n", tree_in_asm -> index_of_while);
 
 	print_tabulation_in_file (tree_in_asm);
-	fprintf (tree_in_asm -> file_for_asm, "skip_while_%ld:    #метка для пропуска while\n", tree_in_asm -> index_of_while);
+	fprintf (tree_in_asm -> file_for_asm, "skip_while_%ld:    #метка для пропуска while\n\n", tree_in_asm -> index_of_while);
 
 	tree_in_asm -> depth_of_tabulation -= 1;
 	tree_in_asm -> index_of_while      += 1;
@@ -293,8 +315,9 @@ static language_error_t write_assign_in_file (node_t* node, tree_in_asm_t* tree_
 
 	language_error_t status = NOT_ERROR;
 
-	fprintf (tree_in_asm -> file_for_asm, "#начало assign <variable> = <expression>\n");
+	fprintf (tree_in_asm -> file_for_asm, "#начало assign <variable> = <expression>\n\n");
 
+	print_tabulation_in_file (tree_in_asm);
 	fprintf (tree_in_asm -> file_for_asm, "#начало expression\n\n");
 
 	status = write_node_in_asm (node -> left, tree_in_asm);
@@ -329,7 +352,9 @@ static language_error_t write_var_declaration_node (node_t* node, tree_in_asm_t*
 
 	language_error_t status = NOT_ERROR;
 
-	fprintf (tree_in_asm -> file_for_asm, "#начало var_declaration  double <variable>...\n");
+	print_tabulation_in_file (tree_in_asm);
+
+	fprintf (tree_in_asm -> file_for_asm, "#начало var_declaration  double <variable>...\n\n");
 
 	status = write_node_in_asm (node -> right, tree_in_asm);
 	if (status) {return status;}
@@ -348,10 +373,13 @@ static language_error_t write_operator_in_file (node_t* node, tree_in_asm_t* tre
 	language_error_t status = NOT_ERROR;
 
 	fprintf (tree_in_asm -> file_for_asm, "#описание %ld оператора\n\n", tree_in_asm -> index_of_operator);
-	tree_in_asm -> index_of_operator += 1;
+	tree_in_asm -> index_of_operator   += 1;
+	tree_in_asm -> depth_of_tabulation += 1;
 
 	status = write_node_in_asm (node -> left, tree_in_asm);
 	if (status) {return status;}
+
+	tree_in_asm -> depth_of_tabulation -= 1;
 
 	if (node -> right)
 	{
@@ -369,7 +397,7 @@ static language_error_t write_base_func_with_two_arg_in_file (node_t* node, tree
 
 	language_error_t status = NOT_ERROR;
 
-	fprintf (tree_in_asm -> file_for_asm, "#начало выполнения арифметической операции с двумя аргументами\n");
+	fprintf (tree_in_asm -> file_for_asm, "#начало выполнения арифметической операции с двумя аргументами\n\n");
 
 	status = write_node_in_asm (node -> left, tree_in_asm);
 	if (status) {return status;}
@@ -381,12 +409,12 @@ static language_error_t write_base_func_with_two_arg_in_file (node_t* node, tree
 
 	for (;;)
 	{
-		WRITE_ARITHMETIC_OPERATION_(ADD, "add    # exp + exp");
-		WRITE_ARITHMETIC_OPERATION_(SUB, "sub    # exp - exp");
-		WRITE_ARITHMETIC_OPERATION_(MUL, "mul    # exp * exp");
-		WRITE_ARITHMETIC_OPERATION_(DIV, "div    # exp / exp");
-		WRITE_ARITHMETIC_OPERATION_(DEG, "deg    # exp ^ exp");
-		WRITE_ARITHMETIC_OPERATION_(LOG, "log    # log exp exp");
+		WRITE_ARITHMETIC_OPERATION_(ADD, "add    # exp + exp\n\n");
+		WRITE_ARITHMETIC_OPERATION_(SUB, "sub    # exp - exp\n\n");
+		WRITE_ARITHMETIC_OPERATION_(MUL, "mul    # exp * exp\n\n");
+		WRITE_ARITHMETIC_OPERATION_(DIV, "div    # exp / exp\n\n");
+		WRITE_ARITHMETIC_OPERATION_(DEG, "deg    # exp ^ exp\n\n");
+		WRITE_ARITHMETIC_OPERATION_(LOG, "log    # log exp exp\n\n");
 	}
 
 	print_tabulation_in_file (tree_in_asm);
@@ -402,7 +430,7 @@ static language_error_t write_base_func_with_one_arg_in_file (node_t* node, tree
 
 	language_error_t status = NOT_ERROR;
 
-	fprintf (tree_in_asm -> file_for_asm, "#начало выполнения арифметической операции с один аргументом\n");
+	fprintf (tree_in_asm -> file_for_asm, "#начало выполнения арифметической операции с один аргументом\n\n");
 
 	status = write_node_in_asm (node -> right, tree_in_asm);
 	if (status) {return status;}
@@ -411,14 +439,14 @@ static language_error_t write_base_func_with_one_arg_in_file (node_t* node, tree
 
 	for (;;)
 	{
-		WRITE_ARITHMETIC_OPERATION_(SIN,   "sin    # sin exp");
-		WRITE_ARITHMETIC_OPERATION_(COS,   "cos    # cos exp");
-		WRITE_ARITHMETIC_OPERATION_(SQRT,  "sqrt    # sqrt exp");
-		WRITE_ARITHMETIC_OPERATION_(SH,    "sh    # sh exp");
-		WRITE_ARITHMETIC_OPERATION_(CH,    "ch    # ch exp");
-		WRITE_ARITHMETIC_OPERATION_(LN,    "ln    # ln exp");
-		//WRITE_ARITHMETIC_OPERATION_(FLOOR, "floor    # floor exp");
-		//WRITE_ARITHMETIC_OPERATION_(DIFF,  "diff    # diff exp");
+		WRITE_ARITHMETIC_OPERATION_(SIN,   "sin    # sin exp\n\n");
+		WRITE_ARITHMETIC_OPERATION_(COS,   "cos    # cos exp\n\n");
+		WRITE_ARITHMETIC_OPERATION_(SQRT,  "sqrt    # sqrt exp\n\n");
+		WRITE_ARITHMETIC_OPERATION_(SH,    "sh    # sh exp\n\n");
+		WRITE_ARITHMETIC_OPERATION_(CH,    "ch    # ch exp\n\n");
+		WRITE_ARITHMETIC_OPERATION_(LN,    "ln    # ln exp\n\n");
+		//WRITE_ARITHMETIC_OPERATION_(FLOOR, "floor    # floor exp\n\n");
+		//WRITE_ARITHMETIC_OPERATION_(DIFF,  "diff    # diff exp\n\n");
 	}
 
 	print_tabulation_in_file (tree_in_asm);
@@ -434,13 +462,13 @@ static language_error_t write_printf_in_file (node_t* node, tree_in_asm_t* tree_
 
 	language_error_t status = NOT_ERROR;
 
-	fprintf (tree_in_asm -> file_for_asm, "#начало печати числа\n");
+	fprintf (tree_in_asm -> file_for_asm, "#начало печати числа\n\n");
 
 	status = write_node_in_asm (node -> right, tree_in_asm);
 	if (status) {return status;}
 
 	print_tabulation_in_file (tree_in_asm);
-	fprintf (tree_in_asm -> file_for_asm, "out    #печатает число из стека\n");
+	fprintf (tree_in_asm -> file_for_asm, "out    #печатает число из стека\n\n");
 
 	print_tabulation_in_file (tree_in_asm);
 	fprintf (tree_in_asm -> file_for_asm, "#конец печати числа\n\n");
@@ -453,13 +481,49 @@ static language_error_t write_scanf_in_file (node_t* node, tree_in_asm_t* tree_i
 	assert (node);
 	assert (tree_in_asm);
 
-	fprintf (tree_in_asm -> file_for_asm, "#начало сканирования числа\n");
+	fprintf (tree_in_asm -> file_for_asm, "#начало сканирования числа\n\n");
 
 	print_tabulation_in_file (tree_in_asm);
-	fprintf (tree_in_asm -> file_for_asm, "in    #считывает число и кладёт его в стек\n");
+	fprintf (tree_in_asm -> file_for_asm, "in    #считывает число и кладёт его в стек\n\n");
 
 	print_tabulation_in_file (tree_in_asm);
 	fprintf (tree_in_asm -> file_for_asm, "#конец сканирования числа\n\n");
+
+	return NOT_ERROR;
+}
+
+static language_error_t write_comparison_in_file (node_t* node, tree_in_asm_t* tree_in_asm)
+{
+	assert (node);
+	assert (tree_in_asm);
+
+	language_error_t status = NOT_ERROR;
+
+	fprintf (tree_in_asm -> file_for_asm, "#начало печати сравнения\n\n");
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "#левая часть сравнения\n\n");
+
+	status = write_node_in_asm (node -> left, tree_in_asm);
+	if (status) {return status;}
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "#правая часть сравнения\n\n");
+
+	status = write_node_in_asm (node -> right, tree_in_asm);
+	if (status) {return status;}
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "#операция сравнения\n\n");
+
+	print_tabulation_in_file (tree_in_asm);
+
+	WRITE_COMPARISON_OPERATION_(EQUALLY,     "# <> == <>\n", "jne ");
+	WRITE_COMPARISON_OPERATION_(NOT_EQUALLY, "# <> != <>\n", "je ");
+	WRITE_COMPARISON_OPERATION_(NO_MORE,     "# <> <= <>\n", "ja ");
+	WRITE_COMPARISON_OPERATION_(LESS,        "# <> <  <>\n", "jae ");
+	WRITE_COMPARISON_OPERATION_(NO_LESS,     "# <> >= <>\n", "jb ");
+	WRITE_COMPARISON_OPERATION_(MORE,        "# <> >  <>\n", "jbe ");
 
 	return NOT_ERROR;
 }

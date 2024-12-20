@@ -1,7 +1,7 @@
 #ifndef CONST_LANGUAGE_H
 #define CONST_LANGUAGE_H
 
-const size_t MAX_LEN_WORD_FROM_STR = 50;
+const size_t MAX_LEN_WORD_FROM_STR = 300;
 
 //------------------------------------------------------------------------------
 /*errors*/
