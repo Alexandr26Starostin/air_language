@@ -113,7 +113,7 @@ language_error_t launch_back_end (int argc, char** argv)
 	//-------------------------------------------------------------------------------------------------------
 	/*write tree in asm*/
 
-	status = write_tree_in_asm (argc, argv, root_node, &name_table, &list_of_local_name_tables);
+	status = write_tree_in_asm (argc, argv, root_node, &name_table, &list_of_local_name_tables, str_with_table);
 	if (status) {return status;}
 
 	//-------------------------------------------------------------------------------------------------------

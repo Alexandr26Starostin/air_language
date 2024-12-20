@@ -226,6 +226,8 @@ static language_error_t print_name_table_in_file (FILE* file_for_table, name_tab
 	{
 		print_symbols_from_str_in_file (file_for_table, str_with_program + (name_table -> array_names)[index].index_to_name_in_str, 
 			                                                               (name_table -> array_names)[index].len_name);
+
+		fprintf (file_for_table, "\n");
 	}
 
 	fprintf (file_for_table, "\n");

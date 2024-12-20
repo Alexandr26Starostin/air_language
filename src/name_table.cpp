@@ -178,7 +178,6 @@ language_error_t print_symbols_from_str_in_file (FILE* file, char* str, size_t c
 	{
 		fprintf (file, "%c", str[index]);
 	}
-	fprintf (file, "\n");
-
+	
 	return NOT_ERROR;
 }

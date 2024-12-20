@@ -63,43 +63,47 @@ static language_error_t fill_list_of_func (list_of_func_t* list_of_func)
 	{
 		switch (value_of_enum)
 		{
-			FILL_LIST_OF_FUNC_(ADD,         "дозаправить");
-			FILL_LIST_OF_FUNC_(SUB,         "ударить");
-			FILL_LIST_OF_FUNC_(MUL,         "штопор");
-			FILL_LIST_OF_FUNC_(DIV,         "кобра");
-			FILL_LIST_OF_FUNC_(SIN,         "ангар");
-			FILL_LIST_OF_FUNC_(COS,         "перрон");
-			FILL_LIST_OF_FUNC_(SH,          "гидрашка");
-			FILL_LIST_OF_FUNC_(CH,          "винт");
-			FILL_LIST_OF_FUNC_(SQRT,        "петля");
-			FILL_LIST_OF_FUNC_(DEG,         "тяга");
-			FILL_LIST_OF_FUNC_(LOG,         "касалетка");
-			FILL_LIST_OF_FUNC_(LN,          "иллюминатор");
-			FILL_LIST_OF_FUNC_(IF,          "рёв_турбин");
-			FILL_LIST_OF_FUNC_(WHILE,       "уносится_в_небо_машина");
-			FILL_LIST_OF_FUNC_(MAIN,        "мой_папа_чинит_самолёты");
-			FILL_LIST_OF_FUNC_(INT,         "в");
-			FILL_LIST_OF_FUNC_(ASSIGN,      "ИЛ");
-			FILL_LIST_OF_FUNC_(SCANF,       "осмотреть");
-			FILL_LIST_OF_FUNC_(PRINTF,      "починить");
+			FILL_LIST_OF_FUNC_(ADD,         "дозаправить_в_небе");
+			FILL_LIST_OF_FUNC_(SUB,         "утечка_топлива");
+			FILL_LIST_OF_FUNC_(MUL,         "уйти_в_штопор");
+			FILL_LIST_OF_FUNC_(DIV,         "выйти_на_кобра");
+
+			FILL_LIST_OF_FUNC_(SIN,         "стоит_в_ангар");
+			FILL_LIST_OF_FUNC_(COS,         "суета_на_перрон");
+			FILL_LIST_OF_FUNC_(SH,          "течёт_гидрашка");
+			FILL_LIST_OF_FUNC_(CH,          "смазать_лопатки");
+
+			FILL_LIST_OF_FUNC_(SQRT,        "изобразить_петлю");
+			FILL_LIST_OF_FUNC_(DEG,         "увеличить_тягу");
+			FILL_LIST_OF_FUNC_(LOG,         "скушать_касалетку");
+			FILL_LIST_OF_FUNC_(LN,          "посмотреть_в_иллюминатор");
+
+			FILL_LIST_OF_FUNC_(IF,          "в_яростном_рёве_турбин_слышится");
+			FILL_LIST_OF_FUNC_(WHILE,       "пока_папа_чинит_самолёты");
+		//  FILL_LIST_OF_FUNC_(MAIN,        "уносится_в_небо_машина");
+			FILL_LIST_OF_FUNC_(INT,         "борт_компании");
+			FILL_LIST_OF_FUNC_(ASSIGN,      "прилетел_во_Внуково");
+			FILL_LIST_OF_FUNC_(SCANF,       "осмотреть_на_дефекты");
+			FILL_LIST_OF_FUNC_(PRINTF,      "починить_двигатель");
 			FILL_LIST_OF_FUNC_(OPERATOR,    "\n");
-			FILL_LIST_OF_FUNC_(RETURN,      "как_хочется_в_небо");
+			FILL_LIST_OF_FUNC_(RETURN,      "как_хочется_в_небо,_разбежавшись_ворваться");
 			FILL_LIST_OF_FUNC_(ROUND_BEGIN, "к");
 			FILL_LIST_OF_FUNC_(ROUND_END,   "лети");
-			FILL_LIST_OF_FUNC_(CURLY_BEGIN, "взлёт");
-			FILL_LIST_OF_FUNC_(CURLY_END,   "приземление");
+			FILL_LIST_OF_FUNC_(CURLY_BEGIN, "внимание!_взлёт");
+			FILL_LIST_OF_FUNC_(CURLY_END,   "успешная_посадка");
 			FILL_LIST_OF_FUNC_(COMMENT,     "от_винта");
-			FILL_LIST_OF_FUNC_(EQUALLY,     "работает?");
+			FILL_LIST_OF_FUNC_(EQUALLY,     "рейс_следует_до");
 			FILL_LIST_OF_FUNC_(LESS,        "крен");
+			FILL_LIST_OF_FUNC_(MORE,        "попасть_в_турбулентность");
 			FILL_LIST_OF_FUNC_(NO_MORE,     "элерон");
 			FILL_LIST_OF_FUNC_(NO_LESS,     "хвост");
-			FILL_LIST_OF_FUNC_(NOT_EQUALLY, "керосин");
-			FILL_LIST_OF_FUNC_(AND,         "горизонт");
-			FILL_LIST_OF_FUNC_(OR,          "вариометр");
+			FILL_LIST_OF_FUNC_(NOT_EQUALLY, "нет_керосина");
+			FILL_LIST_OF_FUNC_(AND,         "виден_горизонт");
+			FILL_LIST_OF_FUNC_(OR,          "показания_вариометра");
 			FILL_LIST_OF_FUNC_(NOT,         "крайний");
-			FILL_LIST_OF_FUNC_(BREAK,       "сломать");
-			FILL_LIST_OF_FUNC_(CONTINUE,    "продолжи");
-			FILL_LIST_OF_FUNC_(ABORT,       "прекрати");
+			FILL_LIST_OF_FUNC_(BREAK,       "сломать_датчик");
+			FILL_LIST_OF_FUNC_(CONTINUE,    "продолжить_полёт");
+			FILL_LIST_OF_FUNC_(ABORT,       "аварийная_посадка");
 			FILL_LIST_OF_FUNC_(COMMA,       "и");
 
 			default:    //Встретилось значение не существующего значения enum

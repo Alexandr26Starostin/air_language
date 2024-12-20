@@ -116,7 +116,7 @@ enum base_func_t
 	NOT         = 39,    // !
 
 	OPERATOR = 41,      // ;
-	COMMA    = 42,
+	COMMA    = 42,      // ,
 
 	INT = 51,      // int/long/doubles
 
@@ -139,7 +139,7 @@ enum base_func_t
 	LN  = 84,   // ln
 	DEG = 85,   // ^
 
-	MAIN     = 86,      // main
+	//MAIN     = 86,      // main
 	
 	ROUND_BEGIN = 91,   // (
 	ROUND_END   = 92,   // )

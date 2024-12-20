@@ -175,7 +175,6 @@ static language_error_t get_operation (syntactic_parameters_t* syntactic_paramet
 	try_perform_operation_(get_if,              SKIP_GET_IF)
 	try_perform_operation_(get_while,           SKIP_GET_WHILE)
 	try_perform_operation_(get_printf,          SKIP_GET_PRINTF)
-	try_perform_operation_(get_scanf,           SKIP_GET_SCANF)
 	try_perform_operation_(get_interruption,    SKIP_GET_INTERRUPTION)
 	try_perform_operation_(get_definition_func, SKIP_GET_DEFINITION_FUNC)
 	try_perform_operation_(get_return,          SKIP_GET_RETURN)
@@ -508,6 +507,8 @@ static language_error_t get_element (syntactic_parameters_t* syntactic_parameter
 		{return get_call_func (syntactic_parameters, ptr_node);}
 
 	if (check_token_type_(0, ID) && check_token_type_(1, OP)) {return get_variable (syntactic_parameters, ptr_node, CHECK_DECLARATION);}
+
+	if (check_token_type_(0, OP) && check_op_value_(0, SCANF)) {return get_scanf (syntactic_parameters, ptr_node);}
 
 	error_massage_
 	printf ("Error from 'get_round': in position in tokens == %ld wait OP after NUM or ID, but find ID\n\n", syntactic_parameters -> index_token + 1);
@@ -886,20 +887,11 @@ static language_error_t get_scanf (syntactic_parameters_t* syntactic_parameters,
 {
 	ASSERTS_IN_RECURSIVE_DESCENT_
 
-	language_error_t status        = NOT_ERROR;
 	node_t*           variable_node = NULL;
-
-	if (! (check_token_type_(0, OP) && check_op_value_(0, SCANF)))
-	{
-		return SKIP_GET_SCANF;
-	}
 
 	syntactic_parameters -> index_token += 1;
 
-	status = get_variable (syntactic_parameters, &variable_node, CHECK_DECLARATION);
-	if (status) {return status;}
-
-	*ptr_node = keyword_node_(SCANF, NULL, variable_node);
+	*ptr_node = keyword_node_(SCANF, NULL, NULL);
 	if (*ptr_node == NULL) {error_massage_; free (variable_node); return NOT_MEMORY_FOR_NEW_NODE;}
 
 	return NOT_ERROR;
