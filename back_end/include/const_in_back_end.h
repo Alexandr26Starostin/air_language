@@ -10,6 +10,12 @@ enum position_in_assign_t
 	IN_ASSIGN     = 1
 };
 
+enum call_func_t 
+{
+	MAIN_FUNC = 0,
+	CALL_FUNC = 1
+};
+
 struct tree_in_asm_t
 {
 	FILE*                        file_for_asm;
@@ -22,6 +28,7 @@ struct tree_in_asm_t
 	char*                        str_with_table;
 	size_t                       depth_of_tabulation;
 	long                         scope;
+	call_func_t                  status_of_func;
 };
 
 #endif

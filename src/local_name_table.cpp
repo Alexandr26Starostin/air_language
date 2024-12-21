@@ -226,3 +226,24 @@ size_t find_position_of_local_table (list_of_local_name_tables_t* list_of_local_
 
 	return index_in_list;
 }
+
+long find_id_in_scope (list_of_local_name_tables_t* list_of_local_name_tables, long scope_of_local_name_table, size_t index_id_in_name_table)
+{
+	assert (list_of_local_name_tables);
+
+	if (scope_of_local_name_table == GLOBAL_SCOPE) {return GLOBAL_SCOPE;}
+
+	size_t position_of_scope = find_position_of_local_table (list_of_local_name_tables, scope_of_local_name_table);
+
+	local_name_table_t* local_name_table = &((list_of_local_name_tables -> array_of_local_name_table)[position_of_scope]);
+
+	for (size_t index = 0; index < local_name_table -> free_index_in_local_name_table; index++)
+	{
+		if ((local_name_table -> array_of_local_names)[index].index_id_in_name_table == index_id_in_name_table)
+		{
+			return (long) index;
+		}
+	}
+
+	return GLOBAL_SCOPE;
+}

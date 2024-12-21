@@ -12,7 +12,8 @@
 #include "recursive_descent.h"
 
 static language_error_t get_grammar                   (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static language_error_t get_operation                 (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node, print_error_in_get_operation_t status_print_error);        
+static language_error_t get_operation                 (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node, 
+                                                       print_error_in_get_operation_t status_print_error);        
 static language_error_t get_assign                    (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
 static language_error_t get_var_declaration           (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
 static language_error_t get_if                        (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
@@ -36,9 +37,12 @@ static language_error_t get_base_func                 (syntactic_parameters_t* s
 static language_error_t get_round                     (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
 static language_error_t get_element                   (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
 static language_error_t get_constant                  (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);       
-static language_error_t get_variable                  (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node, check_declaration_t status_check_declaration);       
+static language_error_t get_variable                  (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node, 
+                                                       check_declaration_t status_check_declaration);       
 static language_error_t get_call_func                 (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node);    
 static language_error_t delete_local_scope_after_func (syntactic_parameters_t* syntactic_parameters);
+
+static language_error_t check_status_of_declaration_funcs (name_table_t* name_table);
 
 // #define error_massage_(...) do{ 								
 // 	fprintf (stderr, "Error in %s:%d\n\n", __FILE__, __LINE__);	
@@ -126,8 +130,12 @@ language_error_t recursive_descent (array_of_tokens_t* tokens, name_table_t* nam
 	syntactic_parameters.list_of_local_name_tables = list_of_local_name_tables;
 
 	language_error_t status = get_grammar (&syntactic_parameters, &root_node);
+	if (status) {return status;}
 
-	return status;
+	status = check_status_of_declaration_funcs (name_table);
+	if (status) {return status;}
+
+	return NOT_ERROR;
 }
 
 static language_error_t get_grammar (syntactic_parameters_t* syntactic_parameters, node_t** ptr_node)
@@ -1211,16 +1219,16 @@ static language_error_t get_call_func (syntactic_parameters_t* syntactic_paramet
 	size_t index_id_in_name_table = token_value_id_(0);
 
 	node_t*           parameters_node = NULL;
-	language_error_t status          = NOT_ERROR;
+	language_error_t status           = NOT_ERROR;
 
-	if ((syntactic_parameters -> array_names)[index_id_in_name_table].status == NOT_DEFINITE)
-	{
-		error_massage_
-		printf ("Error from 'get_call_func': not have declaration of func (index_id in name_table == %ld) in position in tokens == %ld\n\n", 
-				index_id_in_name_table, syntactic_parameters -> index_token);
+	// if ((syntactic_parameters -> array_names)[index_id_in_name_table].status == NOT_DEFINITE)
+	// {
+	// 	error_massage_
+	// 	printf ("Error from 'get_call_func': not have declaration of func (index_id in name_table == %ld) in position in tokens == %ld\n\n", 
+	// 			index_id_in_name_table, syntactic_parameters -> index_token);
 
-		return ERROR_IN_GET_CALL_FUNC;
-	}
+	// 	return ERROR_IN_GET_CALL_FUNC;
+	// }
 
 	syntactic_parameters -> index_token += 2;  //пропуск <name func> (
 
@@ -1320,6 +1328,24 @@ static language_error_t delete_local_scope_after_func (syntactic_parameters_t* s
 	}
 
 	syntactic_parameters -> scope = GLOBAL_SCOPE;
+
+	return NOT_ERROR;
+}
+
+static language_error_t check_status_of_declaration_funcs (name_table_t* name_table)
+{
+	assert (name_table);
+
+	for (size_t index =  0; index < name_table -> free_index; index++)   
+	{
+		if ((name_table -> array_names)[index].type == NAME_FUNC && (name_table -> array_names)[index].status == NOT_DEFINITE)
+		{
+			error_massage_
+			printf ("Error from 'check_status_of_declaration_names': not definite func with id_in_name_table = %ld\n\n", index);
+
+			return NOT_DEFINITE_FUNC;
+		}
+	}
 
 	return NOT_ERROR;
 }

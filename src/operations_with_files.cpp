@@ -144,6 +144,12 @@ static language_error_t print_node_in_file (FILE* file_for_tree, node_t* node)
 		return NOT_ERROR;
 	}
 
+	if (node != NULL && node -> type == KEYWORD && (node -> value).value_keyword == COMMA && node -> right == NULL)
+	{
+		fprintf (file_for_tree, "_ ");
+		return NOT_ERROR;
+	}
+
 	if (node == NULL)
 	{
 		fprintf (file_for_tree, "_ ");

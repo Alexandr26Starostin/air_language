@@ -1,0 +1,66 @@
+push 0
+pop AX
+
+PIXEL:
+
+push AX
+push 11
+idiv
+
+pop BX
+
+push AX
+push BX
+push 11
+mul
+sub
+
+pop CX
+
+push BX
+push 5
+sub
+pop BX
+
+push CX
+push 5
+sub
+pop CX
+
+push BX
+push BX
+mul
+
+push CX
+push CX
+mul
+
+add
+pop DX
+
+push DX
+push 18
+ja SYMBOL_TRUE:
+push 0
+pop [AX]
+SYMBOL_TRUE:
+
+push DX
+push 18
+jb SYMBOL_FALSE:
+push 1
+pop [AX]
+SYMBOL_FALSE:
+
+push AX
+push 1
+add
+pop AX
+
+push AX
+push 121
+ja PIXEL:
+
+draw 0
+
+hlt

@@ -31,10 +31,15 @@
 	}
 
 static language_error_t write_node_in_asm                    (node_t* node, tree_in_asm_t* tree_in_asm);
-static language_error_t print_tabulation_in_file             (tree_in_asm_t* tree_in_asm);
 static language_error_t write_constant_node                  (node_t* node, tree_in_asm_t* tree_in_asm);
 static language_error_t write_identifier_node                (node_t* node, tree_in_asm_t* tree_in_asm);
 static language_error_t write_keyword_node                   (node_t* node, tree_in_asm_t* tree_in_asm);
+static language_error_t write_function_definition_node       (node_t* node, tree_in_asm_t* tree_in_asm);
+static language_error_t write_parameters_node                (node_t* node, tree_in_asm_t* tree_in_asm);
+static language_error_t write_call_node                      (node_t* node, tree_in_asm_t* tree_in_asm);
+
+static language_error_t write_parameters_for_call            (node_t* node, tree_in_asm_t* tree_in_asm);
+
 static language_error_t write_if_in_file                     (node_t* node, tree_in_asm_t* tree_in_asm);
 static language_error_t write_while_in_file                  (node_t* node, tree_in_asm_t* tree_in_asm);
 static language_error_t write_assign_in_file                 (node_t* node, tree_in_asm_t* tree_in_asm); 
@@ -44,8 +49,11 @@ static language_error_t write_base_func_with_one_arg_in_file (node_t* node, tree
 static language_error_t write_base_func_with_two_arg_in_file (node_t* node, tree_in_asm_t* tree_in_asm); 
 static language_error_t write_printf_in_file                 (node_t* node, tree_in_asm_t* tree_in_asm);
 static language_error_t write_scanf_in_file                  (node_t* node, tree_in_asm_t* tree_in_asm);  
-static language_error_t write_comparison_in_file             (node_t* node, tree_in_asm_t* tree_in_asm);
+static language_error_t write_comparison_in_file             (node_t* node, tree_in_asm_t* tree_in_asm); 
+static language_error_t write_abort_in_file                  (node_t* node, tree_in_asm_t* tree_in_asm); 
+static language_error_t write_return_in_asm                  (node_t* node, tree_in_asm_t* tree_in_asm);
 
+static language_error_t print_tabulation_in_file             (tree_in_asm_t* tree_in_asm);
 //------------------------------------------------------------------------------------------------------------------------------------
 
 language_error_t write_tree_in_asm (int argc, char** argv, node_t* root_node, name_table_t* name_table, 
@@ -74,11 +82,14 @@ language_error_t write_tree_in_asm (int argc, char** argv, node_t* root_node, na
 	tree_in_asm.str_with_table            = str_with_table;
 	tree_in_asm.depth_of_tabulation       = 0;
 	tree_in_asm.scope                     = GLOBAL_SCOPE;
+	tree_in_asm.status_of_func            = MAIN_FUNC;
+
+	fprintf (tree_in_asm.file_for_asm, "push %ld    #начальная позиция стекового фрейма\npop BX\n\n", name_table -> free_index);
 
 	status = write_node_in_asm (root_node, &tree_in_asm);
 	if (status) {return status;}
 
-	fprintf (tree_in_asm.file_for_asm, "hlt\n");
+	fprintf (tree_in_asm.file_for_asm, "hlt");
 
 	fclose (file_for_asm);
 
@@ -90,18 +101,12 @@ static language_error_t write_node_in_asm (node_t* node, tree_in_asm_t* tree_in_
 	assert (tree_in_asm);
 	assert (node);
 
-	//if (node == NULL) {return NOT_ERROR;}
-
-	WRITE_NODE_(node -> type, CONSTANT,        write_constant_node);
-	WRITE_NODE_(node -> type, IDENTIFIER,      write_identifier_node);
-	WRITE_NODE_(node -> type, KEYWORD,         write_keyword_node);
-	WRITE_NODE_(node -> type, VAR_DECLARATION, write_var_declaration_node);
-
-	// status = write_node_in_asm (node -> left, tree_in_asm);
-	// if (status) {return status;}
-
-	// status = write_node_in_asm (node -> right, tree_in_asm);
-	// if (status) {return status;}
+	WRITE_NODE_(node -> type, CONSTANT,            write_constant_node);
+	WRITE_NODE_(node -> type, IDENTIFIER,          write_identifier_node);
+	WRITE_NODE_(node -> type, KEYWORD,             write_keyword_node);
+	WRITE_NODE_(node -> type, VAR_DECLARATION,     write_var_declaration_node);
+	WRITE_NODE_(node -> type, FUNCTION_DEFINITION, write_function_definition_node);
+	WRITE_NODE_(node -> type, CALL,                write_call_node);
 
 	return NOT_ERROR;
 }
@@ -123,14 +128,10 @@ static language_error_t write_identifier_node (node_t* node, tree_in_asm_t* tree
 	assert (node);
 	assert (tree_in_asm);
 
-	print_tabulation_in_file (tree_in_asm);
-
 	size_t index_id_in_name_table = node -> value.value_identifier.index_id_in_name_table;
 
 	if (node -> value.value_identifier.type == NAME_FUNC)     //func (global)
 	{
-		print_tabulation_in_file (tree_in_asm);
-
 		print_symbols_from_str_in_file (tree_in_asm -> file_for_asm, 
 		                                tree_in_asm -> str_with_table + (tree_in_asm -> name_table -> array_names)[index_id_in_name_table].index_to_name_in_str,
 																		(tree_in_asm -> name_table -> array_names)[index_id_in_name_table].len_name);
@@ -140,9 +141,13 @@ static language_error_t write_identifier_node (node_t* node, tree_in_asm_t* tree
 		return NOT_ERROR;
 	}
 
+	print_tabulation_in_file (tree_in_asm);
+
 	//node -> value.value_identifier.type == NAME_VAR
 
-	if (tree_in_asm -> scope == GLOBAL_SCOPE)     //global var
+	long index_id_in_scope = find_id_in_scope (tree_in_asm -> list_of_local_name_tables, tree_in_asm -> scope, index_id_in_name_table);
+
+	if (index_id_in_scope == GLOBAL_SCOPE)     //global var
 	{
 		if (tree_in_asm -> position_in_assign == IN_ASSIGN)
 		{
@@ -157,17 +162,17 @@ static language_error_t write_identifier_node (node_t* node, tree_in_asm_t* tree
 		return NOT_ERROR;
 	}
 
-	//tree_in_asm -> scope != GLOBAL_SCOPE    //local var
+	//index_id_in_scope != GLOBAL_SCOPE    //local var
 	//BX - регистр для сохранения позиции начала локальной области видимости 
 
 	if (tree_in_asm -> position_in_assign == IN_ASSIGN)
 	{
-		fprintf (tree_in_asm -> file_for_asm, "pop [BX + %ld]    #присвоил значение локальной переменной\n\n", index_id_in_name_table);
+		fprintf (tree_in_asm -> file_for_asm, "pop [BX+%ld]    #присвоил значение локальной переменной\n\n", index_id_in_scope);
 	}
 
 	else
 	{
-		fprintf (tree_in_asm -> file_for_asm, "push [BX + %ld]    #вернул значение локальной переменной\n\n", index_id_in_name_table);
+		fprintf (tree_in_asm -> file_for_asm, "push [BX+%ld]    #вернул значение локальной переменной\n\n", index_id_in_scope);
 	}
 
 	return NOT_ERROR;
@@ -223,6 +228,8 @@ static language_error_t write_keyword_node (node_t* node, tree_in_asm_t* tree_in
 	WRITE_NODE_(node -> value.value_keyword, NO_MORE,     write_comparison_in_file);
 	WRITE_NODE_(node -> value.value_keyword, NO_LESS,     write_comparison_in_file);
 
+	WRITE_NODE_(node -> value.value_keyword, ABORT,      write_abort_in_file);  
+	WRITE_NODE_(node -> value.value_keyword, RETURN,     write_return_in_asm);
 
 
 	return NOT_ERROR;
@@ -245,7 +252,11 @@ static language_error_t write_if_in_file (node_t* node, tree_in_asm_t* tree_in_a
 	status = write_node_in_asm (node -> left, tree_in_asm);
 	if (status) {return status;}
 
-	fprintf (tree_in_asm -> file_for_asm, "skip_if_%ld:    #если условие не верно, то перепрыгни через тело if\n\n", tree_in_asm -> index_of_if);
+	size_t old_index_of_if = tree_in_asm -> index_of_if;
+
+	tree_in_asm -> index_of_if += 1;
+
+	fprintf (tree_in_asm -> file_for_asm, "skip_if_%ld:    #если условие не верно, то перепрыгни через тело if\n\n", old_index_of_if);
 
 	print_tabulation_in_file (tree_in_asm);
 	fprintf (tree_in_asm -> file_for_asm, "#тело if\n\n");
@@ -254,10 +265,9 @@ static language_error_t write_if_in_file (node_t* node, tree_in_asm_t* tree_in_a
 	if (status) {return status;}
 
 	print_tabulation_in_file (tree_in_asm);
-	fprintf (tree_in_asm -> file_for_asm, "skip_if_%ld:    #метка для пропуска if\n\n", tree_in_asm -> index_of_if);
+	fprintf (tree_in_asm -> file_for_asm, "skip_if_%ld:    #метка для пропуска if\n\n", old_index_of_if);
 
 	tree_in_asm -> depth_of_tabulation -= 1;
-	tree_in_asm -> index_of_if         += 1;
 
 	print_tabulation_in_file (tree_in_asm);
 	fprintf (tree_in_asm -> file_for_asm, "#конец if\n\n");
@@ -275,9 +285,13 @@ static language_error_t write_while_in_file (node_t* node, tree_in_asm_t* tree_i
 	fprintf (tree_in_asm -> file_for_asm, "#начало while\n\n");
 
 	tree_in_asm -> depth_of_tabulation += 1;
+	size_t old_index_of_while = tree_in_asm -> index_of_while;
+
+	tree_in_asm -> index_of_while += 1;
 
 	print_tabulation_in_file (tree_in_asm);
-	fprintf (tree_in_asm -> file_for_asm, "repeat_while_%ld:    #метка для повторного запуска while\n\n", tree_in_asm -> index_of_while);
+	fprintf (tree_in_asm -> file_for_asm, "repeat_while_%ld:    #метка для повторного запуска while\n\n", old_index_of_while);
+
 
 	print_tabulation_in_file (tree_in_asm);
 	fprintf (tree_in_asm -> file_for_asm, "#условие while\n\n");
@@ -285,7 +299,7 @@ static language_error_t write_while_in_file (node_t* node, tree_in_asm_t* tree_i
 	status = write_node_in_asm (node -> left, tree_in_asm);
 	if (status) {return status;}
 
-	fprintf (tree_in_asm -> file_for_asm, "skip_while_%ld:    #если условие не верно, то перепрыгни через тело while\n\n", tree_in_asm -> index_of_while);
+	fprintf (tree_in_asm -> file_for_asm, "skip_while_%ld:    #если условие не верно, то перепрыгни через тело while\n\n", old_index_of_while);
 
 	print_tabulation_in_file (tree_in_asm);
 	fprintf (tree_in_asm -> file_for_asm, "#тело while\n\n");
@@ -294,13 +308,12 @@ static language_error_t write_while_in_file (node_t* node, tree_in_asm_t* tree_i
 	if (status) {return status;}
 
 	print_tabulation_in_file (tree_in_asm);
-	fprintf (tree_in_asm -> file_for_asm, "jmp repeat_while_%ld:    #метка для повторного запуска while\n\n", tree_in_asm -> index_of_while);
+	fprintf (tree_in_asm -> file_for_asm, "jmp repeat_while_%ld:    #метка для повторного запуска while\n\n", old_index_of_while);
 
 	print_tabulation_in_file (tree_in_asm);
-	fprintf (tree_in_asm -> file_for_asm, "skip_while_%ld:    #метка для пропуска while\n\n", tree_in_asm -> index_of_while);
+	fprintf (tree_in_asm -> file_for_asm, "skip_while_%ld:    #метка для пропуска while\n\n", old_index_of_while);
 
 	tree_in_asm -> depth_of_tabulation -= 1;
-	tree_in_asm -> index_of_while      += 1;
 
 	print_tabulation_in_file (tree_in_asm);
 	fprintf (tree_in_asm -> file_for_asm, "#конец while\n\n");
@@ -520,10 +533,228 @@ static language_error_t write_comparison_in_file (node_t* node, tree_in_asm_t* t
 
 	WRITE_COMPARISON_OPERATION_(EQUALLY,     "# <> == <>\n", "jne ");
 	WRITE_COMPARISON_OPERATION_(NOT_EQUALLY, "# <> != <>\n", "je ");
-	WRITE_COMPARISON_OPERATION_(NO_MORE,     "# <> <= <>\n", "ja ");
-	WRITE_COMPARISON_OPERATION_(LESS,        "# <> <  <>\n", "jae ");
-	WRITE_COMPARISON_OPERATION_(NO_LESS,     "# <> >= <>\n", "jb ");
-	WRITE_COMPARISON_OPERATION_(MORE,        "# <> >  <>\n", "jbe ");
+	WRITE_COMPARISON_OPERATION_(NO_MORE,     "# <> <= <>\n", "jb ");
+	WRITE_COMPARISON_OPERATION_(LESS,        "# <> <  <>\n", "jbe ");
+	WRITE_COMPARISON_OPERATION_(NO_LESS,     "# <> >= <>\n", "ja ");
+	WRITE_COMPARISON_OPERATION_(MORE,        "# <> >  <>\n", "jae ");
 
 	return NOT_ERROR;
 }
+
+static language_error_t write_abort_in_file (node_t* node, tree_in_asm_t* tree_in_asm)
+{
+	assert (node);
+	assert (tree_in_asm);	
+
+	fprintf (tree_in_asm -> file_for_asm, "hlt #остановка процессора\n\n");
+
+	return NOT_ERROR;
+}
+
+static language_error_t write_function_definition_node (node_t* node, tree_in_asm_t* tree_in_asm)
+{
+	assert (node);
+	assert (tree_in_asm);
+
+	language_error_t status = NOT_ERROR;
+
+	size_t index_id_in_name_table = node -> value.value_identifier.index_id_in_name_table;
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "#начало определения функции\n\n");
+
+	print_tabulation_in_file (tree_in_asm);
+
+	print_symbols_from_str_in_file (tree_in_asm -> file_for_asm, 
+		                            tree_in_asm -> str_with_table + (tree_in_asm -> name_table -> array_names)[index_id_in_name_table].index_to_name_in_str,
+																	(tree_in_asm -> name_table -> array_names)[index_id_in_name_table].len_name);
+
+	fprintf (tree_in_asm -> file_for_asm, ":    #имя функции\n\n");
+
+	tree_in_asm -> depth_of_tabulation += 1;
+
+	long old_scope       = tree_in_asm -> scope;
+	tree_in_asm -> scope = index_id_in_name_table;
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "#параметры функции\n\n");
+
+	node = node -> right;
+
+	status = write_parameters_node (node -> left, tree_in_asm);
+	if (status) {return status;}
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "#тело функции\n\n");
+
+	status = write_node_in_asm (node -> right, tree_in_asm);
+	if (status) {return status;}
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "#конец функции\n\n");
+
+	tree_in_asm -> depth_of_tabulation -= 1;
+
+	tree_in_asm -> scope = old_scope;
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "hlt    #останавливает процессор\n\n");
+
+	if (tree_in_asm -> status_of_func == MAIN_FUNC)
+	{
+		tree_in_asm -> status_of_func = CALL_FUNC;
+	}
+
+	return NOT_ERROR;
+}
+
+static language_error_t write_parameters_node (node_t* node, tree_in_asm_t* tree_in_asm)
+{
+	assert (tree_in_asm);
+
+	if (node == NULL) {return NOT_ERROR;}
+
+	language_error_t status = NOT_ERROR;
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "#присваивание значений локальных параметрам функции из стека в оперативную память\n\n");
+
+	size_t index_of_parameter = 1;
+
+	tree_in_asm -> position_in_assign = IN_ASSIGN;
+
+	while (node != NULL)
+	{
+		print_tabulation_in_file (tree_in_asm);
+		fprintf (tree_in_asm -> file_for_asm, "# %ld параметр\n\n", index_of_parameter);
+
+		index_of_parameter += 1; 
+
+		status = write_identifier_node (node -> right, tree_in_asm);
+		if (status) {return status;}
+
+		node = node -> left;
+	}
+
+	tree_in_asm -> position_in_assign = NOT_IN_ASSIGN;
+
+	return NOT_ERROR;
+}
+
+static language_error_t write_return_in_asm (node_t* node, tree_in_asm_t* tree_in_asm)
+{
+	assert (node);
+	assert (tree_in_asm);
+
+	language_error_t status = NOT_ERROR;
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "#завершение функции\n\n");
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "#вычисляет значение, возвращаемое функцией\n\n");
+
+	status = write_node_in_asm (node -> right, tree_in_asm);
+	if (status) {return status;}
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "pop AX    #записывает возвращаемое функцией значение\n\n");
+
+	if (tree_in_asm -> status_of_func != MAIN_FUNC)
+	{
+		print_tabulation_in_file (tree_in_asm);
+		fprintf (tree_in_asm -> file_for_asm, "ret    #переход по метке к месту вызова функции\n\n");
+	}
+
+	return NOT_ERROR;
+}
+
+static language_error_t write_call_node (node_t* node, tree_in_asm_t* tree_in_asm)
+{
+	assert (node);
+	assert (tree_in_asm);
+
+	language_error_t status = NOT_ERROR;
+
+	size_t index_id_in_name_table = node -> right -> value.value_identifier.index_id_in_name_table;
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "#начинает вызов функции\n\n");
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "push BX    #сохраняет значение старого стекового фрейма\n\n");
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "#записывает аргументы для функции\n\n");
+
+	status = write_parameters_for_call (node -> left, tree_in_asm);
+	if (status) {return status;}
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "#вызывает функцию\n\n");
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "call ");
+
+	// status = write_identifier_node (node -> right, tree_in_asm);
+	// if (status) return status;
+
+	print_symbols_from_str_in_file (tree_in_asm -> file_for_asm, 
+		                            tree_in_asm -> str_with_table + (tree_in_asm -> name_table -> array_names)[index_id_in_name_table].index_to_name_in_str,
+																	(tree_in_asm -> name_table -> array_names)[index_id_in_name_table].len_name);
+
+	fprintf (tree_in_asm -> file_for_asm, ":    #имя функции\n\n");
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "pop BX    #записывает предыдущее значение начала стекового фрейма\n\n");
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "push AX    #получает значение, вернувшееся от функции\n\n");	
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "#конец вызова функции\n\n");
+
+	return NOT_ERROR;
+}
+
+static language_error_t write_parameters_for_call (node_t* node, tree_in_asm_t* tree_in_asm)
+{
+	assert (node);
+	assert (tree_in_asm);
+
+	language_error_t status = NOT_ERROR;
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "# начал записи значений аргументов, передаваемых функции\n\n");
+
+	size_t index_of_parameter = 0;
+
+	node_t* save_node = node;
+
+	while (node != NULL)
+	{
+		index_of_parameter += 1;
+
+		save_node = node;
+		node      = node -> left;
+	}
+
+	node = save_node;
+
+	for (size_t index = index_of_parameter; index > 0; index--)
+	{
+		print_tabulation_in_file (tree_in_asm);
+		fprintf (tree_in_asm -> file_for_asm, "# %ld аргумент\n\n", index);
+
+		status = write_node_in_asm (node -> right, tree_in_asm);
+		if (status) {return status;}
+
+		node = node -> parent;
+	}
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "#конец записи значений аргументов, передаваемых функции\n\n");
+
+	return NOT_ERROR;
+}
+

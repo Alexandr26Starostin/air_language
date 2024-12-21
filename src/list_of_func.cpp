@@ -66,7 +66,7 @@ static language_error_t fill_list_of_func (list_of_func_t* list_of_func)
 			FILL_LIST_OF_FUNC_(ADD,         "дозаправить_в_небе");
 			FILL_LIST_OF_FUNC_(SUB,         "утечка_топлива");
 			FILL_LIST_OF_FUNC_(MUL,         "уйти_в_штопор");
-			FILL_LIST_OF_FUNC_(DIV,         "выйти_на_кобра");
+			FILL_LIST_OF_FUNC_(DIV,         "вышел_на_кобру");
 
 			FILL_LIST_OF_FUNC_(SIN,         "стоит_в_ангар");
 			FILL_LIST_OF_FUNC_(COS,         "суета_на_перрон");
@@ -86,7 +86,7 @@ static language_error_t fill_list_of_func (list_of_func_t* list_of_func)
 			FILL_LIST_OF_FUNC_(SCANF,       "осмотреть_на_дефекты");
 			FILL_LIST_OF_FUNC_(PRINTF,      "починить_двигатель");
 			FILL_LIST_OF_FUNC_(OPERATOR,    "\n");
-			FILL_LIST_OF_FUNC_(RETURN,      "как_хочется_в_небо,_разбежавшись_ворваться");
+			FILL_LIST_OF_FUNC_(RETURN,      "как_хочется_в_небо,_разбежавшись,_ворваться");
 			FILL_LIST_OF_FUNC_(ROUND_BEGIN, "к");
 			FILL_LIST_OF_FUNC_(ROUND_END,   "лети");
 			FILL_LIST_OF_FUNC_(CURLY_BEGIN, "внимание!_взлёт");

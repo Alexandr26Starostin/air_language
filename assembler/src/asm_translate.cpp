@@ -34,8 +34,8 @@ long translate_asm (asm_t* ptr_assm, char* text)
 	char  word_in_text[MAX_LEN_STR] = "";
 	int   index_text                = 0;
 	char* ptr_text                  = text; 
-	
-	while (sscanf (ptr_text, "%s%n", word_in_text, &index_text) != EOF)
+
+	while (text[index_text] != '\0' && sscanf (ptr_text, "%s%n", word_in_text, &index_text) != EOF)
 	{
 		if (asm_error (ptr_assm, __FILE__, __LINE__))
 		{
@@ -66,7 +66,7 @@ long translate_asm (asm_t* ptr_assm, char* text)
 			continue;
 		}
 
-		printf ("SNT_ERROR:\n command: '%s' don't find\n", word_in_text);
+		printf ("SNT_ERROR:\n command: '%s' don't find\n\n", word_in_text);
 
 		ptr_assm -> error_in_asm |= COMMAND_INCORRECT;
 	}

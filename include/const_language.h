@@ -60,6 +60,7 @@ enum language_error_t
 	ERROR_IN_GET_VARIABLE                  = 52,
 	ERROR_IN_GET_CALL_FUNC                 = 53,
 	ERROR_IN_GET_VAR_DECLARATION           = 54,
+	NOT_DEFINITE_FUNC                      = 55,
 
 	SKIP_GET_ASSIGN          = 70,
 	SKIP_GET_IF              = 71,

@@ -90,6 +90,9 @@ static long read_file (FILE* asm_file, char** ptr_text)
 	}
 
 	long count_fread = (long) fread (*ptr_text, sizeof (char), count_memory, asm_file);
+
+	//printf ("%ld\n", count_fread);
+
 	if (count_fread != count_memory)
 	{
 		#ifdef PRINT_ASM_

@@ -6,12 +6,12 @@
 #define PRINT_LABELS_
 #define PRINT_FIX_UP_
 
-const size_t MAX_LEN_STR   = 50;
-const size_t MAX_LEN_LABEL = 50; 
+const size_t MAX_LEN_STR   = 400;
+const size_t MAX_LEN_LABEL = 70; 
 
-const size_t SIZE_CMD      = 526;
-const size_t SIZE_LABELS   = 128;
-const size_t SIZE_FIX_UP   = 128;
+const size_t SIZE_CMD      = 40000;
+const size_t SIZE_LABELS   = 256;
+const size_t SIZE_FIX_UP   = 256;
 const size_t MAX_BIT       = sizeof (long) * 8;
 
 const int SIZE_HEADER   = 3;
