@@ -89,7 +89,7 @@ language_error_t write_tree_in_asm (int argc, char** argv, node_t* root_node, na
 	status = write_node_in_asm (root_node, &tree_in_asm);
 	if (status) {return status;}
 
-	fprintf (tree_in_asm.file_for_asm, "hlt");
+	fprintf (tree_in_asm.file_for_asm, "\nhlt");
 
 	fclose (file_for_asm);
 
@@ -125,7 +125,6 @@ static language_error_t write_constant_node (node_t* node, tree_in_asm_t* tree_i
 
 static language_error_t write_identifier_node (node_t* node, tree_in_asm_t* tree_in_asm)
 {
-	assert (node);
 	assert (tree_in_asm);
 
 	size_t index_id_in_name_table = node -> value.value_identifier.index_id_in_name_table;
@@ -211,7 +210,7 @@ static language_error_t write_keyword_node (node_t* node, tree_in_asm_t* tree_in
 
 	WRITE_NODE_(node -> value.value_keyword, SIN,      write_base_func_with_one_arg_in_file);
 	WRITE_NODE_(node -> value.value_keyword, COS,      write_base_func_with_one_arg_in_file);
-	//WRITE_NODE_(node -> value.value_keyword, FLOOR,      write_base_func_with_one_arg_in_file);
+	//WRITE_NODE_(node -> value.value_keyword, FLOOR,     write_base_func_with_one_arg_in_file);
 	//WRITE_NODE_(node -> value.value_keyword, DIFF,      write_base_func_with_one_arg_in_file);
 	WRITE_NODE_(node -> value.value_keyword, SQRT,     write_base_func_with_one_arg_in_file);
 	WRITE_NODE_(node -> value.value_keyword, SH,       write_base_func_with_one_arg_in_file);

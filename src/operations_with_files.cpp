@@ -95,12 +95,13 @@ FILE* find_program_file (int argc, char** argv, operation_with_file_t operation_
 
 	switch (operation_with_file)
 	{
-		FIND_FILE_(FIND_FILE_WITH_PROGRAM, "-read_program", "r");
-		FIND_FILE_(FIND_FILE_WITH_TREE,    "-read_tree",    "r");
-		FIND_FILE_(FIND_FILE_WITH_TABLE,   "-read_table",   "r");
-		FIND_FILE_(FIND_FILE_FOR_TREE,     "-write_tree",   "w");
-		FIND_FILE_(FIND_FILE_FOR_TABLE,    "-write_table",  "w");
-		FIND_FILE_(FIND_FILE_FOR_ASM,      "-write_asm",    "w");
+		FIND_FILE_(FIND_FILE_WITH_PROGRAM, "-read_program",  "r");
+		FIND_FILE_(FIND_FILE_WITH_TREE,    "-read_tree",     "r");
+		FIND_FILE_(FIND_FILE_WITH_TABLE,   "-read_table",    "r");
+		FIND_FILE_(FIND_FILE_FOR_TREE,     "-write_tree",    "w");
+		FIND_FILE_(FIND_FILE_FOR_TABLE,    "-write_table",   "w"); 
+		FIND_FILE_(FIND_FILE_FOR_ASM,      "-write_asm",     "w");
+		FIND_FILE_(FIND_FILE_FOR_REVERSE,  "-write_reverse", "w");
 		
 		default:
 			PRINT_EXAMPLE_OF_USING_FRONT_END_;
@@ -218,7 +219,6 @@ language_error_t write_table_in_file (int argc, char** argv, list_of_local_name_
 
 	return NOT_ERROR;
 }
-
 
 static language_error_t print_name_table_in_file (FILE* file_for_table, name_table_t* name_table, char* str_with_program)
 {

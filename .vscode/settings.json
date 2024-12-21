@@ -25,6 +25,8 @@
 		"span": "cpp",
 		"stop_token": "cpp",
 		"text_encoding": "cpp",
-		"random": "cpp"
+		"random": "cpp",
+		"forward_list": "cpp",
+		"unordered_set": "cpp"
 	}
 }

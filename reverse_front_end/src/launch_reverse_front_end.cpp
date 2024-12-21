@@ -3,23 +3,23 @@
 #include <assert.h>
 
 #include "const_language.h"
-#include "const_in_back_end.h"
+#include "const_in_reverse_front_end.h"
 #include "operations_with_files.h"
 #include "tree.h"
 #include "list_of_func.h"
 #include "name_table.h"
 #include "local_name_table.h"
-#include "write_tree_in_asm.h"
-#include "launch_back_end.h"
+#include "write_program_from_tree.h"
+#include "launch_reverse_front_end.h"
 
-language_error_t launch_back_end (int argc, char** argv)
+language_error_t launch_reverse_front_end (int argc, char** argv)
 {
 	assert (argv);
 
 	//-------------------------------------------------------------------------------------------------------
 	/*read file with tree and create str_with_tree*/
 
-	#ifdef CHECK_WORK_OF_BACK_END
+	#ifdef CHECK_WORK_OF_REVERSE_FRONT_END
 
 		printf ("\n\n---------------------------------------------------------------------------\n\nstr_with_tree:\n\n");
 
@@ -30,7 +30,7 @@ language_error_t launch_back_end (int argc, char** argv)
 	language_error_t status = read_file_to_str (argc, argv, &str_with_tree, FIND_FILE_WITH_TREE, NOT_FIND_FILE_WITH_TREE);
 	if (status) {return status;}
 
-	#ifdef CHECK_WORK_OF_BACK_END
+	#ifdef CHECK_WORK_OF_REVERSE_FRONT_END
 
 		printf ("%s\n\n", str_with_tree);
 
@@ -39,10 +39,10 @@ language_error_t launch_back_end (int argc, char** argv)
 	//-------------------------------------------------------------------------------------------------------
 	/*read file with table and create str_with_table*/
 
-	#ifdef CHECK_WORK_OF_BACK_END
+	#ifdef CHECK_WORK_OF_REVERSE_FRONT_END
 
 		printf ("\n\n---------------------------------------------------------------------------\n\nstr_with_table:\n\n");
-
+	
 	#endif
 
 	char* str_with_table = NULL;
@@ -50,10 +50,10 @@ language_error_t launch_back_end (int argc, char** argv)
 	status = read_file_to_str (argc, argv, &str_with_table, FIND_FILE_WITH_TABLE, NOT_FIND_FILE_WITH_TABLE);
 	if (status) {return status;}
 
-	#ifdef CHECK_WORK_OF_BACK_END
+	#ifdef CHECK_WORK_OF_REVERSE_FRONT_END
 
 		printf ("%s\n\n", str_with_table);
-
+	
 	#endif
 
 	//-------------------------------------------------------------------------------------------------------
@@ -64,7 +64,7 @@ language_error_t launch_back_end (int argc, char** argv)
 	status = create_list_of_func (&list_of_func);
 	if (status) {return status;}
 
-	#ifdef CHECK_WORK_OF_BACK_END
+	#ifdef CHECK_WORK_OF_REVERSE_FRONT_END
 	
 		dump_list_of_func (&list_of_func);
 
@@ -87,10 +87,10 @@ language_error_t launch_back_end (int argc, char** argv)
 	status = create_name_table (&name_table);
 	if (status) {return status;}
 
-	#ifdef CHECK_WORK_OF_BACK_END
+	#ifdef CHECK_WORK_OF_REVERSE_FRONT_END
 
 		dump_name_table (&name_table, str_with_table);
-
+	
 	#endif
 
 	size_t index_in_str_with_table = 0;
@@ -98,26 +98,9 @@ language_error_t launch_back_end (int argc, char** argv)
 	status = create_table_from_str (str_with_table, &name_table, &index_in_str_with_table);
 	if (status) {return status;}
 
-	#ifdef CHECK_WORK_OF_BACK_END
+	#ifdef CHECK_WORK_OF_REVERSE_FRONT_END
 
 		dump_name_table (&name_table, str_with_table);
-
-	#endif
-
-	//------------------------------------------------------------------------
-	/*list_of_local_name_tables*/
-
-	list_of_local_name_tables_t list_of_local_name_tables = {};
-
-	status = create_list_of_local_name_tables (&list_of_local_name_tables);
-	if (status) {return status;}
-
-	status = create_list_of_local_tables_from_str (str_with_table, &list_of_local_name_tables, &index_in_str_with_table);
-	if (status) {return status;}
-
-	#ifdef CHECK_WORK_OF_BACK_END
-
-		dump_list_of_local_name_tables (&list_of_local_name_tables);
 
 	#endif
 
@@ -140,16 +123,16 @@ language_error_t launch_back_end (int argc, char** argv)
 	tree_dump.str_with_program = str_with_table;
 	tree_dump.tree_html        = tree_html;
 
-	#ifdef CHECK_WORK_OF_BACK_END
+	#ifdef CHECK_WORK_OF_REVERSE_FRONT_END
 
 		dump_tree (root_node, &tree_dump);
-	
+
 	#endif
 
 	//-------------------------------------------------------------------------------------------------------
-	/*write tree in asm*/
+	/*write program from tree*/
 
-	status = write_tree_in_asm (argc, argv, root_node, &name_table, &list_of_local_name_tables, str_with_table);
+	status = write_program_from_tree (argc, argv, root_node, str_with_table, &name_table, &list_of_func);
 	if (status) {return status;}
 
 	//-------------------------------------------------------------------------------------------------------
@@ -158,7 +141,7 @@ language_error_t launch_back_end (int argc, char** argv)
 	delete_node         			 (root_node);
 	delete_list_of_func 			 (&list_of_func);
 	delete_name_table   			 (&name_table);
-	delete_list_of_local_name_tables (&list_of_local_name_tables);
+	// delete_list_of_local_name_tables (&list_of_local_name_tables);
 
 	free (str_with_tree);
 	free (str_with_table);

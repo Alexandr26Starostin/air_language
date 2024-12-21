@@ -2,861 +2,901 @@ digraph
 {
 	node[fontsize=9]
 
-	node_0x5b89d98b8f40 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98c16f0 | node = 0x5b89d98b8f40 | parent = (nil) | right = 0x5b89d98c1730}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de625f40 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62e980 | node = 0x5f26de625f40 | parent = (nil) | right = 0x5f26de62e9c0}}" style="filled",fillcolor="#BDEF9E"]
 
-	node_0x5b89d98c16f0 [shape=record, label = "{0 (уносится_в_небо_машина)| type = 4 (FUNCTION_DEFINITION) | {left = 0x5b89d98c16b0 | node = 0x5b89d98c16f0 | parent = 0x5b89d98b8f40 | right = 0x5b89d98c1670}}" style="filled",fillcolor="#68F10D"]
+	node_0x5f26de62e980 [shape=record, label = "{0 (уносится_в_небо_машина)| type = 4 (FUNCTION_DEFINITION) | {left = 0x5f26de62e940 | node = 0x5f26de62e980 | parent = 0x5f26de625f40 | right = 0x5f26de62e900}}" style="filled",fillcolor="#68F10D"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98b8f40 -> node_0x5b89d98c16f0
+	node_0x5f26de625f40 -> node_0x5f26de62e980
 
-	node_0x5b89d98c16b0 [shape=record, label = "{51 (борт_компании)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98c16b0 | parent = 0x5b89d98c16f0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62e940 [shape=record, label = "{51 (борт_компании)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62e940 | parent = 0x5f26de62e980 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c16f0 -> node_0x5b89d98c16b0
+	node_0x5f26de62e980 -> node_0x5f26de62e940
 
-	node_0x5b89d98c1670 [shape=record, label = "{nan| type = 5 (PARAMETERS) | {left = 0x5b89d98b93a0 | node = 0x5b89d98c1670 | parent = 0x5b89d98c16f0 | right = 0x5b89d98b9280}}" style="filled",fillcolor="#FF91DA"]
+	node_0x5f26de62e900 [shape=record, label = "{nan| type = 5 (PARAMETERS) | {left = 0x5f26de6263a0 | node = 0x5f26de62e900 | parent = 0x5f26de62e980 | right = 0x5f26de626280}}" style="filled",fillcolor="#FF91DA"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c16f0 -> node_0x5b89d98c1670
+	node_0x5f26de62e980 -> node_0x5f26de62e900
 
-	node_0x5b89d98b93a0 [shape=record, label = "{42 (и)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98b93a0 | parent = 0x5b89d98c1670 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de6263a0 [shape=record, label = "{42 (и)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de6263a0 | parent = 0x5f26de62e900 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c1670 -> node_0x5b89d98b93a0
+	node_0x5f26de62e900 -> node_0x5f26de6263a0
 
-	node_0x5b89d98b9280 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98b95d0 | node = 0x5b89d98b9280 | parent = 0x5b89d98c1670 | right = 0x5b89d98b9610}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de626280 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de626650 | node = 0x5f26de626280 | parent = 0x5f26de62e900 | right = 0x5f26de626690}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c1670 -> node_0x5b89d98b9280
+	node_0x5f26de62e900 -> node_0x5f26de626280
 
-	node_0x5b89d98b95d0 [shape=record, label = "{1 (САМОЛЁТ)| type = 6 (VAR_DECLARATION) | {left = 0x5b89d98b9590 | node = 0x5b89d98b95d0 | parent = 0x5b89d98b9280 | right = 0x5b89d98b9550}}" style="filled",fillcolor="#B93CDC"]
+	node_0x5f26de626650 [shape=record, label = "{1 (САМОЛЁТ)| type = 6 (VAR_DECLARATION) | {left = 0x5f26de626610 | node = 0x5f26de626650 | parent = 0x5f26de626280 | right = 0x5f26de6265d0}}" style="filled",fillcolor="#B93CDC"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98b9280 -> node_0x5b89d98b95d0
+	node_0x5f26de626280 -> node_0x5f26de626650
 
-	node_0x5b89d98b9590 [shape=record, label = "{51 (борт_компании)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98b9590 | parent = 0x5b89d98b95d0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de626610 [shape=record, label = "{51 (борт_компании)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de626610 | parent = 0x5f26de626650 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98b95d0 -> node_0x5b89d98b9590
+	node_0x5f26de626650 -> node_0x5f26de626610
 
-	node_0x5b89d98b9550 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5b89d98b9510 | node = 0x5b89d98b9550 | parent = 0x5b89d98b95d0 | right = 0x5b89d98b94d0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de6265d0 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5f26de626590 | node = 0x5f26de6265d0 | parent = 0x5f26de626650 | right = 0x5f26de6264d0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98b95d0 -> node_0x5b89d98b9550
+	node_0x5f26de626650 -> node_0x5f26de6265d0
 
-	node_0x5b89d98b9510 [shape=record, label = "{61 (осмотреть_на_дефекты)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98b9510 | parent = 0x5b89d98b9550 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de626590 [shape=record, label = "{24 (дозаправить_в_небе)| type = 3 (KEYWORD) | {left = 0x5f26de626510 | node = 0x5f26de626590 | parent = 0x5f26de6265d0 | right = 0x5f26de626550}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98b9550 -> node_0x5b89d98b9510
+	node_0x5f26de6265d0 -> node_0x5f26de626590
 
-	node_0x5b89d98b94d0 [shape=record, label = "{1 (САМОЛЁТ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98b94d0 | parent = 0x5b89d98b9550 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de626510 [shape=record, label = "{61 (осмотреть_на_дефекты)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de626510 | parent = 0x5f26de626590 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98b9550 -> node_0x5b89d98b94d0
+	node_0x5f26de626590 -> node_0x5f26de626510
 
-	node_0x5b89d98b9610 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98b97a0 | node = 0x5b89d98b9610 | parent = 0x5b89d98b9280 | right = 0x5b89d98b97e0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de626550 [shape=record, label = "{0| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de626550 | parent = 0x5f26de626590 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98b9280 -> node_0x5b89d98b9610
+	node_0x5f26de626590 -> node_0x5f26de626550
 
-	node_0x5b89d98b97a0 [shape=record, label = "{2 (НЕБО)| type = 6 (VAR_DECLARATION) | {left = 0x5b89d98b9760 | node = 0x5b89d98b97a0 | parent = 0x5b89d98b9610 | right = 0x5b89d98b9720}}" style="filled",fillcolor="#B93CDC"]
+	node_0x5f26de6264d0 [shape=record, label = "{1 (САМОЛЁТ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de6264d0 | parent = 0x5f26de6265d0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98b9610 -> node_0x5b89d98b97a0
+	node_0x5f26de6265d0 -> node_0x5f26de6264d0
 
-	node_0x5b89d98b9760 [shape=record, label = "{51 (борт_компании)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98b9760 | parent = 0x5b89d98b97a0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de626690 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de626820 | node = 0x5f26de626690 | parent = 0x5f26de626280 | right = 0x5f26de626860}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98b97a0 -> node_0x5b89d98b9760
+	node_0x5f26de626280 -> node_0x5f26de626690
 
-	node_0x5b89d98b9720 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5b89d98b96e0 | node = 0x5b89d98b9720 | parent = 0x5b89d98b97a0 | right = 0x5b89d98b96a0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de626820 [shape=record, label = "{2 (НЕБО)| type = 6 (VAR_DECLARATION) | {left = 0x5f26de6267e0 | node = 0x5f26de626820 | parent = 0x5f26de626690 | right = 0x5f26de6267a0}}" style="filled",fillcolor="#B93CDC"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98b97a0 -> node_0x5b89d98b9720
+	node_0x5f26de626690 -> node_0x5f26de626820
 
-	node_0x5b89d98b96e0 [shape=record, label = "{61 (осмотреть_на_дефекты)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98b96e0 | parent = 0x5b89d98b9720 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de6267e0 [shape=record, label = "{51 (борт_компании)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de6267e0 | parent = 0x5f26de626820 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98b9720 -> node_0x5b89d98b96e0
+	node_0x5f26de626820 -> node_0x5f26de6267e0
 
-	node_0x5b89d98b96a0 [shape=record, label = "{2 (НЕБО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98b96a0 | parent = 0x5b89d98b9720 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de6267a0 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5f26de626760 | node = 0x5f26de6267a0 | parent = 0x5f26de626820 | right = 0x5f26de626720}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98b9720 -> node_0x5b89d98b96a0
+	node_0x5f26de626820 -> node_0x5f26de6267a0
 
-	node_0x5b89d98b97e0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98bcce0 | node = 0x5b89d98b97e0 | parent = 0x5b89d98b9610 | right = 0x5b89d98bcd20}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de626760 [shape=record, label = "{61 (осмотреть_на_дефекты)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de626760 | parent = 0x5f26de6267a0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98b9610 -> node_0x5b89d98b97e0
+	node_0x5f26de6267a0 -> node_0x5f26de626760
 
-	node_0x5b89d98bcce0 [shape=record, label = "{3 (ТРАНСАЭРО)| type = 6 (VAR_DECLARATION) | {left = 0x5b89d98b98e0 | node = 0x5b89d98bcce0 | parent = 0x5b89d98b97e0 | right = 0x5b89d98b98a0}}" style="filled",fillcolor="#B93CDC"]
+	node_0x5f26de626720 [shape=record, label = "{2 (НЕБО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de626720 | parent = 0x5f26de6267a0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98b97e0 -> node_0x5b89d98bcce0
+	node_0x5f26de6267a0 -> node_0x5f26de626720
 
-	node_0x5b89d98b98e0 [shape=record, label = "{51 (борт_компании)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98b98e0 | parent = 0x5b89d98bcce0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de626860 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de629df0 | node = 0x5f26de626860 | parent = 0x5f26de626690 | right = 0x5f26de629e30}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bcce0 -> node_0x5b89d98b98e0
+	node_0x5f26de626690 -> node_0x5f26de626860
 
-	node_0x5b89d98b98a0 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5b89d98b9860 | node = 0x5b89d98b98a0 | parent = 0x5b89d98bcce0 | right = 0x5b89d98b9820}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de629df0 [shape=record, label = "{3 (ТРАНСАЭРО)| type = 6 (VAR_DECLARATION) | {left = 0x5f26de629db0 | node = 0x5f26de629df0 | parent = 0x5f26de626860 | right = 0x5f26de629d70}}" style="filled",fillcolor="#B93CDC"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bcce0 -> node_0x5b89d98b98a0
+	node_0x5f26de626860 -> node_0x5f26de629df0
 
-	node_0x5b89d98b9860 [shape=record, label = "{61 (осмотреть_на_дефекты)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98b9860 | parent = 0x5b89d98b98a0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de629db0 [shape=record, label = "{51 (борт_компании)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de629db0 | parent = 0x5f26de629df0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98b98a0 -> node_0x5b89d98b9860
+	node_0x5f26de629df0 -> node_0x5f26de629db0
 
-	node_0x5b89d98b9820 [shape=record, label = "{3 (ТРАНСАЭРО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98b9820 | parent = 0x5b89d98b98a0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de629d70 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5f26de6268e0 | node = 0x5f26de629d70 | parent = 0x5f26de629df0 | right = 0x5f26de6268a0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98b98a0 -> node_0x5b89d98b9820
+	node_0x5f26de629df0 -> node_0x5f26de629d70
 
-	node_0x5b89d98bcd20 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98bcfb0 | node = 0x5b89d98bcd20 | parent = 0x5b89d98b97e0 | right = 0x5b89d98bcff0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de6268e0 [shape=record, label = "{61 (осмотреть_на_дефекты)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de6268e0 | parent = 0x5f26de629d70 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98b97e0 -> node_0x5b89d98bcd20
+	node_0x5f26de629d70 -> node_0x5f26de6268e0
 
-	node_0x5b89d98bcfb0 [shape=record, label = "{4 (ВВС_РФ)| type = 6 (VAR_DECLARATION) | {left = 0x5b89d98bcf70 | node = 0x5b89d98bcfb0 | parent = 0x5b89d98bcd20 | right = 0x5b89d98bcf30}}" style="filled",fillcolor="#B93CDC"]
+	node_0x5f26de6268a0 [shape=record, label = "{3 (ТРАНСАЭРО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de6268a0 | parent = 0x5f26de629d70 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bcd20 -> node_0x5b89d98bcfb0
+	node_0x5f26de629d70 -> node_0x5f26de6268a0
 
-	node_0x5b89d98bcf70 [shape=record, label = "{51 (борт_компании)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98bcf70 | parent = 0x5b89d98bcfb0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de629e30 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62a140 | node = 0x5f26de629e30 | parent = 0x5f26de626860 | right = 0x5f26de62a180}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bcfb0 -> node_0x5b89d98bcf70
+	node_0x5f26de626860 -> node_0x5f26de629e30
 
-	node_0x5b89d98bcf30 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5b89d98bcef0 | node = 0x5b89d98bcf30 | parent = 0x5b89d98bcfb0 | right = 0x5b89d98bceb0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62a140 [shape=record, label = "{4 (ВВС_РФ)| type = 6 (VAR_DECLARATION) | {left = 0x5f26de62a100 | node = 0x5f26de62a140 | parent = 0x5f26de629e30 | right = 0x5f26de62a0c0}}" style="filled",fillcolor="#B93CDC"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bcfb0 -> node_0x5b89d98bcf30
+	node_0x5f26de629e30 -> node_0x5f26de62a140
 
-	node_0x5b89d98bcef0 [shape=record, label = "{0| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98bcef0 | parent = 0x5b89d98bcf30 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62a100 [shape=record, label = "{51 (борт_компании)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62a100 | parent = 0x5f26de62a140 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bcf30 -> node_0x5b89d98bcef0
+	node_0x5f26de62a140 -> node_0x5f26de62a100
 
-	node_0x5b89d98bceb0 [shape=record, label = "{4 (ВВС_РФ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bceb0 | parent = 0x5b89d98bcf30 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62a0c0 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5f26de62a080 | node = 0x5f26de62a0c0 | parent = 0x5f26de62a140 | right = 0x5f26de629fc0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bcf30 -> node_0x5b89d98bceb0
+	node_0x5f26de62a140 -> node_0x5f26de62a0c0
 
-	node_0x5b89d98bcff0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98bd130 | node = 0x5b89d98bcff0 | parent = 0x5b89d98bcd20 | right = 0x5b89d98bd170}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62a080 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5f26de62a000 | node = 0x5f26de62a080 | parent = 0x5f26de62a0c0 | right = 0x5f26de62a040}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bcd20 -> node_0x5b89d98bcff0
+	node_0x5f26de62a0c0 -> node_0x5f26de62a080
 
-	node_0x5b89d98bd130 [shape=record, label = "{5 (БОИНГ)| type = 6 (VAR_DECLARATION) | {left = 0x5b89d98bd0f0 | node = 0x5b89d98bd130 | parent = 0x5b89d98bcff0 | right = 0x5b89d98bd0b0}}" style="filled",fillcolor="#B93CDC"]
+	node_0x5f26de62a000 [shape=record, label = "{0| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62a000 | parent = 0x5f26de62a080 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bcff0 -> node_0x5b89d98bd130
+	node_0x5f26de62a080 -> node_0x5f26de62a000
 
-	node_0x5b89d98bd0f0 [shape=record, label = "{51 (борт_компании)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98bd0f0 | parent = 0x5b89d98bd130 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62a040 [shape=record, label = "{1 (САМОЛЁТ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62a040 | parent = 0x5f26de62a080 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd130 -> node_0x5b89d98bd0f0
+	node_0x5f26de62a080 -> node_0x5f26de62a040
 
-	node_0x5b89d98bd0b0 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5b89d98bd070 | node = 0x5b89d98bd0b0 | parent = 0x5b89d98bd130 | right = 0x5b89d98bd030}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de629fc0 [shape=record, label = "{4 (ВВС_РФ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de629fc0 | parent = 0x5f26de62a0c0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd130 -> node_0x5b89d98bd0b0
+	node_0x5f26de62a0c0 -> node_0x5f26de629fc0
 
-	node_0x5b89d98bd070 [shape=record, label = "{0| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98bd070 | parent = 0x5b89d98bd0b0 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62a180 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62a3c0 | node = 0x5f26de62a180 | parent = 0x5f26de629e30 | right = 0x5f26de62a400}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd0b0 -> node_0x5b89d98bd070
+	node_0x5f26de629e30 -> node_0x5f26de62a180
 
-	node_0x5b89d98bd030 [shape=record, label = "{5 (БОИНГ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bd030 | parent = 0x5b89d98bd0b0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62a3c0 [shape=record, label = "{5 (БОИНГ)| type = 6 (VAR_DECLARATION) | {left = 0x5f26de62a380 | node = 0x5f26de62a3c0 | parent = 0x5f26de62a180 | right = 0x5f26de62a340}}" style="filled",fillcolor="#B93CDC"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd0b0 -> node_0x5b89d98bd030
+	node_0x5f26de62a180 -> node_0x5f26de62a3c0
 
-	node_0x5b89d98bd170 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98beeb0 | node = 0x5b89d98bd170 | parent = 0x5b89d98bcff0 | right = 0x5b89d98beef0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62a380 [shape=record, label = "{51 (борт_компании)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62a380 | parent = 0x5f26de62a3c0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bcff0 -> node_0x5b89d98bd170
+	node_0x5f26de62a3c0 -> node_0x5f26de62a380
 
-	node_0x5b89d98beeb0 [shape=record, label = "{11 (в_яростном_рёве_турбин_слышится)| type = 3 (KEYWORD) | {left = 0x5b89d98bd330 | node = 0x5b89d98beeb0 | parent = 0x5b89d98bd170 | right = 0x5b89d98bd270}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62a340 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5f26de62a300 | node = 0x5f26de62a340 | parent = 0x5f26de62a3c0 | right = 0x5f26de62a1c0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd170 -> node_0x5b89d98beeb0
+	node_0x5f26de62a3c0 -> node_0x5f26de62a340
 
-	node_0x5b89d98bd330 [shape=record, label = "{31 (рейс_следует_до)| type = 3 (KEYWORD) | {left = 0x5b89d98bd2b0 | node = 0x5b89d98bd330 | parent = 0x5b89d98beeb0 | right = 0x5b89d98bd2f0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62a300 [shape=record, label = "{25 (утечка_топлива)| type = 3 (KEYWORD) | {left = 0x5f26de62a280 | node = 0x5f26de62a300 | parent = 0x5f26de62a340 | right = 0x5f26de62a2c0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98beeb0 -> node_0x5b89d98bd330
+	node_0x5f26de62a340 -> node_0x5f26de62a300
 
-	node_0x5b89d98bd2b0 [shape=record, label = "{1 (САМОЛЁТ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bd2b0 | parent = 0x5b89d98bd330 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62a280 [shape=record, label = "{24 (дозаправить_в_небе)| type = 3 (KEYWORD) | {left = 0x5f26de62a200 | node = 0x5f26de62a280 | parent = 0x5f26de62a300 | right = 0x5f26de62a240}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd330 -> node_0x5b89d98bd2b0
+	node_0x5f26de62a300 -> node_0x5f26de62a280
 
-	node_0x5b89d98bd2f0 [shape=record, label = "{0| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98bd2f0 | parent = 0x5b89d98bd330 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62a200 [shape=record, label = "{0| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62a200 | parent = 0x5f26de62a280 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd330 -> node_0x5b89d98bd2f0
+	node_0x5f26de62a280 -> node_0x5f26de62a200
 
-	node_0x5b89d98bd270 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98be630 | node = 0x5b89d98bd270 | parent = 0x5b89d98beeb0 | right = 0x5b89d98be670}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62a240 [shape=record, label = "{1| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62a240 | parent = 0x5f26de62a280 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98beeb0 -> node_0x5b89d98bd270
+	node_0x5f26de62a280 -> node_0x5f26de62a240
 
-	node_0x5b89d98be630 [shape=record, label = "{11 (в_яростном_рёве_турбин_слышится)| type = 3 (KEYWORD) | {left = 0x5b89d98bd4f0 | node = 0x5b89d98be630 | parent = 0x5b89d98bd270 | right = 0x5b89d98bd430}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62a2c0 [shape=record, label = "{1| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62a2c0 | parent = 0x5f26de62a300 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd270 -> node_0x5b89d98be630
+	node_0x5f26de62a300 -> node_0x5f26de62a2c0
 
-	node_0x5b89d98bd4f0 [shape=record, label = "{31 (рейс_следует_до)| type = 3 (KEYWORD) | {left = 0x5b89d98bd470 | node = 0x5b89d98bd4f0 | parent = 0x5b89d98be630 | right = 0x5b89d98bd4b0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62a1c0 [shape=record, label = "{5 (БОИНГ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62a1c0 | parent = 0x5f26de62a340 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98be630 -> node_0x5b89d98bd4f0
+	node_0x5f26de62a340 -> node_0x5f26de62a1c0
 
-	node_0x5b89d98bd470 [shape=record, label = "{2 (НЕБО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bd470 | parent = 0x5b89d98bd4f0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62a400 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62c140 | node = 0x5f26de62a400 | parent = 0x5f26de62a180 | right = 0x5f26de62c180}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd4f0 -> node_0x5b89d98bd470
+	node_0x5f26de62a180 -> node_0x5f26de62a400
 
-	node_0x5b89d98bd4b0 [shape=record, label = "{0| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98bd4b0 | parent = 0x5b89d98bd4f0 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62c140 [shape=record, label = "{11 (в_яростном_рёве_турбин_слышится)| type = 3 (KEYWORD) | {left = 0x5f26de62a5c0 | node = 0x5f26de62c140 | parent = 0x5f26de62a400 | right = 0x5f26de62a500}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd4f0 -> node_0x5b89d98bd4b0
+	node_0x5f26de62a400 -> node_0x5f26de62c140
 
-	node_0x5b89d98bd430 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98be270 | node = 0x5b89d98bd430 | parent = 0x5b89d98be630 | right = 0x5b89d98be2b0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62a5c0 [shape=record, label = "{31 (рейс_следует_до)| type = 3 (KEYWORD) | {left = 0x5f26de62a540 | node = 0x5f26de62a5c0 | parent = 0x5f26de62c140 | right = 0x5f26de62a580}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98be630 -> node_0x5b89d98bd430
+	node_0x5f26de62c140 -> node_0x5f26de62a5c0
 
-	node_0x5b89d98be270 [shape=record, label = "{11 (в_яростном_рёве_турбин_слышится)| type = 3 (KEYWORD) | {left = 0x5b89d98bd6b0 | node = 0x5b89d98be270 | parent = 0x5b89d98bd430 | right = 0x5b89d98bd5f0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62a540 [shape=record, label = "{1 (САМОЛЁТ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62a540 | parent = 0x5f26de62a5c0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd430 -> node_0x5b89d98be270
+	node_0x5f26de62a5c0 -> node_0x5f26de62a540
 
-	node_0x5b89d98bd6b0 [shape=record, label = "{31 (рейс_следует_до)| type = 3 (KEYWORD) | {left = 0x5b89d98bd630 | node = 0x5b89d98bd6b0 | parent = 0x5b89d98be270 | right = 0x5b89d98bd670}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62a580 [shape=record, label = "{0| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62a580 | parent = 0x5f26de62a5c0 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98be270 -> node_0x5b89d98bd6b0
+	node_0x5f26de62a5c0 -> node_0x5f26de62a580
 
-	node_0x5b89d98bd630 [shape=record, label = "{3 (ТРАНСАЭРО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bd630 | parent = 0x5b89d98bd6b0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62a500 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62b8c0 | node = 0x5f26de62a500 | parent = 0x5f26de62c140 | right = 0x5f26de62b900}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd6b0 -> node_0x5b89d98bd630
+	node_0x5f26de62c140 -> node_0x5f26de62a500
 
-	node_0x5b89d98bd670 [shape=record, label = "{0| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98bd670 | parent = 0x5b89d98bd6b0 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62b8c0 [shape=record, label = "{11 (в_яростном_рёве_турбин_слышится)| type = 3 (KEYWORD) | {left = 0x5f26de62a780 | node = 0x5f26de62b8c0 | parent = 0x5f26de62a500 | right = 0x5f26de62a6c0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd6b0 -> node_0x5b89d98bd670
+	node_0x5f26de62a500 -> node_0x5f26de62b8c0
 
-	node_0x5b89d98bd5f0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98bd870 | node = 0x5b89d98bd5f0 | parent = 0x5b89d98be270 | right = 0x5b89d98bd8b0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62a780 [shape=record, label = "{31 (рейс_следует_до)| type = 3 (KEYWORD) | {left = 0x5f26de62a700 | node = 0x5f26de62a780 | parent = 0x5f26de62b8c0 | right = 0x5f26de62a740}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98be270 -> node_0x5b89d98bd5f0
+	node_0x5f26de62b8c0 -> node_0x5f26de62a780
 
-	node_0x5b89d98bd870 [shape=record, label = "{62 (починить_двигатель)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98bd870 | parent = 0x5b89d98bd5f0 | right = 0x5b89d98bd830}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62a700 [shape=record, label = "{2 (НЕБО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62a700 | parent = 0x5f26de62a780 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd5f0 -> node_0x5b89d98bd870
+	node_0x5f26de62a780 -> node_0x5f26de62a700
 
-	node_0x5b89d98bd830 [shape=record, label = "{1| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98bd830 | parent = 0x5b89d98bd870 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62a740 [shape=record, label = "{0| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62a740 | parent = 0x5f26de62a780 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd870 -> node_0x5b89d98bd830
+	node_0x5f26de62a780 -> node_0x5f26de62a740
 
-	node_0x5b89d98bd8b0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98bda70 | node = 0x5b89d98bd8b0 | parent = 0x5b89d98bd5f0 | right = 0x5b89d98bdab0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62a6c0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62b500 | node = 0x5f26de62a6c0 | parent = 0x5f26de62b8c0 | right = 0x5f26de62b540}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd5f0 -> node_0x5b89d98bd8b0
+	node_0x5f26de62b8c0 -> node_0x5f26de62a6c0
 
-	node_0x5b89d98bda70 [shape=record, label = "{62 (починить_двигатель)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98bda70 | parent = 0x5b89d98bd8b0 | right = 0x5b89d98bda30}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62b500 [shape=record, label = "{11 (в_яростном_рёве_турбин_слышится)| type = 3 (KEYWORD) | {left = 0x5f26de62a940 | node = 0x5f26de62b500 | parent = 0x5f26de62a6c0 | right = 0x5f26de62a880}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd8b0 -> node_0x5b89d98bda70
+	node_0x5f26de62a6c0 -> node_0x5f26de62b500
 
-	node_0x5b89d98bda30 [shape=record, label = "{2| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98bda30 | parent = 0x5b89d98bda70 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62a940 [shape=record, label = "{31 (рейс_следует_до)| type = 3 (KEYWORD) | {left = 0x5f26de62a8c0 | node = 0x5f26de62a940 | parent = 0x5f26de62b500 | right = 0x5f26de62a900}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bda70 -> node_0x5b89d98bda30
+	node_0x5f26de62b500 -> node_0x5f26de62a940
 
-	node_0x5b89d98bdab0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98bdc70 | node = 0x5b89d98bdab0 | parent = 0x5b89d98bd8b0 | right = 0x5b89d98bdcb0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62a8c0 [shape=record, label = "{3 (ТРАНСАЭРО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62a8c0 | parent = 0x5f26de62a940 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd8b0 -> node_0x5b89d98bdab0
+	node_0x5f26de62a940 -> node_0x5f26de62a8c0
 
-	node_0x5b89d98bdc70 [shape=record, label = "{62 (починить_двигатель)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98bdc70 | parent = 0x5b89d98bdab0 | right = 0x5b89d98bdc30}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62a900 [shape=record, label = "{0| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62a900 | parent = 0x5f26de62a940 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bdab0 -> node_0x5b89d98bdc70
+	node_0x5f26de62a940 -> node_0x5f26de62a900
 
-	node_0x5b89d98bdc30 [shape=record, label = "{3| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98bdc30 | parent = 0x5b89d98bdc70 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62a880 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62ab00 | node = 0x5f26de62a880 | parent = 0x5f26de62b500 | right = 0x5f26de62ab40}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bdc70 -> node_0x5b89d98bdc30
+	node_0x5f26de62b500 -> node_0x5f26de62a880
 
-	node_0x5b89d98bdcb0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98bde70 | node = 0x5b89d98bdcb0 | parent = 0x5b89d98bdab0 | right = 0x5b89d98bdeb0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62ab00 [shape=record, label = "{62 (починить_двигатель)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62ab00 | parent = 0x5f26de62a880 | right = 0x5f26de62aac0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bdab0 -> node_0x5b89d98bdcb0
+	node_0x5f26de62a880 -> node_0x5f26de62ab00
 
-	node_0x5b89d98bde70 [shape=record, label = "{62 (починить_двигатель)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98bde70 | parent = 0x5b89d98bdcb0 | right = 0x5b89d98bde30}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62aac0 [shape=record, label = "{1| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62aac0 | parent = 0x5f26de62ab00 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bdcb0 -> node_0x5b89d98bde70
+	node_0x5f26de62ab00 -> node_0x5f26de62aac0
 
-	node_0x5b89d98bde30 [shape=record, label = "{4| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98bde30 | parent = 0x5b89d98bde70 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62ab40 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62ad00 | node = 0x5f26de62ab40 | parent = 0x5f26de62a880 | right = 0x5f26de62ad40}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bde70 -> node_0x5b89d98bde30
+	node_0x5f26de62a880 -> node_0x5f26de62ab40
 
-	node_0x5b89d98bdeb0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98be070 | node = 0x5b89d98bdeb0 | parent = 0x5b89d98bdcb0 | right = 0x5b89d98be0b0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62ad00 [shape=record, label = "{62 (починить_двигатель)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62ad00 | parent = 0x5f26de62ab40 | right = 0x5f26de62acc0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bdcb0 -> node_0x5b89d98bdeb0
+	node_0x5f26de62ab40 -> node_0x5f26de62ad00
 
-	node_0x5b89d98be070 [shape=record, label = "{62 (починить_двигатель)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98be070 | parent = 0x5b89d98bdeb0 | right = 0x5b89d98be030}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62acc0 [shape=record, label = "{2| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62acc0 | parent = 0x5f26de62ad00 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bdeb0 -> node_0x5b89d98be070
+	node_0x5f26de62ad00 -> node_0x5f26de62acc0
 
-	node_0x5b89d98be030 [shape=record, label = "{5| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98be030 | parent = 0x5b89d98be070 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62ad40 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62af00 | node = 0x5f26de62ad40 | parent = 0x5f26de62ab40 | right = 0x5f26de62af40}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98be070 -> node_0x5b89d98be030
+	node_0x5f26de62ab40 -> node_0x5f26de62ad40
 
-	node_0x5b89d98be0b0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98be0b0 | parent = 0x5b89d98bdeb0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62af00 [shape=record, label = "{62 (починить_двигатель)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62af00 | parent = 0x5f26de62ad40 | right = 0x5f26de62aec0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bdeb0 -> node_0x5b89d98be0b0
+	node_0x5f26de62ad40 -> node_0x5f26de62af00
 
-	node_0x5b89d98be2b0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98be430 | node = 0x5b89d98be2b0 | parent = 0x5b89d98bd430 | right = 0x5b89d98be470}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62aec0 [shape=record, label = "{3| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62aec0 | parent = 0x5f26de62af00 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd430 -> node_0x5b89d98be2b0
+	node_0x5f26de62af00 -> node_0x5f26de62aec0
 
-	node_0x5b89d98be430 [shape=record, label = "{74 (аварийная_посадка)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98be430 | parent = 0x5b89d98be2b0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62af40 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62b100 | node = 0x5f26de62af40 | parent = 0x5f26de62ad40 | right = 0x5f26de62b140}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98be2b0 -> node_0x5b89d98be430
+	node_0x5f26de62ad40 -> node_0x5f26de62af40
 
-	node_0x5b89d98be470 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98be470 | parent = 0x5b89d98be2b0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62b100 [shape=record, label = "{62 (починить_двигатель)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62b100 | parent = 0x5f26de62af40 | right = 0x5f26de62b0c0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98be2b0 -> node_0x5b89d98be470
+	node_0x5f26de62af40 -> node_0x5f26de62b100
 
-	node_0x5b89d98be670 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98be8f0 | node = 0x5b89d98be670 | parent = 0x5b89d98bd270 | right = 0x5b89d98be930}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62b0c0 [shape=record, label = "{4| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62b0c0 | parent = 0x5f26de62b100 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd270 -> node_0x5b89d98be670
+	node_0x5f26de62b100 -> node_0x5f26de62b0c0
 
-	node_0x5b89d98be8f0 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5b89d98be8b0 | node = 0x5b89d98be8f0 | parent = 0x5b89d98be670 | right = 0x5b89d98be770}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62b140 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62b300 | node = 0x5f26de62b140 | parent = 0x5f26de62af40 | right = 0x5f26de62b340}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98be670 -> node_0x5b89d98be8f0
+	node_0x5f26de62af40 -> node_0x5f26de62b140
 
-	node_0x5b89d98be8b0 [shape=record, label = "{27 (вышел_на_кобру)| type = 3 (KEYWORD) | {left = 0x5b89d98be830 | node = 0x5b89d98be8b0 | parent = 0x5b89d98be8f0 | right = 0x5b89d98be870}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62b300 [shape=record, label = "{62 (починить_двигатель)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62b300 | parent = 0x5f26de62b140 | right = 0x5f26de62b2c0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98be8f0 -> node_0x5b89d98be8b0
+	node_0x5f26de62b140 -> node_0x5f26de62b300
 
-	node_0x5b89d98be830 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5b89d98be7b0 | node = 0x5b89d98be830 | parent = 0x5b89d98be8b0 | right = 0x5b89d98be7f0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62b2c0 [shape=record, label = "{5| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62b2c0 | parent = 0x5f26de62b300 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98be8b0 -> node_0x5b89d98be830
+	node_0x5f26de62b300 -> node_0x5f26de62b2c0
 
-	node_0x5b89d98be7b0 [shape=record, label = "{-100| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98be7b0 | parent = 0x5b89d98be830 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62b340 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62b340 | parent = 0x5f26de62b140 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98be830 -> node_0x5b89d98be7b0
+	node_0x5f26de62b140 -> node_0x5f26de62b340
 
-	node_0x5b89d98be7f0 [shape=record, label = "{3 (ТРАНСАЭРО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98be7f0 | parent = 0x5b89d98be830 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62b540 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62b6c0 | node = 0x5f26de62b540 | parent = 0x5f26de62a6c0 | right = 0x5f26de62b700}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98be830 -> node_0x5b89d98be7f0
+	node_0x5f26de62a6c0 -> node_0x5f26de62b540
 
-	node_0x5b89d98be870 [shape=record, label = "{2 (НЕБО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98be870 | parent = 0x5b89d98be8b0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62b6c0 [shape=record, label = "{74 (аварийная_посадка)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62b6c0 | parent = 0x5f26de62b540 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98be8b0 -> node_0x5b89d98be870
+	node_0x5f26de62b540 -> node_0x5f26de62b6c0
 
-	node_0x5b89d98be770 [shape=record, label = "{4 (ВВС_РФ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98be770 | parent = 0x5b89d98be8f0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62b700 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62b700 | parent = 0x5f26de62b540 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98be8f0 -> node_0x5b89d98be770
+	node_0x5f26de62b540 -> node_0x5f26de62b700
 
-	node_0x5b89d98be930 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98beaf0 | node = 0x5b89d98be930 | parent = 0x5b89d98be670 | right = 0x5b89d98beb30}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62b900 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62bb80 | node = 0x5f26de62b900 | parent = 0x5f26de62a500 | right = 0x5f26de62bbc0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98be670 -> node_0x5b89d98be930
+	node_0x5f26de62a500 -> node_0x5f26de62b900
 
-	node_0x5b89d98beaf0 [shape=record, label = "{62 (починить_двигатель)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98beaf0 | parent = 0x5b89d98be930 | right = 0x5b89d98beab0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62bb80 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5f26de62bb40 | node = 0x5f26de62bb80 | parent = 0x5f26de62b900 | right = 0x5f26de62ba00}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98be930 -> node_0x5b89d98beaf0
+	node_0x5f26de62b900 -> node_0x5f26de62bb80
 
-	node_0x5b89d98beab0 [shape=record, label = "{4 (ВВС_РФ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98beab0 | parent = 0x5b89d98beaf0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62bb40 [shape=record, label = "{27 (вышел_на_кобру)| type = 3 (KEYWORD) | {left = 0x5f26de62bac0 | node = 0x5f26de62bb40 | parent = 0x5f26de62bb80 | right = 0x5f26de62bb00}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98beaf0 -> node_0x5b89d98beab0
+	node_0x5f26de62bb80 -> node_0x5f26de62bb40
 
-	node_0x5b89d98beb30 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98becb0 | node = 0x5b89d98beb30 | parent = 0x5b89d98be930 | right = 0x5b89d98becf0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62bac0 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5f26de62ba40 | node = 0x5f26de62bac0 | parent = 0x5f26de62bb40 | right = 0x5f26de62ba80}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98be930 -> node_0x5b89d98beb30
+	node_0x5f26de62bb40 -> node_0x5f26de62bac0
 
-	node_0x5b89d98becb0 [shape=record, label = "{74 (аварийная_посадка)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98becb0 | parent = 0x5b89d98beb30 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62ba40 [shape=record, label = "{-100| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62ba40 | parent = 0x5f26de62bac0 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98beb30 -> node_0x5b89d98becb0
+	node_0x5f26de62bac0 -> node_0x5f26de62ba40
 
-	node_0x5b89d98becf0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98becf0 | parent = 0x5b89d98beb30 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62ba80 [shape=record, label = "{3 (ТРАНСАЭРО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62ba80 | parent = 0x5f26de62bac0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98beb30 -> node_0x5b89d98becf0
+	node_0x5f26de62bac0 -> node_0x5f26de62ba80
 
-	node_0x5b89d98beef0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98bf2f0 | node = 0x5b89d98beef0 | parent = 0x5b89d98bd170 | right = 0x5b89d98bf330}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62bb00 [shape=record, label = "{2 (НЕБО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62bb00 | parent = 0x5f26de62bb40 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bd170 -> node_0x5b89d98beef0
+	node_0x5f26de62bb40 -> node_0x5f26de62bb00
 
-	node_0x5b89d98bf2f0 [shape=record, label = "{6 (ПАПА)| type = 6 (VAR_DECLARATION) | {left = 0x5b89d98bf2b0 | node = 0x5b89d98bf2f0 | parent = 0x5b89d98beef0 | right = 0x5b89d98bf270}}" style="filled",fillcolor="#B93CDC"]
+	node_0x5f26de62ba00 [shape=record, label = "{4 (ВВС_РФ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62ba00 | parent = 0x5f26de62bb80 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98beef0 -> node_0x5b89d98bf2f0
+	node_0x5f26de62bb80 -> node_0x5f26de62ba00
 
-	node_0x5b89d98bf2b0 [shape=record, label = "{51 (борт_компании)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98bf2b0 | parent = 0x5b89d98bf2f0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62bbc0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62bd80 | node = 0x5f26de62bbc0 | parent = 0x5f26de62b900 | right = 0x5f26de62bdc0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf2f0 -> node_0x5b89d98bf2b0
+	node_0x5f26de62b900 -> node_0x5f26de62bbc0
 
-	node_0x5b89d98bf270 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5b89d98bf230 | node = 0x5b89d98bf270 | parent = 0x5b89d98bf2f0 | right = 0x5b89d98beff0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62bd80 [shape=record, label = "{62 (починить_двигатель)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62bd80 | parent = 0x5f26de62bbc0 | right = 0x5f26de62bd40}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf2f0 -> node_0x5b89d98bf270
+	node_0x5f26de62bbc0 -> node_0x5f26de62bd80
 
-	node_0x5b89d98bf230 [shape=record, label = "{25 (утечка_топлива)| type = 3 (KEYWORD) | {left = 0x5b89d98bf0b0 | node = 0x5b89d98bf230 | parent = 0x5b89d98bf270 | right = 0x5b89d98bf1f0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62bd40 [shape=record, label = "{4 (ВВС_РФ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62bd40 | parent = 0x5f26de62bd80 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf270 -> node_0x5b89d98bf230
+	node_0x5f26de62bd80 -> node_0x5f26de62bd40
 
-	node_0x5b89d98bf0b0 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5b89d98bf030 | node = 0x5b89d98bf0b0 | parent = 0x5b89d98bf230 | right = 0x5b89d98bf070}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62bdc0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62bf40 | node = 0x5f26de62bdc0 | parent = 0x5f26de62bbc0 | right = 0x5f26de62bf80}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf230 -> node_0x5b89d98bf0b0
+	node_0x5f26de62bbc0 -> node_0x5f26de62bdc0
 
-	node_0x5b89d98bf030 [shape=record, label = "{2 (НЕБО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bf030 | parent = 0x5b89d98bf0b0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62bf40 [shape=record, label = "{74 (аварийная_посадка)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62bf40 | parent = 0x5f26de62bdc0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf0b0 -> node_0x5b89d98bf030
+	node_0x5f26de62bdc0 -> node_0x5f26de62bf40
 
-	node_0x5b89d98bf070 [shape=record, label = "{2 (НЕБО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bf070 | parent = 0x5b89d98bf0b0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62bf80 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62bf80 | parent = 0x5f26de62bdc0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf0b0 -> node_0x5b89d98bf070
+	node_0x5f26de62bdc0 -> node_0x5f26de62bf80
 
-	node_0x5b89d98bf1f0 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5b89d98bf0f0 | node = 0x5b89d98bf1f0 | parent = 0x5b89d98bf230 | right = 0x5b89d98bf1b0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62c180 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62c580 | node = 0x5f26de62c180 | parent = 0x5f26de62a400 | right = 0x5f26de62c5c0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf230 -> node_0x5b89d98bf1f0
+	node_0x5f26de62a400 -> node_0x5f26de62c180
 
-	node_0x5b89d98bf0f0 [shape=record, label = "{4| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98bf0f0 | parent = 0x5b89d98bf1f0 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62c580 [shape=record, label = "{6 (ПАПА)| type = 6 (VAR_DECLARATION) | {left = 0x5f26de62c540 | node = 0x5f26de62c580 | parent = 0x5f26de62c180 | right = 0x5f26de62c500}}" style="filled",fillcolor="#B93CDC"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf1f0 -> node_0x5b89d98bf0f0
+	node_0x5f26de62c180 -> node_0x5f26de62c580
 
-	node_0x5b89d98bf1b0 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5b89d98bf130 | node = 0x5b89d98bf1b0 | parent = 0x5b89d98bf1f0 | right = 0x5b89d98bf170}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62c540 [shape=record, label = "{51 (борт_компании)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62c540 | parent = 0x5f26de62c580 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf1f0 -> node_0x5b89d98bf1b0
+	node_0x5f26de62c580 -> node_0x5f26de62c540
 
-	node_0x5b89d98bf130 [shape=record, label = "{1 (САМОЛЁТ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bf130 | parent = 0x5b89d98bf1b0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62c500 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5f26de62c4c0 | node = 0x5f26de62c500 | parent = 0x5f26de62c580 | right = 0x5f26de62c280}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf1b0 -> node_0x5b89d98bf130
+	node_0x5f26de62c580 -> node_0x5f26de62c500
 
-	node_0x5b89d98bf170 [shape=record, label = "{3 (ТРАНСАЭРО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bf170 | parent = 0x5b89d98bf1b0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62c4c0 [shape=record, label = "{25 (утечка_топлива)| type = 3 (KEYWORD) | {left = 0x5f26de62c340 | node = 0x5f26de62c4c0 | parent = 0x5f26de62c500 | right = 0x5f26de62c480}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf1b0 -> node_0x5b89d98bf170
+	node_0x5f26de62c500 -> node_0x5f26de62c4c0
 
-	node_0x5b89d98beff0 [shape=record, label = "{6 (ПАПА)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98beff0 | parent = 0x5b89d98bf270 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62c340 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5f26de62c2c0 | node = 0x5f26de62c340 | parent = 0x5f26de62c4c0 | right = 0x5f26de62c300}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf270 -> node_0x5b89d98beff0
+	node_0x5f26de62c4c0 -> node_0x5f26de62c340
 
-	node_0x5b89d98bf330 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98bf530 | node = 0x5b89d98bf330 | parent = 0x5b89d98beef0 | right = 0x5b89d98bf570}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62c2c0 [shape=record, label = "{2 (НЕБО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62c2c0 | parent = 0x5f26de62c340 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98beef0 -> node_0x5b89d98bf330
+	node_0x5f26de62c340 -> node_0x5f26de62c2c0
 
-	node_0x5b89d98bf530 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5b89d98bf4f0 | node = 0x5b89d98bf530 | parent = 0x5b89d98bf330 | right = 0x5b89d98bf430}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62c300 [shape=record, label = "{2 (НЕБО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62c300 | parent = 0x5f26de62c340 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf330 -> node_0x5b89d98bf530
+	node_0x5f26de62c340 -> node_0x5f26de62c300
 
-	node_0x5b89d98bf4f0 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5b89d98bf470 | node = 0x5b89d98bf4f0 | parent = 0x5b89d98bf530 | right = 0x5b89d98bf4b0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62c480 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5f26de62c380 | node = 0x5f26de62c480 | parent = 0x5f26de62c4c0 | right = 0x5f26de62c440}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf530 -> node_0x5b89d98bf4f0
+	node_0x5f26de62c4c0 -> node_0x5f26de62c480
 
-	node_0x5b89d98bf470 [shape=record, label = "{6 (ПАПА)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bf470 | parent = 0x5b89d98bf4f0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62c380 [shape=record, label = "{4| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62c380 | parent = 0x5f26de62c480 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf4f0 -> node_0x5b89d98bf470
+	node_0x5f26de62c480 -> node_0x5f26de62c380
 
-	node_0x5b89d98bf4b0 [shape=record, label = "{10000| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98bf4b0 | parent = 0x5b89d98bf4f0 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62c440 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5f26de62c3c0 | node = 0x5f26de62c440 | parent = 0x5f26de62c480 | right = 0x5f26de62c400}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf4f0 -> node_0x5b89d98bf4b0
+	node_0x5f26de62c480 -> node_0x5f26de62c440
 
-	node_0x5b89d98bf430 [shape=record, label = "{6 (ПАПА)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bf430 | parent = 0x5b89d98bf530 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62c3c0 [shape=record, label = "{1 (САМОЛЁТ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62c3c0 | parent = 0x5f26de62c440 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf530 -> node_0x5b89d98bf430
+	node_0x5f26de62c440 -> node_0x5f26de62c3c0
 
-	node_0x5b89d98bf570 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98c0770 | node = 0x5b89d98bf570 | parent = 0x5b89d98bf330 | right = 0x5b89d98c07b0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62c400 [shape=record, label = "{3 (ТРАНСАЭРО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62c400 | parent = 0x5f26de62c440 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf330 -> node_0x5b89d98bf570
+	node_0x5f26de62c440 -> node_0x5f26de62c400
 
-	node_0x5b89d98c0770 [shape=record, label = "{11 (в_яростном_рёве_турбин_слышится)| type = 3 (KEYWORD) | {left = 0x5b89d98bf730 | node = 0x5b89d98c0770 | parent = 0x5b89d98bf570 | right = 0x5b89d98bf670}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62c280 [shape=record, label = "{6 (ПАПА)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62c280 | parent = 0x5f26de62c500 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf570 -> node_0x5b89d98c0770
+	node_0x5f26de62c500 -> node_0x5f26de62c280
 
-	node_0x5b89d98bf730 [shape=record, label = "{33 (попасть_в_турбулентность)| type = 3 (KEYWORD) | {left = 0x5b89d98bf6b0 | node = 0x5b89d98bf730 | parent = 0x5b89d98c0770 | right = 0x5b89d98bf6f0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62c5c0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62c7c0 | node = 0x5f26de62c5c0 | parent = 0x5f26de62c180 | right = 0x5f26de62c800}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c0770 -> node_0x5b89d98bf730
+	node_0x5f26de62c180 -> node_0x5f26de62c5c0
 
-	node_0x5b89d98bf6b0 [shape=record, label = "{6 (ПАПА)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bf6b0 | parent = 0x5b89d98bf730 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62c7c0 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5f26de62c780 | node = 0x5f26de62c7c0 | parent = 0x5f26de62c5c0 | right = 0x5f26de62c6c0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf730 -> node_0x5b89d98bf6b0
+	node_0x5f26de62c5c0 -> node_0x5f26de62c7c0
 
-	node_0x5b89d98bf6f0 [shape=record, label = "{0| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98bf6f0 | parent = 0x5b89d98bf730 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62c780 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5f26de62c700 | node = 0x5f26de62c780 | parent = 0x5f26de62c7c0 | right = 0x5f26de62c740}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf730 -> node_0x5b89d98bf6f0
+	node_0x5f26de62c7c0 -> node_0x5f26de62c780
 
-	node_0x5b89d98bf670 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98bf8f0 | node = 0x5b89d98bf670 | parent = 0x5b89d98c0770 | right = 0x5b89d98bf930}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62c700 [shape=record, label = "{6 (ПАПА)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62c700 | parent = 0x5f26de62c780 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c0770 -> node_0x5b89d98bf670
+	node_0x5f26de62c780 -> node_0x5f26de62c700
 
-	node_0x5b89d98bf8f0 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5b89d98bf8b0 | node = 0x5b89d98bf8f0 | parent = 0x5b89d98bf670 | right = 0x5b89d98bf830}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62c740 [shape=record, label = "{10000| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62c740 | parent = 0x5f26de62c780 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf670 -> node_0x5b89d98bf8f0
+	node_0x5f26de62c780 -> node_0x5f26de62c740
 
-	node_0x5b89d98bf8b0 [shape=record, label = "{29 (изобразить_петлю)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98bf8b0 | parent = 0x5b89d98bf8f0 | right = 0x5b89d98bf870}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62c6c0 [shape=record, label = "{6 (ПАПА)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62c6c0 | parent = 0x5f26de62c7c0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf8f0 -> node_0x5b89d98bf8b0
+	node_0x5f26de62c7c0 -> node_0x5f26de62c6c0
 
-	node_0x5b89d98bf870 [shape=record, label = "{6 (ПАПА)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bf870 | parent = 0x5b89d98bf8b0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62c800 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62da00 | node = 0x5f26de62c800 | parent = 0x5f26de62c5c0 | right = 0x5f26de62da40}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf8b0 -> node_0x5b89d98bf870
+	node_0x5f26de62c5c0 -> node_0x5f26de62c800
 
-	node_0x5b89d98bf830 [shape=record, label = "{6 (ПАПА)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bf830 | parent = 0x5b89d98bf8f0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62da00 [shape=record, label = "{11 (в_яростном_рёве_турбин_слышится)| type = 3 (KEYWORD) | {left = 0x5f26de62c9c0 | node = 0x5f26de62da00 | parent = 0x5f26de62c800 | right = 0x5f26de62c900}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf8f0 -> node_0x5b89d98bf830
+	node_0x5f26de62c800 -> node_0x5f26de62da00
 
-	node_0x5b89d98bf930 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98bfcb0 | node = 0x5b89d98bf930 | parent = 0x5b89d98bf670 | right = 0x5b89d98bfcf0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62c9c0 [shape=record, label = "{33 (попасть_в_турбулентность)| type = 3 (KEYWORD) | {left = 0x5f26de62c940 | node = 0x5f26de62c9c0 | parent = 0x5f26de62da00 | right = 0x5f26de62c980}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf670 -> node_0x5b89d98bf930
+	node_0x5f26de62da00 -> node_0x5f26de62c9c0
 
-	node_0x5b89d98bfcb0 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5b89d98bfc70 | node = 0x5b89d98bfcb0 | parent = 0x5b89d98bf930 | right = 0x5b89d98bfa30}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62c940 [shape=record, label = "{6 (ПАПА)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62c940 | parent = 0x5f26de62c9c0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf930 -> node_0x5b89d98bfcb0
+	node_0x5f26de62c9c0 -> node_0x5f26de62c940
 
-	node_0x5b89d98bfc70 [shape=record, label = "{27 (вышел_на_кобру)| type = 3 (KEYWORD) | {left = 0x5b89d98bfb70 | node = 0x5b89d98bfc70 | parent = 0x5b89d98bfcb0 | right = 0x5b89d98bfc30}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62c980 [shape=record, label = "{0| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62c980 | parent = 0x5f26de62c9c0 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bfcb0 -> node_0x5b89d98bfc70
+	node_0x5f26de62c9c0 -> node_0x5f26de62c980
 
-	node_0x5b89d98bfb70 [shape=record, label = "{24 (дозаправить_в_небе)| type = 3 (KEYWORD) | {left = 0x5b89d98bfaf0 | node = 0x5b89d98bfb70 | parent = 0x5b89d98bfc70 | right = 0x5b89d98bfb30}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62c900 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62cb80 | node = 0x5f26de62c900 | parent = 0x5f26de62da00 | right = 0x5f26de62cbc0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bfc70 -> node_0x5b89d98bfb70
+	node_0x5f26de62da00 -> node_0x5f26de62c900
 
-	node_0x5b89d98bfaf0 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5b89d98bfa70 | node = 0x5b89d98bfaf0 | parent = 0x5b89d98bfb70 | right = 0x5b89d98bfab0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62cb80 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5f26de62cb40 | node = 0x5f26de62cb80 | parent = 0x5f26de62c900 | right = 0x5f26de62cac0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bfb70 -> node_0x5b89d98bfaf0
+	node_0x5f26de62c900 -> node_0x5f26de62cb80
 
-	node_0x5b89d98bfa70 [shape=record, label = "{-100| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98bfa70 | parent = 0x5b89d98bfaf0 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62cb40 [shape=record, label = "{29 (изобразить_петлю)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62cb40 | parent = 0x5f26de62cb80 | right = 0x5f26de62cb00}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bfaf0 -> node_0x5b89d98bfa70
+	node_0x5f26de62cb80 -> node_0x5f26de62cb40
 
-	node_0x5b89d98bfab0 [shape=record, label = "{2 (НЕБО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bfab0 | parent = 0x5b89d98bfaf0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62cb00 [shape=record, label = "{6 (ПАПА)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62cb00 | parent = 0x5f26de62cb40 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bfaf0 -> node_0x5b89d98bfab0
+	node_0x5f26de62cb40 -> node_0x5f26de62cb00
 
-	node_0x5b89d98bfb30 [shape=record, label = "{6 (ПАПА)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bfb30 | parent = 0x5b89d98bfb70 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62cac0 [shape=record, label = "{6 (ПАПА)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62cac0 | parent = 0x5f26de62cb80 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bfb70 -> node_0x5b89d98bfb30
+	node_0x5f26de62cb80 -> node_0x5f26de62cac0
 
-	node_0x5b89d98bfc30 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5b89d98bfbb0 | node = 0x5b89d98bfc30 | parent = 0x5b89d98bfc70 | right = 0x5b89d98bfbf0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62cbc0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62cf40 | node = 0x5f26de62cbc0 | parent = 0x5f26de62c900 | right = 0x5f26de62cf80}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bfc70 -> node_0x5b89d98bfc30
+	node_0x5f26de62c900 -> node_0x5f26de62cbc0
 
-	node_0x5b89d98bfbb0 [shape=record, label = "{1 (САМОЛЁТ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bfbb0 | parent = 0x5b89d98bfc30 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62cf40 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5f26de62cf00 | node = 0x5f26de62cf40 | parent = 0x5f26de62cbc0 | right = 0x5f26de62ccc0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bfc30 -> node_0x5b89d98bfbb0
+	node_0x5f26de62cbc0 -> node_0x5f26de62cf40
 
-	node_0x5b89d98bfbf0 [shape=record, label = "{2| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98bfbf0 | parent = 0x5b89d98bfc30 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62cf00 [shape=record, label = "{27 (вышел_на_кобру)| type = 3 (KEYWORD) | {left = 0x5f26de62ce00 | node = 0x5f26de62cf00 | parent = 0x5f26de62cf40 | right = 0x5f26de62cec0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bfc30 -> node_0x5b89d98bfbf0
+	node_0x5f26de62cf40 -> node_0x5f26de62cf00
 
-	node_0x5b89d98bfa30 [shape=record, label = "{4 (ВВС_РФ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bfa30 | parent = 0x5b89d98bfcb0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62ce00 [shape=record, label = "{24 (дозаправить_в_небе)| type = 3 (KEYWORD) | {left = 0x5f26de62cd80 | node = 0x5f26de62ce00 | parent = 0x5f26de62cf00 | right = 0x5f26de62cdc0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bfcb0 -> node_0x5b89d98bfa30
+	node_0x5f26de62cf00 -> node_0x5f26de62ce00
 
-	node_0x5b89d98bfcf0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98bffb0 | node = 0x5b89d98bfcf0 | parent = 0x5b89d98bf930 | right = 0x5b89d98bfff0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62cd80 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5f26de62cd00 | node = 0x5f26de62cd80 | parent = 0x5f26de62ce00 | right = 0x5f26de62cd40}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf930 -> node_0x5b89d98bfcf0
+	node_0x5f26de62ce00 -> node_0x5f26de62cd80
 
-	node_0x5b89d98bffb0 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5b89d98bff70 | node = 0x5b89d98bffb0 | parent = 0x5b89d98bfcf0 | right = 0x5b89d98bfd30}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62cd00 [shape=record, label = "{-100| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62cd00 | parent = 0x5f26de62cd80 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bfcf0 -> node_0x5b89d98bffb0
+	node_0x5f26de62cd80 -> node_0x5f26de62cd00
 
-	node_0x5b89d98bff70 [shape=record, label = "{27 (вышел_на_кобру)| type = 3 (KEYWORD) | {left = 0x5b89d98bfe70 | node = 0x5b89d98bff70 | parent = 0x5b89d98bffb0 | right = 0x5b89d98bff30}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62cd40 [shape=record, label = "{2 (НЕБО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62cd40 | parent = 0x5f26de62cd80 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bffb0 -> node_0x5b89d98bff70
+	node_0x5f26de62cd80 -> node_0x5f26de62cd40
 
-	node_0x5b89d98bfe70 [shape=record, label = "{25 (утечка_топлива)| type = 3 (KEYWORD) | {left = 0x5b89d98bfdf0 | node = 0x5b89d98bfe70 | parent = 0x5b89d98bff70 | right = 0x5b89d98bfe30}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62cdc0 [shape=record, label = "{6 (ПАПА)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62cdc0 | parent = 0x5f26de62ce00 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bff70 -> node_0x5b89d98bfe70
+	node_0x5f26de62ce00 -> node_0x5f26de62cdc0
 
-	node_0x5b89d98bfdf0 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5b89d98bfd70 | node = 0x5b89d98bfdf0 | parent = 0x5b89d98bfe70 | right = 0x5b89d98bfdb0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62cec0 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5f26de62ce40 | node = 0x5f26de62cec0 | parent = 0x5f26de62cf00 | right = 0x5f26de62ce80}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bfe70 -> node_0x5b89d98bfdf0
+	node_0x5f26de62cf00 -> node_0x5f26de62cec0
 
-	node_0x5b89d98bfd70 [shape=record, label = "{-100| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98bfd70 | parent = 0x5b89d98bfdf0 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62ce40 [shape=record, label = "{1 (САМОЛЁТ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62ce40 | parent = 0x5f26de62cec0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bfdf0 -> node_0x5b89d98bfd70
+	node_0x5f26de62cec0 -> node_0x5f26de62ce40
 
-	node_0x5b89d98bfdb0 [shape=record, label = "{2 (НЕБО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bfdb0 | parent = 0x5b89d98bfdf0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62ce80 [shape=record, label = "{2| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62ce80 | parent = 0x5f26de62cec0 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bfdf0 -> node_0x5b89d98bfdb0
+	node_0x5f26de62cec0 -> node_0x5f26de62ce80
 
-	node_0x5b89d98bfe30 [shape=record, label = "{6 (ПАПА)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bfe30 | parent = 0x5b89d98bfe70 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62ccc0 [shape=record, label = "{4 (ВВС_РФ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62ccc0 | parent = 0x5f26de62cf40 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bfe70 -> node_0x5b89d98bfe30
+	node_0x5f26de62cf40 -> node_0x5f26de62ccc0
 
-	node_0x5b89d98bff30 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5b89d98bfeb0 | node = 0x5b89d98bff30 | parent = 0x5b89d98bff70 | right = 0x5b89d98bfef0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62cf80 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62d240 | node = 0x5f26de62cf80 | parent = 0x5f26de62cbc0 | right = 0x5f26de62d280}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bff70 -> node_0x5b89d98bff30
+	node_0x5f26de62cbc0 -> node_0x5f26de62cf80
 
-	node_0x5b89d98bfeb0 [shape=record, label = "{1 (САМОЛЁТ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bfeb0 | parent = 0x5b89d98bff30 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62d240 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5f26de62d200 | node = 0x5f26de62d240 | parent = 0x5f26de62cf80 | right = 0x5f26de62cfc0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bff30 -> node_0x5b89d98bfeb0
+	node_0x5f26de62cf80 -> node_0x5f26de62d240
 
-	node_0x5b89d98bfef0 [shape=record, label = "{2| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98bfef0 | parent = 0x5b89d98bff30 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62d200 [shape=record, label = "{27 (вышел_на_кобру)| type = 3 (KEYWORD) | {left = 0x5f26de62d100 | node = 0x5f26de62d200 | parent = 0x5f26de62d240 | right = 0x5f26de62d1c0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bff30 -> node_0x5b89d98bfef0
+	node_0x5f26de62d240 -> node_0x5f26de62d200
 
-	node_0x5b89d98bfd30 [shape=record, label = "{5 (БОИНГ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98bfd30 | parent = 0x5b89d98bffb0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62d100 [shape=record, label = "{25 (утечка_топлива)| type = 3 (KEYWORD) | {left = 0x5f26de62d080 | node = 0x5f26de62d100 | parent = 0x5f26de62d200 | right = 0x5f26de62d0c0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bffb0 -> node_0x5b89d98bfd30
+	node_0x5f26de62d200 -> node_0x5f26de62d100
 
-	node_0x5b89d98bfff0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98c01b0 | node = 0x5b89d98bfff0 | parent = 0x5b89d98bfcf0 | right = 0x5b89d98c01f0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62d080 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5f26de62d000 | node = 0x5f26de62d080 | parent = 0x5f26de62d100 | right = 0x5f26de62d040}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bfcf0 -> node_0x5b89d98bfff0
+	node_0x5f26de62d100 -> node_0x5f26de62d080
 
-	node_0x5b89d98c01b0 [shape=record, label = "{62 (починить_двигатель)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98c01b0 | parent = 0x5b89d98bfff0 | right = 0x5b89d98c0170}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62d000 [shape=record, label = "{-100| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62d000 | parent = 0x5f26de62d080 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bfff0 -> node_0x5b89d98c01b0
+	node_0x5f26de62d080 -> node_0x5f26de62d000
 
-	node_0x5b89d98c0170 [shape=record, label = "{4 (ВВС_РФ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98c0170 | parent = 0x5b89d98c01b0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62d040 [shape=record, label = "{2 (НЕБО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62d040 | parent = 0x5f26de62d080 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c01b0 -> node_0x5b89d98c0170
+	node_0x5f26de62d080 -> node_0x5f26de62d040
 
-	node_0x5b89d98c01f0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98c03b0 | node = 0x5b89d98c01f0 | parent = 0x5b89d98bfff0 | right = 0x5b89d98c03f0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62d0c0 [shape=record, label = "{6 (ПАПА)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62d0c0 | parent = 0x5f26de62d100 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bfff0 -> node_0x5b89d98c01f0
+	node_0x5f26de62d100 -> node_0x5f26de62d0c0
 
-	node_0x5b89d98c03b0 [shape=record, label = "{62 (починить_двигатель)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98c03b0 | parent = 0x5b89d98c01f0 | right = 0x5b89d98c0370}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62d1c0 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5f26de62d140 | node = 0x5f26de62d1c0 | parent = 0x5f26de62d200 | right = 0x5f26de62d180}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c01f0 -> node_0x5b89d98c03b0
+	node_0x5f26de62d200 -> node_0x5f26de62d1c0
 
-	node_0x5b89d98c0370 [shape=record, label = "{5 (БОИНГ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98c0370 | parent = 0x5b89d98c03b0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62d140 [shape=record, label = "{1 (САМОЛЁТ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62d140 | parent = 0x5f26de62d1c0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c03b0 -> node_0x5b89d98c0370
+	node_0x5f26de62d1c0 -> node_0x5f26de62d140
 
-	node_0x5b89d98c03f0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98c0570 | node = 0x5b89d98c03f0 | parent = 0x5b89d98c01f0 | right = 0x5b89d98c05b0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62d180 [shape=record, label = "{2| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62d180 | parent = 0x5f26de62d1c0 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c01f0 -> node_0x5b89d98c03f0
+	node_0x5f26de62d1c0 -> node_0x5f26de62d180
 
-	node_0x5b89d98c0570 [shape=record, label = "{74 (аварийная_посадка)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98c0570 | parent = 0x5b89d98c03f0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62cfc0 [shape=record, label = "{5 (БОИНГ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62cfc0 | parent = 0x5f26de62d240 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c03f0 -> node_0x5b89d98c0570
+	node_0x5f26de62d240 -> node_0x5f26de62cfc0
 
-	node_0x5b89d98c05b0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98c05b0 | parent = 0x5b89d98c03f0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62d280 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62d440 | node = 0x5f26de62d280 | parent = 0x5f26de62cf80 | right = 0x5f26de62d480}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c03f0 -> node_0x5b89d98c05b0
+	node_0x5f26de62cf80 -> node_0x5f26de62d280
 
-	node_0x5b89d98c07b0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98c1230 | node = 0x5b89d98c07b0 | parent = 0x5b89d98bf570 | right = 0x5b89d98c1270}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62d440 [shape=record, label = "{62 (починить_двигатель)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62d440 | parent = 0x5f26de62d280 | right = 0x5f26de62d400}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98bf570 -> node_0x5b89d98c07b0
+	node_0x5f26de62d280 -> node_0x5f26de62d440
 
-	node_0x5b89d98c1230 [shape=record, label = "{11 (в_яростном_рёве_турбин_слышится)| type = 3 (KEYWORD) | {left = 0x5b89d98c0970 | node = 0x5b89d98c1230 | parent = 0x5b89d98c07b0 | right = 0x5b89d98c08b0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62d400 [shape=record, label = "{4 (ВВС_РФ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62d400 | parent = 0x5f26de62d440 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c07b0 -> node_0x5b89d98c1230
+	node_0x5f26de62d440 -> node_0x5f26de62d400
 
-	node_0x5b89d98c0970 [shape=record, label = "{31 (рейс_следует_до)| type = 3 (KEYWORD) | {left = 0x5b89d98c08f0 | node = 0x5b89d98c0970 | parent = 0x5b89d98c1230 | right = 0x5b89d98c0930}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62d480 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62d640 | node = 0x5f26de62d480 | parent = 0x5f26de62d280 | right = 0x5f26de62d680}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c1230 -> node_0x5b89d98c0970
+	node_0x5f26de62d280 -> node_0x5f26de62d480
 
-	node_0x5b89d98c08f0 [shape=record, label = "{6 (ПАПА)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98c08f0 | parent = 0x5b89d98c0970 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62d640 [shape=record, label = "{62 (починить_двигатель)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62d640 | parent = 0x5f26de62d480 | right = 0x5f26de62d600}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c0970 -> node_0x5b89d98c08f0
+	node_0x5f26de62d480 -> node_0x5f26de62d640
 
-	node_0x5b89d98c0930 [shape=record, label = "{0| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98c0930 | parent = 0x5b89d98c0970 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62d600 [shape=record, label = "{5 (БОИНГ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62d600 | parent = 0x5f26de62d640 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c0970 -> node_0x5b89d98c0930
+	node_0x5f26de62d640 -> node_0x5f26de62d600
 
-	node_0x5b89d98c08b0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98c0c70 | node = 0x5b89d98c08b0 | parent = 0x5b89d98c1230 | right = 0x5b89d98c0cb0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62d680 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62d800 | node = 0x5f26de62d680 | parent = 0x5f26de62d480 | right = 0x5f26de62d840}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c1230 -> node_0x5b89d98c08b0
+	node_0x5f26de62d480 -> node_0x5f26de62d680
 
-	node_0x5b89d98c0c70 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5b89d98c0c30 | node = 0x5b89d98c0c70 | parent = 0x5b89d98c08b0 | right = 0x5b89d98c0a70}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62d800 [shape=record, label = "{74 (аварийная_посадка)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62d800 | parent = 0x5f26de62d680 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c08b0 -> node_0x5b89d98c0c70
+	node_0x5f26de62d680 -> node_0x5f26de62d800
 
-	node_0x5b89d98c0c30 [shape=record, label = "{27 (вышел_на_кобру)| type = 3 (KEYWORD) | {left = 0x5b89d98c0b30 | node = 0x5b89d98c0c30 | parent = 0x5b89d98c0c70 | right = 0x5b89d98c0bf0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62d840 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62d840 | parent = 0x5f26de62d680 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c0c70 -> node_0x5b89d98c0c30
+	node_0x5f26de62d680 -> node_0x5f26de62d840
 
-	node_0x5b89d98c0b30 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5b89d98c0ab0 | node = 0x5b89d98c0b30 | parent = 0x5b89d98c0c30 | right = 0x5b89d98c0af0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62da40 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62e4c0 | node = 0x5f26de62da40 | parent = 0x5f26de62c800 | right = 0x5f26de62e500}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c0c30 -> node_0x5b89d98c0b30
+	node_0x5f26de62c800 -> node_0x5f26de62da40
 
-	node_0x5b89d98c0ab0 [shape=record, label = "{-100| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98c0ab0 | parent = 0x5b89d98c0b30 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62e4c0 [shape=record, label = "{11 (в_яростном_рёве_турбин_слышится)| type = 3 (KEYWORD) | {left = 0x5f26de62dc00 | node = 0x5f26de62e4c0 | parent = 0x5f26de62da40 | right = 0x5f26de62db40}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c0b30 -> node_0x5b89d98c0ab0
+	node_0x5f26de62da40 -> node_0x5f26de62e4c0
 
-	node_0x5b89d98c0af0 [shape=record, label = "{2 (НЕБО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98c0af0 | parent = 0x5b89d98c0b30 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62dc00 [shape=record, label = "{31 (рейс_следует_до)| type = 3 (KEYWORD) | {left = 0x5f26de62db80 | node = 0x5f26de62dc00 | parent = 0x5f26de62e4c0 | right = 0x5f26de62dbc0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c0b30 -> node_0x5b89d98c0af0
+	node_0x5f26de62e4c0 -> node_0x5f26de62dc00
 
-	node_0x5b89d98c0bf0 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5b89d98c0b70 | node = 0x5b89d98c0bf0 | parent = 0x5b89d98c0c30 | right = 0x5b89d98c0bb0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62db80 [shape=record, label = "{6 (ПАПА)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62db80 | parent = 0x5f26de62dc00 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c0c30 -> node_0x5b89d98c0bf0
+	node_0x5f26de62dc00 -> node_0x5f26de62db80
 
-	node_0x5b89d98c0b70 [shape=record, label = "{1 (САМОЛЁТ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98c0b70 | parent = 0x5b89d98c0bf0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62dbc0 [shape=record, label = "{0| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62dbc0 | parent = 0x5f26de62dc00 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c0bf0 -> node_0x5b89d98c0b70
+	node_0x5f26de62dc00 -> node_0x5f26de62dbc0
 
-	node_0x5b89d98c0bb0 [shape=record, label = "{2| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98c0bb0 | parent = 0x5b89d98c0bf0 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62db40 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62df00 | node = 0x5f26de62db40 | parent = 0x5f26de62e4c0 | right = 0x5f26de62df40}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c0bf0 -> node_0x5b89d98c0bb0
+	node_0x5f26de62e4c0 -> node_0x5f26de62db40
 
-	node_0x5b89d98c0a70 [shape=record, label = "{4 (ВВС_РФ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98c0a70 | parent = 0x5b89d98c0c70 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62df00 [shape=record, label = "{13 (прилетел_во_Внуково)| type = 3 (KEYWORD) | {left = 0x5f26de62dec0 | node = 0x5f26de62df00 | parent = 0x5f26de62db40 | right = 0x5f26de62dd00}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c0c70 -> node_0x5b89d98c0a70
+	node_0x5f26de62db40 -> node_0x5f26de62df00
 
-	node_0x5b89d98c0cb0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98c0e70 | node = 0x5b89d98c0cb0 | parent = 0x5b89d98c08b0 | right = 0x5b89d98c0eb0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62dec0 [shape=record, label = "{27 (вышел_на_кобру)| type = 3 (KEYWORD) | {left = 0x5f26de62ddc0 | node = 0x5f26de62dec0 | parent = 0x5f26de62df00 | right = 0x5f26de62de80}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c08b0 -> node_0x5b89d98c0cb0
+	node_0x5f26de62df00 -> node_0x5f26de62dec0
 
-	node_0x5b89d98c0e70 [shape=record, label = "{62 (починить_двигатель)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98c0e70 | parent = 0x5b89d98c0cb0 | right = 0x5b89d98c0e30}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62ddc0 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5f26de62dd40 | node = 0x5f26de62ddc0 | parent = 0x5f26de62dec0 | right = 0x5f26de62dd80}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c0cb0 -> node_0x5b89d98c0e70
+	node_0x5f26de62dec0 -> node_0x5f26de62ddc0
 
-	node_0x5b89d98c0e30 [shape=record, label = "{4 (ВВС_РФ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5b89d98c0e30 | parent = 0x5b89d98c0e70 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
+	node_0x5f26de62dd40 [shape=record, label = "{-100| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62dd40 | parent = 0x5f26de62ddc0 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c0e70 -> node_0x5b89d98c0e30
+	node_0x5f26de62ddc0 -> node_0x5f26de62dd40
 
-	node_0x5b89d98c0eb0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98c1030 | node = 0x5b89d98c0eb0 | parent = 0x5b89d98c0cb0 | right = 0x5b89d98c1070}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62dd80 [shape=record, label = "{2 (НЕБО)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62dd80 | parent = 0x5f26de62ddc0 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c0cb0 -> node_0x5b89d98c0eb0
+	node_0x5f26de62ddc0 -> node_0x5f26de62dd80
 
-	node_0x5b89d98c1030 [shape=record, label = "{74 (аварийная_посадка)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98c1030 | parent = 0x5b89d98c0eb0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62de80 [shape=record, label = "{26 (уйти_в_штопор)| type = 3 (KEYWORD) | {left = 0x5f26de62de00 | node = 0x5f26de62de80 | parent = 0x5f26de62dec0 | right = 0x5f26de62de40}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c0eb0 -> node_0x5b89d98c1030
+	node_0x5f26de62dec0 -> node_0x5f26de62de80
 
-	node_0x5b89d98c1070 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98c1070 | parent = 0x5b89d98c0eb0 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62de00 [shape=record, label = "{1 (САМОЛЁТ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62de00 | parent = 0x5f26de62de80 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c0eb0 -> node_0x5b89d98c1070
+	node_0x5f26de62de80 -> node_0x5f26de62de00
 
-	node_0x5b89d98c1270 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5b89d98c1470 | node = 0x5b89d98c1270 | parent = 0x5b89d98c07b0 | right = 0x5b89d98c14b0}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62de40 [shape=record, label = "{2| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62de40 | parent = 0x5f26de62de80 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c07b0 -> node_0x5b89d98c1270
+	node_0x5f26de62de80 -> node_0x5f26de62de40
 
-	node_0x5b89d98c1470 [shape=record, label = "{71 (как_хочется_в_небо,_разбежавшись,_ворваться)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98c1470 | parent = 0x5b89d98c1270 | right = 0x5b89d98c1430}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62dd00 [shape=record, label = "{4 (ВВС_РФ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62dd00 | parent = 0x5f26de62df00 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c1270 -> node_0x5b89d98c1470
+	node_0x5f26de62df00 -> node_0x5f26de62dd00
 
-	node_0x5b89d98c1430 [shape=record, label = "{0| type = 1 (CONSTANT) | {left = (nil) | node = 0x5b89d98c1430 | parent = 0x5b89d98c1470 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+	node_0x5f26de62df40 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62e100 | node = 0x5f26de62df40 | parent = 0x5f26de62db40 | right = 0x5f26de62e140}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c1470 -> node_0x5b89d98c1430
+	node_0x5f26de62db40 -> node_0x5f26de62df40
 
-	node_0x5b89d98c14b0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98c14b0 | parent = 0x5b89d98c1270 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62e100 [shape=record, label = "{62 (починить_двигатель)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62e100 | parent = 0x5f26de62df40 | right = 0x5f26de62e0c0}}" style="filled",fillcolor="#BDEF9E"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98c1270 -> node_0x5b89d98c14b0
+	node_0x5f26de62df40 -> node_0x5f26de62e100
 
-	node_0x5b89d98c1730 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5b89d98c1730 | parent = 0x5b89d98b8f40 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+	node_0x5f26de62e0c0 [shape=record, label = "{4 (ВВС_РФ)| type = 2 (IDENTIFIER) | {left = (nil) | node = 0x5f26de62e0c0 | parent = 0x5f26de62e100 | right = (nil)}}" style="filled",fillcolor="#F0FF4F"]
 
 	edge[color="black",fontsize=12]
-	node_0x5b89d98b8f40 -> node_0x5b89d98c1730
+	node_0x5f26de62e100 -> node_0x5f26de62e0c0
+
+	node_0x5f26de62e140 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62e2c0 | node = 0x5f26de62e140 | parent = 0x5f26de62df40 | right = 0x5f26de62e300}}" style="filled",fillcolor="#BDEF9E"]
+
+	edge[color="black",fontsize=12]
+	node_0x5f26de62df40 -> node_0x5f26de62e140
+
+	node_0x5f26de62e2c0 [shape=record, label = "{74 (аварийная_посадка)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62e2c0 | parent = 0x5f26de62e140 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+
+	edge[color="black",fontsize=12]
+	node_0x5f26de62e140 -> node_0x5f26de62e2c0
+
+	node_0x5f26de62e300 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62e300 | parent = 0x5f26de62e140 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+
+	edge[color="black",fontsize=12]
+	node_0x5f26de62e140 -> node_0x5f26de62e300
+
+	node_0x5f26de62e500 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = 0x5f26de62e700 | node = 0x5f26de62e500 | parent = 0x5f26de62da40 | right = 0x5f26de62e740}}" style="filled",fillcolor="#BDEF9E"]
+
+	edge[color="black",fontsize=12]
+	node_0x5f26de62da40 -> node_0x5f26de62e500
+
+	node_0x5f26de62e700 [shape=record, label = "{71 (как_хочется_в_небо,_разбежавшись,_ворваться)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62e700 | parent = 0x5f26de62e500 | right = 0x5f26de62e6c0}}" style="filled",fillcolor="#BDEF9E"]
+
+	edge[color="black",fontsize=12]
+	node_0x5f26de62e500 -> node_0x5f26de62e700
+
+	node_0x5f26de62e6c0 [shape=record, label = "{0| type = 1 (CONSTANT) | {left = (nil) | node = 0x5f26de62e6c0 | parent = 0x5f26de62e700 | right = (nil)}}" style="filled",fillcolor="#1AC6D9"]
+
+	edge[color="black",fontsize=12]
+	node_0x5f26de62e700 -> node_0x5f26de62e6c0
+
+	node_0x5f26de62e740 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62e740 | parent = 0x5f26de62e500 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+
+	edge[color="black",fontsize=12]
+	node_0x5f26de62e500 -> node_0x5f26de62e740
+
+	node_0x5f26de62e9c0 [shape=record, label = "{41 (\\n)| type = 3 (KEYWORD) | {left = (nil) | node = 0x5f26de62e9c0 | parent = 0x5f26de625f40 | right = (nil)}}" style="filled",fillcolor="#BDEF9E"]
+
+	edge[color="black",fontsize=12]
+	node_0x5f26de625f40 -> node_0x5f26de62e9c0
 
 	}

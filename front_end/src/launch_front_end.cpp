@@ -26,8 +26,12 @@ language_error_t launch_front_end (int argc, char** argv)
 
 	language_error_t status = create_list_of_func (&list_of_func);
 	if (status) {return status;}
+
+	#ifdef CHECK_WORK_OF_FRONT_END
 	
-	dump_list_of_func (&list_of_func);
+		dump_list_of_func (&list_of_func);
+	
+	#endif
 
 	//------------------------------------------------------------------------
 	/*read program file and create str_with_program*/
@@ -37,7 +41,11 @@ language_error_t launch_front_end (int argc, char** argv)
 	status = read_file_to_str (argc, argv, &str_with_program, FIND_FILE_WITH_PROGRAM, NOT_FIND_FILE_WITH_PROGRAM);
 	if (status) {return status;}
 
-	printf ("%s\n", str_with_program);
+	#ifdef CHECK_WORK_OF_FRONT_END
+
+		printf ("%s\n", str_with_program);
+	
+	#endif
 
 	//printf ("len_str_with_program == %ld\n\n", strlen (str_with_program));
 
@@ -49,7 +57,11 @@ language_error_t launch_front_end (int argc, char** argv)
 	status = create_name_table (&name_table);
 	if (status) {return status;}
 
-	dump_name_table (&name_table, str_with_program);
+	#ifdef CHECK_WORK_OF_FRONT_END
+
+		dump_name_table (&name_table, str_with_program);
+
+	#endif
 
 	//-------------------------------------------------------------------------
 	/*create tokens*/
@@ -59,7 +71,11 @@ language_error_t launch_front_end (int argc, char** argv)
 	status = create_tokens (&tokens);
 	if (status) {return status;}
 
-	dump_array_of_tokens (&tokens);
+	#ifdef CHECK_WORK_OF_FRONT_END
+
+		dump_array_of_tokens (&tokens);
+	
+	#endif
 
 	//------------------------------------------------------------------------
 	/*lexical_analysis*/
@@ -67,10 +83,14 @@ language_error_t launch_front_end (int argc, char** argv)
 	status = lexical_analysis (&tokens, &name_table, &list_of_func, str_with_program);
 	if (status) {return status;}
 
-	printf ("\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nlexical_analysis completed\n\n");
+	#ifdef CHECK_WORK_OF_FRONT_END
 
-	dump_name_table (&name_table, str_with_program);
-	dump_array_of_tokens (&tokens);
+		printf ("\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nlexical_analysis completed\n\n");
+
+		dump_name_table (&name_table, str_with_program);
+		dump_array_of_tokens (&tokens);
+	
+	#endif
 
 	//------------------------------------------------------------------------
 	/*create tree*/
@@ -96,7 +116,11 @@ language_error_t launch_front_end (int argc, char** argv)
 	tree_dump.str_with_program = str_with_program;
 	tree_dump.tree_html        = tree_html;
 
-	dump_tree (root_node, &tree_dump);
+	#ifdef CHECK_WORK_OF_FRONT_END
+
+		dump_tree (root_node, &tree_dump);
+	
+	#endif
 
 	//------------------------------------------------------------------------
 	/*list_of_local_name_tables*/
@@ -109,7 +133,11 @@ language_error_t launch_front_end (int argc, char** argv)
 	status = add_new_local_name_table_in_list  (&list_of_local_name_tables, GLOBAL_SCOPE);
 	if (status) {return status;}
 
-	dump_list_of_local_name_tables (&list_of_local_name_tables);
+	#ifdef CHECK_WORK_OF_FRONT_END
+
+		dump_list_of_local_name_tables (&list_of_local_name_tables);
+	
+	#endif
 
 	//------------------------------------------------------------------------
 	/*recursive descent*/
@@ -117,13 +145,17 @@ language_error_t launch_front_end (int argc, char** argv)
 	status = recursive_descent (&tokens, &name_table, &list_of_local_name_tables, root_node);
 	if (status) {return status;}
 
-	printf ("\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nrecursive_descent\n\n");
+	#ifdef CHECK_WORK_OF_FRONT_END
 
-	dump_name_table (&name_table, str_with_program);
+		printf ("\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\nrecursive_descent\n\n");
 
-	dump_list_of_local_name_tables (&list_of_local_name_tables);
+		dump_name_table (&name_table, str_with_program);
 
-	dump_tree (root_node, &tree_dump);
+		dump_list_of_local_name_tables (&list_of_local_name_tables);
+
+		dump_tree (root_node, &tree_dump);
+	
+	#endif
 
 	//------------------------------------------------------------------------
 	/*write AST, name_table and local name_tables in files*/

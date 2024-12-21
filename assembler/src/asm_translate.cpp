@@ -42,9 +42,13 @@ long translate_asm (asm_t* ptr_assm, char* text)
 			return ptr_assm -> error_in_asm;
 		}
 
+		//#define PRINT_ASM_
+
 		#ifdef PRINT_ASM_
 			printf ("word from sscanf: %s\n", word_in_text);
 		#endif
+
+		//#undef PRINT_ASM_
 
 		#ifdef PRINT_ASM_
 			print_asm (ptr_assm);

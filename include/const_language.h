@@ -1,6 +1,13 @@
 #ifndef CONST_LANGUAGE_H
 #define CONST_LANGUAGE_H
 
+#define CHECK_WORK_OF_REVERSE_FRONT_END
+#define CHECK_WORK_OF_BACK_END
+#define CHECK_WORK_OF_FRONT_END
+#define CHECK_WORK_OF_MIDDLE_END
+
+//-----------------------------------------------------------------------------
+
 const size_t MAX_LEN_WORD_FROM_STR = 300;
 
 //------------------------------------------------------------------------------
@@ -30,6 +37,7 @@ enum language_error_t
 	NOT_FIND_FILE_FOR_TREE                           = 19,   
 	NOT_FIND_FILE_FOR_TABLE                          = 20,
 	NOT_FIND_FILE_FOR_ASM                            = 21, 
+	NOT_FIND_FILE_FOR_REVERSE                        = 26,
 	ERROR_IN_CREATE_TREE_FROM_STR                    = 22, 
 	ERROR_IN_CREATE_TABLE_FROM_STR                   = 23, 
 	ERROR_IN_CREATE_LIST_OF_LOCAL_TABLES_FROM_STR    = 24,
@@ -175,7 +183,8 @@ enum operation_with_file_t
 	FIND_FILE_WITH_TABLE   = 2,   // -read_table
 	FIND_FILE_FOR_TREE     = 3,   // -write_tree
 	FIND_FILE_FOR_TABLE    = 4,   // -write_table
-	FIND_FILE_FOR_ASM      = 5    // -write_asm
+	FIND_FILE_FOR_ASM      = 5,   // -write_asm
+	FIND_FILE_FOR_REVERSE  = 6,   // -write_reverse
 };
 
 // struct tree_from_str_t
