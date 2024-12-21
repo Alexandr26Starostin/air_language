@@ -31,12 +31,14 @@
                                                                       \
 	return count_of_simplification;
 
-static size_t simplify_numbers (node_t* node);
-static size_t simplify_neutral_elements (node_t* node);
-static bool compare_doubles (double num_1, double num_2);
-static double evaluate_tree (node_t* node);
-static node_t* copy_tree (node_t* old_node, node_t* parent_new_node);
-static language_error_t count_vars (node_t* node, size_t* ptr_quantity_vars);
+#define COMPARE_CONSTANT_AND_NUMBER_(branch, number) (((node -> branch) -> type == CONSTANT) && (compare_doubles (((node -> branch) -> value).value_constant, number)))
+
+static size_t           simplify_numbers          (node_t* node);
+static size_t           simplify_neutral_elements (node_t* node);
+static bool             compare_doubles           (double num_1, double num_2);
+static double           evaluate_tree             (node_t* node);
+static node_t*          copy_tree                 (node_t* old_node, node_t* parent_new_node);
+static language_error_t count_vars                (node_t* node, size_t* ptr_quantity_vars);
 
 //---------------------------------------------------------------------------------------------------------
 
@@ -117,14 +119,14 @@ static size_t simplify_neutral_elements (node_t* node)
 	{
 		if ((node -> value).value_keyword == ADD)
 		{ 
-			if (((node -> left) -> type == CONSTANT) && compare_doubles (((node -> left) -> value).value_constant, 0)) {change_node_(left, right)}
+			if (COMPARE_CONSTANT_AND_NUMBER_(left, 0)) {change_node_(left, right)}
 
-			else if (((node -> right) -> type == CONSTANT) && compare_doubles (((node -> right) -> value).value_constant, 0)) {change_node_(right, left)}
+			else if (COMPARE_CONSTANT_AND_NUMBER_(right, 0)) {change_node_(right, left)}
 		}
 
 		else if ((node -> value).value_keyword == SUB)
 		{
-			if (((node -> left) -> type == CONSTANT) && compare_doubles (((node -> left) -> value).value_constant, 0))
+			if (COMPARE_CONSTANT_AND_NUMBER_(left, 0))
 			{
 				(node -> value).value_keyword = MUL;
 
@@ -135,16 +137,16 @@ static size_t simplify_neutral_elements (node_t* node)
 				return count_of_simplification;
 			}
 
-			else if (((node -> right) -> type == CONSTANT) && compare_doubles (((node -> right) -> value).value_constant, 0)) {change_node_(right, left)}
+			else if (COMPARE_CONSTANT_AND_NUMBER_(right, 0)) {change_node_(right, left)}
 		}
 
 		else if ((node -> value).value_keyword == MUL)
 		{
-			if (((node -> left) -> type == CONSTANT) && compare_doubles (((node -> left) -> value).value_constant, 1)) {change_node_(left, right)}
+			if (COMPARE_CONSTANT_AND_NUMBER_(left, 1)) {change_node_(left, right)}
 
-			else if (((node -> right) -> type == CONSTANT) && compare_doubles (((node -> right) -> value).value_constant, 1)) {change_node_(right, left)}
+			else if (COMPARE_CONSTANT_AND_NUMBER_(right, 1)) {change_node_(right, left)}
 
-			else if ((((node -> left) -> type == CONSTANT) && compare_doubles (((node -> left) -> value).value_constant, 0)) || (((node -> right) -> type == CONSTANT) && compare_doubles (((node -> right) -> value).value_constant, 0)))
+			else if (COMPARE_CONSTANT_AND_NUMBER_(left, 0) || COMPARE_CONSTANT_AND_NUMBER_(right, 0))
 			{                                       
 				delete_node (node -> left);
 				delete_node (node -> right);
@@ -164,9 +166,9 @@ static size_t simplify_neutral_elements (node_t* node)
 
 		else if ((node -> value).value_keyword == DIV)
 		{  
-			if (((node -> right) -> type == CONSTANT) && compare_doubles (((node -> right) -> value).value_constant, 1)) {change_node_(right, left)}
+			if (COMPARE_CONSTANT_AND_NUMBER_(right, 1)) {change_node_(right, left)}
 
-			if (((node -> left)  -> type == CONSTANT) && compare_doubles (((node -> left) -> value).value_constant, 0))
+			if (COMPARE_CONSTANT_AND_NUMBER_(left, 0))
 			{
 				delete_node (node -> left);
 				delete_node (node -> right);

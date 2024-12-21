@@ -183,7 +183,6 @@ static language_error_t print_node_in_file (FILE* file_for_tree, node_t* node)
 		case VAR_DECLARATION:
 			fprintf (file_for_tree, "%ld ", (node -> value).value_var_declaration);
 			break;
-	
 
 		case CALL:
 			break;

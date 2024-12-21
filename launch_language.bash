@@ -1,7 +1,12 @@
 #! /bin/bash
 
+#solve_square.air
+#factorial_with_while.air
+#factorial_with_recursive.air
+#reverse_program.air
+
 cd ./front_end
-./front_end -read_program ../solve_square.air -write_tree ../ast.txt -write_table ../table.txt
+./front_end -read_program ../reverse_program.air -write_tree ../ast.txt -write_table ../table.txt
 
 cd ../middle_end
 ./middle_end -read_tree ../ast.txt -read_table ../table.txt -write_tree ../ast.txt

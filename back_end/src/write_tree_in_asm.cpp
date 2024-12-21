@@ -89,7 +89,7 @@ language_error_t write_tree_in_asm (int argc, char** argv, node_t* root_node, na
 	status = write_node_in_asm (root_node, &tree_in_asm);
 	if (status) {return status;}
 
-	fprintf (tree_in_asm.file_for_asm, "\nhlt");
+	fprintf (tree_in_asm.file_for_asm, "\n\nhlt");
 
 	fclose (file_for_asm);
 
