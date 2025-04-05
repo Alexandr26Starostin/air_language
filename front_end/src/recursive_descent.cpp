@@ -1355,12 +1355,12 @@ static language_error_t check_status_of_declaration_funcs (name_table_t* name_ta
 
 // for (int i = 0; i > -1; i++)
 // {
-// 	printf("FUUUCK YOU NVIDIAA\n");
+// 		printf("FUUUCK YOU NVIDIAA\n");
 // }
 
 // while("i want to eat")
 // {
-// 	printf("i want to eat. Give me food\n");
+// 		printf("i want to eat. Give me food\n");
 // }
 
 // return food

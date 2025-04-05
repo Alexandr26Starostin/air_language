@@ -690,6 +690,21 @@ static language_error_t write_call_node (node_t* node, tree_in_asm_t* tree_in_as
 	if (status) {return status;}
 
 	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "push BX   #начало старого стекового фрейма\n\n");
+
+	size_t index_local_table_in_list = find_position_of_local_table (tree_in_asm -> list_of_local_name_tables, index_id_in_name_table);
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "push %ld    #записывает количество локальных переменных в функции\n\n", 
+	            (tree_in_asm -> list_of_local_name_tables -> array_of_local_name_table)[index_local_table_in_list].free_index_in_local_name_table);
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "add    #начало нового стекового фрейма\n\n");
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, "pop BX    #сохраняет новое старого стекового фрейма\n\n");
+
+	print_tabulation_in_file (tree_in_asm);
 	fprintf (tree_in_asm -> file_for_asm, "#вызывает функцию\n\n");
 
 	print_tabulation_in_file (tree_in_asm);
