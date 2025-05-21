@@ -1,0 +1,266 @@
+     1                                  global _start     ;начало трансляции в NASM
+     2                                  section .text
+     3                                  _start:
+     4                                  
+     5                                  	;--------------------------------------------------------------------------------------------
+     6                                  	;Выделение места под глобальные переменные  (src/write_tree_in_nasm.cpp:97)
+     7                                  	;--------------------------------------------------------------------------------------------
+     8 00000000 4883EC10                	sub rsp, 2 * 8    ;выделение места под глобальные переменные (их количество == 2)
+     9 00000004 4889E3                  	mov rbx, rsp        ;rbx = указатель на глобальные переменные
+    10                                  	;--------------------------------------------------------------------------------------------
+    11                                  
+    12                                  ;описание 0 оператора  (src/write_tree_in_nasm.cpp:481)
+    13                                  
+    14                                  	;начало var_declaration  long <variable>...   (src/write_tree_in_nasm.cpp:456)
+    15                                  
+    16                                  	;начало assign <variable> = <expression>   (src/write_tree_in_nasm.cpp:414)
+    17                                  
+    18                                  	;начало expression   (src/write_tree_in_nasm.cpp:417)
+    19                                  
+    20                                  	;начало сканирования числа  (src/write_tree_in_nasm.cpp:657)
+    21                                  
+    22 00000007 E811000000              	call scanf_number    ;считывает число и кладёт его в rax  (src/write_tree_in_nasm.cpp:660)
+    23                                  
+    24 0000000C 50                      	push rax       ;кладёт считанное число в стек   (src/write_tree_in_nasm.cpp:663)
+    25                                  
+    26                                  	
+    27                                  
+    28 0000000D 5F                      	pop rdi    ;получает число для печати из стека   (src/write_tree_in_nasm.cpp:639)
+    29                                  
+    30 0000000E E849000000              	call printf_number    ;печатает число в rdi    (src/write_tree_in_nasm.cpp:642)
+    31                                  
+    32                                  	;конец печати числа    (src/write_tree_in_nasm.cpp:645)
+    33                                  
+    34                                  	;--------------------------------------------------------------------------------------------
+    35                                  	;Завершение работы программы    (src/write_tree_in_nasm.cpp:113)
+    36                                  	;Возвращает значение, которое к этом моменту хранится в rax
+    37                                  	;--------------------------------------------------------------------------------------------
+    38 00000013 4889C7                  	mov rdi, rax     ;exit64 (rdi)
+    39 00000016 B83C000000              	mov rax, 0x3C
+    40 0000001B 0F05                    	syscall
+    41                                  ;--------------------------------------------------------------------------------------------
+    42                                  
+    43                                  %INCLUDE "std_lib.s"
+     1                              <1> ;------------------------------------------------------------------------------------------------------------------
+     2                              <1> ;													scanf_number
+     3                              <1> ;take number from stdio and push it in stack
+     4                              <1> ;
+     5                              <1> ;entry: NO
+     6                              <1> ;
+     7                              <1> ;exit: NO
+     8                              <1> ;
+     9                              <1> ;destr: 
+    10                              <1> ;	
+    11                              <1> ;------------------------------------------------------------------------------------------------------------------
+    12                              <1> scanf_number:
+    13                              <1> 
+    14 0000001D 53                  <1> 	push rbx
+    15 0000001E 4154                <1> 	push r12
+    16                              <1> 
+    17 00000020 31C0                <1> 	xor eax, eax      		   ; номер syscall (0 = read)
+    18 00000022 83F700              <1>     xor edi, 0      		   ; файловый дескриптор (0 = stdin)
+    19 00000025 48BE-               <1> 	mov rsi, bytes_of_number   ; буфер для символа
+    19 00000027 [1E00000000000000]  <1>
+    20 0000002F BA14000000          <1>     mov rdx, 20     			   ; количество байт
+    21 00000034 0F05                <1>     syscall         		   ; вызов syscall
+    22                              <1> 
+    23 00000036 4889C1              <1> 	mov rcx, rax
+    24                              <1> 
+    25                              <1> 	;mov rax, 1          ; sys_write
+    26                              <1>     ;mov rdi, 1          ; stdout
+    27                              <1>     ;mov rsi, bytes_of_number     ; буфер с данными
+    28                              <1>     ;mov rdx, rcx         ; кол-во прочитанных байт
+    29                              <1>     ;syscall
+    30                              <1> 
+    31 00000039 31C0                <1> 	xor eax, eax
+    32 0000003B 31DB                <1> 	xor ebx, ebx
+    33                              <1> 
+    34                              <1> 	prepare_next_byte:
+    35                              <1> 
+    36 0000003D 8A1E                <1> 	mov bl, byte [rsi]
+    37 0000003F 48FFC6              <1> 	inc rsi
+    38                              <1> 
+    39 00000042 80FB0A              <1> 	cmp bl, 0x0A 
+    40 00000045 7411                <1> 	jz end_scanf
+    41                              <1> 
+    42 00000047 80EB30              <1> 	sub bl, '0'
+    43                              <1> 
+    44 0000004A 41B80A000000        <1> 	mov r8, 10
+    45 00000050 49F7E0              <1> 	mul r8
+    46 00000053 4801D8              <1> 	add rax, rbx
+    47                              <1> 
+    48 00000056 E2E5                <1> 	loop prepare_next_byte
+    49                              <1> 
+    50                              <1> 	end_scanf:
+    51                              <1> 
+    52 00000058 415C                <1> 	pop r12
+    53 0000005A 5B                  <1> 	pop rbx
+    54                              <1> 
+    55 0000005B C3                  <1> 	ret
+    56                              <1> 
+    57                              <1> ;------------------------------------------------------------------------------------------------------------------
+    58                              <1> 
+    59                              <1> 
+    60                              <1> 
+    61                              <1> 
+    62                              <1> 
+    63                              <1> ;------------------------------------------------------------------------------------------------------------------
+    64                              <1> ;													printf_number
+    65                              <1> ;print number in stdio
+    66                              <1> ;
+    67                              <1> ;entry: rdi = number for print
+    68                              <1> ;
+    69                              <1> ;exit: NO
+    70                              <1> ;
+    71                              <1> ;destr:
+    72                              <1> ;	
+    73                              <1> ;------------------------------------------------------------------------------------------------------------------
+    74                              <1> printf_number:
+    75                              <1> 
+    76                              <1> 	;mov rcx, [len_buffer]       ;rcx = index of count free places in buffer
+    77 0000005C 48BE-               <1> 	mov rsi, buffer_for_printf   ;rsi = address of buffer
+    77 0000005E [0000000000000000]  <1>
+    78 00000066 31C9                <1> 	xor ecx, ecx                 ;rcx = index_in_buffer = 0
+    79                              <1> 
+    80 00000068 E81A000000          <1> 	call print_argument
+    81                              <1> 
+    82                              <1> 	;---------------------------------------------------------------------------------------------------------	;print_buffer:
+    84                              <1>     ;interrupt rax = 0x01: print buffer (address = rsi) with len (len = rdx) on flow (flow = rdi) 
+    85 0000006D B801000000          <1>     mov rax, 0x01                ;int  
+    86                              <1> 
+    87 00000072 4889CA              <1>     mov rdx, rcx                 ;rdx == len
+    88                              <1> 
+    89 00000075 48BE-               <1>     mov rsi, buffer_for_printf   ;rsi == const char* buffer
+    89 00000077 [0000000000000000]  <1>
+    90 0000007F BF01000000          <1>     mov rdi, 1                   ;rdi == 1 => stdout
+    91 00000084 0F05                <1>     syscall ;!!! change r10, r11
+    92                              <1> 	;---------------------------------------------------------------------------------------------------------
+    93                              <1> 
+    94 00000086 C3                  <1> 	ret
+    95                              <1> ;------------------------------------------------------------------------------------------------------------------
+    96                              <1> 
+    97                              <1> 
+    98                              <1> ;------------------------------------------------------------------------------------------------------------------
+    99                              <1> ;													print_argument
+   100                              <1> ;print argument %d (int)
+   101                              <1> ;
+   102                              <1> ;entry: rdi = number for print
+   103                              <1> ;       rcx = index_in_buffer
+   104                              <1> ;       rsi = address of buffer
+   105                              <1> ;
+   106                              <1> ;exit: NO
+   107                              <1> ;
+   108                              <1> ;destr:
+   109                              <1> ;	
+   110                              <1> ;------------------------------------------------------------------------------------------------------------------
+   111                              <1> print_argument:    ;%d   (for int)
+   112                              <1> 
+   113 00000087 4889F8              <1> 	mov rax, rdi
+   114                              <1> 	
+   115 0000008A 4C8B2C25[3C000000]  <1> 	mov r13, [mask_for_sign]   ;r13 = mask_for_sign
+   116 00000092 4C21EF              <1> 	and rdi, r13   ;rdx = eax and r13
+   117                              <1> 
+   118 00000095 740B                <1> 	jz continue_write_int_10  ;rdx == 0 --> unsigned value
+   119                              <1> 							  ;rdx != 0 -->   signed value
+   120                              <1> 
+   121 00000097 F7D8                <1> 	neg eax   ;eax *= -1  ;rax = 0...0not(eax)
+   122                              <1> 
+   123 00000099 C6062D              <1> 	mov [rsi], byte '-'   ;put '-' in buffer         
+   124 0000009C 48FFC2              <1> 	inc rdx         ;+1 - next free symbol in buffer
+   125 0000009F 48FFC1              <1> 	inc rcx         
+   126                              <1> 
+   127                              <1> 	;----------------------------------------------------------------------------------
+   128                              <1> 
+   129                              <1> 	continue_write_int_10:
+   130                              <1> 
+   131 000000A2 4D31C0              <1> 	xor r8, r8  ;r8 = 0 (count of numbers in value symbols for number_10)
+   132                              <1> 
+   133                              <1> 	count_next_symbol_in_number_10:  ;take number from value and put it in stack
+   134                              <1> 
+   135 000000A5 4899                <1> 	cqo          ;rax --> rdx:rax
+   136 000000A7 41B90A000000        <1> 	mov r9, 10   ;r9  = footing of 10 calculus system 
+   137 000000AD 49F7F1              <1> 	div r9       ;rax = rax // 10
+   138                              <1> 				 ;rdx = rax %  10
+   139 000000B0 49FFC0              <1> 	inc r8       ;+1 count of numbers in stack
+   140 000000B3 4883C230            <1> 	add rdx, '0' ;numbers --> 'numbers' (ascii)
+   141 000000B7 52                  <1> 	push rdx     ;put number in stack
+   142                              <1> 
+   143 000000B8 4883F800            <1> 	cmp rax, 0
+   144 000000BC 75E7                <1> 	jne count_next_symbol_in_number_10 ;rax != 0 --> can put number from rax in stack
+   145                              <1> 
+   146                              <1> 	;all numbers from value in stack
+   147                              <1> 	;mov rax, r8    ;rax = count of numbers in stack (count of writing symbols will be counted in print_symbols_from_stack)
+   148                              <1> 	;mov rdx, r12   ;rdx = address on the next free place in buffer 
+   149                              <1> 
+   150                              <1> 	;---------------------------------------------------------------
+   151                              <1> 
+   152 000000BE E801000000          <1> 	call print_symbols_from_stack        
+   153                              <1> 
+   154 000000C3 C3                  <1> 	ret
+   155                              <1> ;------------------------------------------------------------------------------------------------------------------
+   156                              <1> 
+   157                              <1> ;---------------------------------------------------------------------------------------------------------
+   158                              <1> ;                                       print_symbols_from_stack
+   159                              <1> ;value --> (calculus system) --> array of numbers in stack (little end)
+   160                              <1> ;print this numbers from stack
+   161                              <1> ;
+   162                              <1> ;entry: rsi = address of buffer
+   163                              <1> ;		rcx = index_in_buffer
+   164                              <1> ;		r8  = count of numbers in value symbols for number_10
+   165                              <1> ;exit:  
+   166                              <1> ;
+   167                              <1> ;destr: 
+   168                              <1> ;---------------------------------------------------------------------------------------------------------
+   169                              <1> print_symbols_from_stack:
+   170                              <1> 
+   171 000000C4 415D                <1>     pop r13  ;save address of return for this func
+   172                              <1>     ;in stack - all numbers
+   173                              <1> 
+   174                              <1>     print_symbol:
+   175                              <1> 
+   176 000000C6 58                  <1>         pop rax         ;take symbol from stack to bl
+   177 000000C7 8806                <1>         mov [rsi], al   ;put symbol in buffer         
+   178 000000C9 48FFC6              <1>         inc rsi        ;+1 - next free symbol in buffer
+   179 000000CC 48FFC1              <1>         inc rcx      
+   180 000000CF 49FFC8              <1>         dec r8          ;-1 number in stack
+   181                              <1> 
+   182 000000D2 4983F800            <1>         cmp r8, 0     
+   183 000000D6 75EE                <1>         jne print_symbol ;r8 != 0 --> print the next number from stack
+   184                              <1> 
+   185                              <1>     ;r8 == 0 --> all numbers in stack are printed   
+   186                              <1> 
+   187 000000D8 4155                <1>     push r13   ;save address of return for this func
+   188                              <1> 
+   189 000000DA C3                  <1>     ret
+   190                              <1> ;---------------------------------------------------------------------------------------------------------
+   191                              <1> 
+   192                              <1> 
+   193                              <1> 
+   194                              <1> 
+   195                              <1> 
+   196                              <1> 
+   197                              <1> ;------------------------------------------------------------------------------------------------------------------
+   198                              <1> ;													end_program
+   199                              <1> ;abort program
+   200                              <1> ;
+   201                              <1> ;entry: NO
+   202                              <1> ;
+   203                              <1> ;exit: NO
+   204                              <1> ;
+   205                              <1> ;destr: rdi = code for ending program
+   206                              <1> ;		rax = number of interrupt
+   207                              <1> ;	
+   208                              <1> ;------------------------------------------------------------------------------------------------------------------
+   209                              <1> end_program:
+   210                              <1> 
+   211 000000DB 31FF                <1> 	xor edi, edi     ;exit64 (0)
+   212 000000DD B83C000000          <1> 	mov rax, 0x3C
+   213 000000E2 0F05                <1> 	syscall
+   214                              <1> 
+   215                              <1> ;------------------------------------------------------------------------------------------------------------------
+   216                              <1> 
+   217                              <1> 
+   218                              <1> section .data   ;has data
+   219 00000000 00<rep 1Eh>         <1> buffer_for_printf: times 30 db 0  ;buffer for symbols
+   220 0000001E 00<rep 1Eh>         <1> bytes_of_number: times 30 db 0
+   221 0000003C 00000080            <1> mask_for_sign dd 1<<31   ;mask_for_sign in int (for %d)

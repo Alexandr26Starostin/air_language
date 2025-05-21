@@ -9,7 +9,7 @@
 //#include "list_of_func.h"
 #include "name_table.h"
 #include "local_name_table.h"
-#include "write_tree_in_asm.h"
+#include "write_tree_in_my_asm.h"
 
 #define WRITE_NODE_(sign, value_type, name_print_func)  if (value_type == sign) {return name_print_func (node, tree_in_asm);}  
 
@@ -56,7 +56,7 @@ static language_error_t write_return_in_asm                  (node_t* node, tree
 static language_error_t print_tabulation_in_file             (tree_in_asm_t* tree_in_asm);
 //------------------------------------------------------------------------------------------------------------------------------------
 
-language_error_t write_tree_in_asm (int argc, char** argv, node_t* root_node, name_table_t* name_table, 
+language_error_t write_tree_in_my_asm (int argc, char** argv, node_t* root_node, name_table_t* name_table, 
                                     list_of_local_name_tables_t* list_of_local_name_tables, char* str_with_table)
 {
 	assert (argv);

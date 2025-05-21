@@ -214,11 +214,15 @@ size_t find_position_of_local_table (list_of_local_name_tables_t* list_of_local_
 {
 	assert (list_of_local_name_tables);
 
-	size_t index_in_list = 0;
+	local_name_table_t* array_of_local_name_table = list_of_local_name_tables -> array_of_local_name_table;
+	assert (array_of_local_name_table);
+
+	size_t max_index_in_list = list_of_local_name_tables -> free_index_in_list;
+	size_t index_in_list     = 0;
 	
-	for (; index_in_list < list_of_local_name_tables -> free_index_in_list; index_in_list++)
+	for (; index_in_list < max_index_in_list; index_in_list++)
 	{
-		if ((list_of_local_name_tables -> array_of_local_name_table)[index_in_list].scope_of_local_name_table == scope_of_local_name_table)
+		if (array_of_local_name_table[index_in_list].scope_of_local_name_table == scope_of_local_name_table)
 		{
 			break;
 		}
@@ -235,11 +239,13 @@ long find_id_in_scope (list_of_local_name_tables_t* list_of_local_name_tables, l
 
 	size_t position_of_scope = find_position_of_local_table (list_of_local_name_tables, scope_of_local_name_table);
 
-	local_name_table_t* local_name_table = &((list_of_local_name_tables -> array_of_local_name_table)[position_of_scope]);
+	local_name_table_t* local_name_table     = list_of_local_name_tables -> array_of_local_name_table + position_of_scope;
+	local_name_t*       array_of_local_names = local_name_table          -> array_of_local_names;
+	size_t              max_index            = local_name_table          -> free_index_in_local_name_table;
 
-	for (size_t index = 0; index < local_name_table -> free_index_in_local_name_table; index++)
+	for (size_t index = 0; index < max_index; index++)
 	{
-		if ((local_name_table -> array_of_local_names)[index].index_id_in_name_table == index_id_in_name_table)
+		if (array_of_local_names[index].index_id_in_name_table == index_id_in_name_table)
 		{
 			return (long) index;
 		}
