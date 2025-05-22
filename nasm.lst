@@ -3,44 +3,408 @@
      3                                  _start:
      4                                  
      5                                  	;--------------------------------------------------------------------------------------------
-     6                                  	;Выделение места под глобальные переменные  (src/write_tree_in_nasm.cpp:97)
+     6                                  	;Выделение места под глобальные переменные  (src/write_tree_in_nasm.cpp:98)
      7                                  	;--------------------------------------------------------------------------------------------
-     8 00000000 4883EC10                	sub rsp, 2 * 8    ;выделение места под глобальные переменные (их количество == 2)
+     8 00000000 4883EC40                	sub rsp, 8 * 8    ;выделение места под глобальные переменные (их количество == 8)
      9 00000004 4889E3                  	mov rbx, rsp        ;rbx = указатель на глобальные переменные
-    10                                  	;--------------------------------------------------------------------------------------------
-    11                                  
-    12                                  ;описание 0 оператора  (src/write_tree_in_nasm.cpp:481)
-    13                                  
-    14                                  	;начало var_declaration  long <variable>...   (src/write_tree_in_nasm.cpp:456)
-    15                                  
-    16                                  	;начало assign <variable> = <expression>   (src/write_tree_in_nasm.cpp:414)
-    17                                  
-    18                                  	;начало expression   (src/write_tree_in_nasm.cpp:417)
-    19                                  
-    20                                  	;начало сканирования числа  (src/write_tree_in_nasm.cpp:657)
-    21                                  
-    22 00000007 E811000000              	call scanf_number    ;считывает число и кладёт его в rax  (src/write_tree_in_nasm.cpp:660)
-    23                                  
-    24 0000000C 50                      	push rax       ;кладёт считанное число в стек   (src/write_tree_in_nasm.cpp:663)
-    25                                  
-    26                                  	
-    27                                  
-    28 0000000D 5F                      	pop rdi    ;получает число для печати из стека   (src/write_tree_in_nasm.cpp:639)
-    29                                  
-    30 0000000E E849000000              	call printf_number    ;печатает число в rdi    (src/write_tree_in_nasm.cpp:642)
-    31                                  
-    32                                  	;конец печати числа    (src/write_tree_in_nasm.cpp:645)
-    33                                  
-    34                                  	;--------------------------------------------------------------------------------------------
-    35                                  	;Завершение работы программы    (src/write_tree_in_nasm.cpp:113)
-    36                                  	;Возвращает значение, которое к этом моменту хранится в rax
-    37                                  	;--------------------------------------------------------------------------------------------
-    38 00000013 4889C7                  	mov rdi, rax     ;exit64 (rdi)
-    39 00000016 B83C000000              	mov rax, 0x3C
-    40 0000001B 0F05                    	syscall
-    41                                  ;--------------------------------------------------------------------------------------------
+    10 00000007 4989E4                  	mov r12, rsp
+    11                                  	;--------------------------------------------------------------------------------------------
+    12                                  
+    13                                  ;описание 0 оператора  (src/write_tree_in_nasm.cpp:482)
+    14                                  
+    15                                  ;-----------------------------------------------------------------------
+    16                                  ;описание функции    (src/write_tree_in_nasm.cpp:766)
+    17                                  ;-----------------------------------------------------------------------
+    18                                  
+    19                                  уносится_в_небо_машина:    ;имя функции   (src/write_tree_in_nasm.cpp:775)
+    20                                  
+    21 0000000A 4983EC18                	sub r12, 3 * 8  ;(src/write_tree_in_nasm.cpp:790)
+    22                                  
+    23 0000000E 4C89E4                  	mov rsp, r12  ;(src/write_tree_in_nasm.cpp:793)
+    24                                  
+    25                                  	;тело функции   (src/write_tree_in_nasm.cpp:805)
+    26                                  
+    27                                  	;описание 1 оператора  (src/write_tree_in_nasm.cpp:482)
+    28                                  
+    29                                  		;начало var_declaration  long <variable>...   (src/write_tree_in_nasm.cpp:457)
+    30                                  
+    31                                  		;начало assign <variable> = <expression>   (src/write_tree_in_nasm.cpp:415)
+    32                                  
+    33                                  		;начало expression   (src/write_tree_in_nasm.cpp:418)
+    34                                  
+    35                                  		;начало сканирования числа  (src/write_tree_in_nasm.cpp:678)
+    36                                  
+    37 00000011 E81D010000              		call scanf_number    ;считывает число и кладёт его в rax  (src/write_tree_in_nasm.cpp:681)
+    38                                  
+    39 00000016 50                      		push rax       ;кладёт считанное число в стек   (src/write_tree_in_nasm.cpp:684)
+    40                                  
+    41                                  		;конец сканирования числа   (src/write_tree_in_nasm.cpp:687)
     42                                  
-    43                                  %INCLUDE "std_lib.s"
+    43                                  		;конец expression  (src/write_tree_in_nasm.cpp:424)
+    44                                  
+    45                                  		;начало присваивания переменной   (src/write_tree_in_nasm.cpp:429)
+    46                                  
+    47 00000017 4158                    		pop r8   ;вытащил константу из стека    (src/write_tree_in_nasm.cpp:226)
+    48 00000019 4D890424                		mov [r12 + 0 * 8], r8   ;присвоил значение локальной переменной    (src/write_tree_in_nasm.cpp:231)
+    49                                  
+    50                                  		;конец присваивания переменной   (src/write_tree_in_nasm.cpp:435)
+    51                                  
+    52                                  		;конец assign   (src/write_tree_in_nasm.cpp:438)
+    53                                  
+    54                                  		;конец var_declaration  long <variable>...   (src/write_tree_in_nasm.cpp:466)
+    55                                  
+    56                                  	;описание 2 оператора  (src/write_tree_in_nasm.cpp:482)
+    57                                  
+    58                                  		;начало var_declaration  long <variable>...   (src/write_tree_in_nasm.cpp:457)
+    59                                  
+    60                                  		;начало assign <variable> = <expression>   (src/write_tree_in_nasm.cpp:415)
+    61                                  
+    62                                  		;начало expression   (src/write_tree_in_nasm.cpp:418)
+    63                                  
+    64 0000001D 41B800000000            		mov r8, 0   ;временно сохраняет значение константы = 0   (src/write_tree_in_nasm.cpp:153)
+    65 00000023 4150                    		push r8   ;кладёт значение константы в стек     (src/write_tree_in_nasm.cpp:158)
+    66                                  
+    67                                  		;конец expression  (src/write_tree_in_nasm.cpp:424)
+    68                                  
+    69                                  		;начало присваивания переменной   (src/write_tree_in_nasm.cpp:429)
+    70                                  
+    71 00000025 4158                    		pop r8   ;вытащил константу из стека    (src/write_tree_in_nasm.cpp:226)
+    72 00000027 4D89442408              		mov [r12 + 1 * 8], r8   ;присвоил значение локальной переменной    (src/write_tree_in_nasm.cpp:231)
+    73                                  
+    74                                  		;конец присваивания переменной   (src/write_tree_in_nasm.cpp:435)
+    75                                  
+    76                                  		;конец assign   (src/write_tree_in_nasm.cpp:438)
+    77                                  
+    78                                  		;конец var_declaration  long <variable>...   (src/write_tree_in_nasm.cpp:466)
+    79                                  
+    80                                  	;описание 3 оператора  (src/write_tree_in_nasm.cpp:482)
+    81                                  
+    82                                  		;начало var_declaration  long <variable>...   (src/write_tree_in_nasm.cpp:457)
+    83                                  
+    84                                  		;начало assign <variable> = <expression>   (src/write_tree_in_nasm.cpp:415)
+    85                                  
+    86                                  		;начало expression   (src/write_tree_in_nasm.cpp:418)
+    87                                  
+    88 0000002C 41B800000000            		mov r8, 0   ;временно сохраняет значение константы = 0   (src/write_tree_in_nasm.cpp:153)
+    89 00000032 4150                    		push r8   ;кладёт значение константы в стек     (src/write_tree_in_nasm.cpp:158)
+    90                                  
+    91                                  		;конец expression  (src/write_tree_in_nasm.cpp:424)
+    92                                  
+    93                                  		;начало присваивания переменной   (src/write_tree_in_nasm.cpp:429)
+    94                                  
+    95 00000034 4158                    		pop r8   ;вытащил константу из стека    (src/write_tree_in_nasm.cpp:226)
+    96 00000036 4D89442410              		mov [r12 + 2 * 8], r8   ;присвоил значение локальной переменной    (src/write_tree_in_nasm.cpp:231)
+    97                                  
+    98                                  		;конец присваивания переменной   (src/write_tree_in_nasm.cpp:435)
+    99                                  
+   100                                  		;конец assign   (src/write_tree_in_nasm.cpp:438)
+   101                                  
+   102                                  		;конец var_declaration  long <variable>...   (src/write_tree_in_nasm.cpp:466)
+   103                                  
+   104                                  	;описание 4 оператора  (src/write_tree_in_nasm.cpp:482)
+   105                                  
+   106                                  		;начало assign <variable> = <expression>   (src/write_tree_in_nasm.cpp:415)
+   107                                  
+   108                                  		;начало expression   (src/write_tree_in_nasm.cpp:418)
+   109                                  
+   110                                  		;начало выполнения арифметической операции с двумя аргументами   (src/write_tree_in_nasm.cpp:509)
+   111                                  
+   112                                  		;получение правого аргумента   (src/write_tree_in_nasm.cpp:512)
+   113                                  
+   114 0000003B 41B8E8030000            		mov r8, 1000   ;временно сохраняет значение константы = 1000   (src/write_tree_in_nasm.cpp:153)
+   115 00000041 4150                    		push r8   ;кладёт значение константы в стек     (src/write_tree_in_nasm.cpp:158)
+   116                                  
+   117                                  		;получение левого аргумента   (src/write_tree_in_nasm.cpp:518)
+   118                                  
+   119                                  		;начинает вызов функции   (src/write_tree_in_nasm.cpp:910)
+   120                                  
+   121 00000043 4989E7                  		mov r15, rsp  ;сохраняем rsp   (src/write_tree_in_nasm.cpp:913)
+   122                                  
+   123 00000046 4883EC08                		sub rsp, 8  ;место под rip от call   (src/write_tree_in_nasm.cpp:916)
+   124                                  
+   125 0000004A 4154                    		push r12    ;сохраняет значение старого стекового фрейма  (src/write_tree_in_nasm.cpp:920)
+   126                                  
+   127                                  		;записывает аргументы для функции (src/write_tree_in_nasm.cpp:924)
+   128                                  
+   129                                  		; начало записи значений аргументов, передаваемых функции (src/write_tree_in_nasm.cpp:1034)
+   130                                  
+   131                                  		; 3 аргумент   (src/write_tree_in_nasm.cpp:1053)
+   132                                  
+   133 0000004C 4D8B4C2410              		mov r9, [r12 + 2 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
+   134 00000051 4151                    		push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
+   135                                  
+   136                                  		; 2 аргумент   (src/write_tree_in_nasm.cpp:1053)
+   137                                  
+   138 00000053 4D8B4C2408              		mov r9, [r12 + 1 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
+   139 00000058 4151                    		push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
+   140                                  
+   141                                  		; 1 аргумент   (src/write_tree_in_nasm.cpp:1053)
+   142                                  
+   143 0000005A 4D8B0C24                		mov r9, [r12 + 0 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
+   144 0000005E 4151                    		push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
+   145                                  
+   146                                  		; конец записи значений аргументов, передаваемых функции  (src/write_tree_in_nasm.cpp:1062)
+   147                                  
+   148 00000060 4989E4                  		mov r12, rsp    ;(src/write_tree_in_nasm.cpp:932)
+   149                                  
+   150                                  		;вызывает функцию   (src/write_tree_in_nasm.cpp:989)
+   151                                  
+   152 00000063 4C89FC                  		mov rsp, r15    ;(src/write_tree_in_nasm.cpp:992)
+   153                                  
+   154 00000066 E837000000              		call чтоб_машину_отправить_в_полёт    ;вызов функции   (src/write_tree_in_nasm.cpp:1006)
+   155                                  
+   156 0000006B 50                      		push rax    ;кладёт в стек значение, которое вернула функция    (src/write_tree_in_nasm.cpp:1016)
+   157                                  
+   158                                  		;конец вызова функции    (src/write_tree_in_nasm.cpp:1019)
+   159                                  
+   160 0000006C 58                      		pop rax   ;вытаскивает первый аргумент (в него же и сохранит результат)   (src/write_tree_in_nasm.cpp:529)
+   161 0000006D 5A                      		pop rdx   ;вытаскивает второй аргумент    (src/write_tree_in_nasm.cpp:532)
+   162                                  
+   163 0000006E 4801D0                  		add rax, rdx     ;rax += rdx   (src/write_tree_in_nasm.cpp:547)
+   164                                  
+   165 00000071 50                      		push rax    ;кладёт в стек результат операции   (src/write_tree_in_nasm.cpp:581)
+   166                                  		;конец выполнения арифметической операции с двумя аргументами  (src/write_tree_in_nasm.cpp:587)
+   167                                  
+   168                                  		;конец expression  (src/write_tree_in_nasm.cpp:424)
+   169                                  
+   170                                  		;начало присваивания переменной   (src/write_tree_in_nasm.cpp:429)
+   171                                  
+   172 00000072 4158                    		pop r8   ;вытащил константу из стека    (src/write_tree_in_nasm.cpp:226)
+   173 00000074 4D890424                		mov [r12 + 0 * 8], r8   ;присвоил значение локальной переменной    (src/write_tree_in_nasm.cpp:231)
+   174                                  
+   175                                  		;конец присваивания переменной   (src/write_tree_in_nasm.cpp:435)
+   176                                  
+   177                                  		;конец assign   (src/write_tree_in_nasm.cpp:438)
+   178                                  
+   179                                  	;описание 5 оператора  (src/write_tree_in_nasm.cpp:482)
+   180                                  
+   181                                  		;начало печати числа   (src/write_tree_in_nasm.cpp:651)
+   182                                  
+   183 00000078 4D8B0C24                		mov r9, [r12 + 0 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
+   184 0000007C 4151                    		push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
+   185                                  
+   186 0000007E 48BF-                   		mov rdi, str_for_printf    ;   (src/write_tree_in_nasm.cpp:657)
+   186 00000080 [1E00000000000000] 
+   187                                  
+   188 00000088 5E                      		pop rsi    ;получает число для печати из стека   (src/write_tree_in_nasm.cpp:660)
+   189                                  
+   190 00000089 E801010000              		call printf_number    ;печатает число в rdi    (src/write_tree_in_nasm.cpp:663)
+   191                                  
+   192                                  		;конец печати числа    (src/write_tree_in_nasm.cpp:666)
+   193                                  
+   194                                  	;описание 6 оператора  (src/write_tree_in_nasm.cpp:482)
+   195                                  
+   196                                  				;завершение функции  (src/write_tree_in_nasm.cpp:878)
+   197                                  
+   198                                  		;вычисляет значение, возвращаемое функцией  (src/write_tree_in_nasm.cpp:881)
+   199                                  
+   200 0000008E 41B800000000            		mov r8, 0   ;временно сохраняет значение константы = 0   (src/write_tree_in_nasm.cpp:153)
+   201 00000094 4150                    		push r8   ;кладёт значение константы в стек     (src/write_tree_in_nasm.cpp:158)
+   202                                  
+   203 00000096 58                      		pop rax    ;записывает возвращаемое функцией значение  (src/write_tree_in_nasm.cpp:887)
+   204                                  
+   205                                  	;конец функции   (src/write_tree_in_nasm.cpp:811)
+   206                                  
+   207 00000097 4983C418                	add r12, 8*3   ;  (src/write_tree_in_nasm.cpp:814)
+   208                                  
+   209 0000009B 415C                    	pop r12    ;   (src/write_tree_in_nasm.cpp:817)
+   210                                  
+   211 0000009D E8CA020000              	call end_program  ;завершает работу программу  (src/write_tree_in_nasm.cpp:826)
+   212                                  
+   213                                  ;описание 7 оператора  (src/write_tree_in_nasm.cpp:482)
+   214                                  
+   215                                  ;-----------------------------------------------------------------------
+   216                                  ;описание функции    (src/write_tree_in_nasm.cpp:766)
+   217                                  ;-----------------------------------------------------------------------
+   218                                  
+   219                                  чтоб_машину_отправить_в_полёт:    ;имя функции   (src/write_tree_in_nasm.cpp:775)
+   220                                  
+   221                                  	;тело функции   (src/write_tree_in_nasm.cpp:805)
+   222                                  
+   223                                  	;описание 8 оператора  (src/write_tree_in_nasm.cpp:482)
+   224                                  
+   225                                  		;начало if  (src/write_tree_in_nasm.cpp:320)
+   226                                  
+   227                                  			;условие if   (src/write_tree_in_nasm.cpp:325)
+   228                                  
+   229                                  			;начало печати сравнения   (src/write_tree_in_nasm.cpp:701)
+   230                                  
+   231                                  			;правая часть сравнения   (src/write_tree_in_nasm.cpp:704)
+   232                                  
+   233 000000A2 41B800000000            			mov r8, 0   ;временно сохраняет значение константы = 0   (src/write_tree_in_nasm.cpp:153)
+   234 000000A8 4150                    			push r8   ;кладёт значение константы в стек     (src/write_tree_in_nasm.cpp:158)
+   235                                  
+   236                                  			;левая часть сравнения   (src/write_tree_in_nasm.cpp:710)
+   237                                  
+   238 000000AA 4D8B0C24                			mov r9, [r12 + 0 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
+   239 000000AE 4151                    			push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
+   240                                  
+   241 000000B0 415D                    			pop r13   ;r13 = левая часть сравнения   (src/write_tree_in_nasm.cpp:716)
+   242                                  
+   243 000000B2 415E                    			pop r14   ;r14 = правая часть сравнения  (src/write_tree_in_nasm.cpp:719)
+   244                                  
+   245 000000B4 4D39F5                  			cmp r13, r14 ;сравнение   (<левая> - <правая>)  (src/write_tree_in_nasm.cpp:722)
+   246                                  
+   247                                  			; <л> - <п> <  0    (>= то прыжок мимо - jge)
+   248 000000B7 7D05                    			jge skip_if_0    ;если условие не верно, то перепрыгни через тело if (src/write_tree_in_nasm.cpp:335)
+   249                                  
+   250                                  			;тело if  (src/write_tree_in_nasm.cpp:338)
+   251                                  
+   252                                  			;описание 9 оператора  (src/write_tree_in_nasm.cpp:482)
+   253                                  
+   254 000000B9 E8AE020000              				call end_program  ;завершает работу программу  (src/write_tree_in_nasm.cpp:745)
+   255                                  
+   256                                  			skip_if_0:    ;метка для пропуска if    (src/write_tree_in_nasm.cpp:345)
+   257                                  
+   258                                  		;конец if   (src/write_tree_in_nasm.cpp:350)
+   259                                  
+   260                                  	;описание 10 оператора  (src/write_tree_in_nasm.cpp:482)
+   261                                  
+   262                                  		;начало if  (src/write_tree_in_nasm.cpp:320)
+   263                                  
+   264                                  			;условие if   (src/write_tree_in_nasm.cpp:325)
+   265                                  
+   266                                  			;начало печати сравнения   (src/write_tree_in_nasm.cpp:701)
+   267                                  
+   268                                  			;правая часть сравнения   (src/write_tree_in_nasm.cpp:704)
+   269                                  
+   270 000000BE 41B800000000            			mov r8, 0   ;временно сохраняет значение константы = 0   (src/write_tree_in_nasm.cpp:153)
+   271 000000C4 4150                    			push r8   ;кладёт значение константы в стек     (src/write_tree_in_nasm.cpp:158)
+   272                                  
+   273                                  			;левая часть сравнения   (src/write_tree_in_nasm.cpp:710)
+   274                                  
+   275 000000C6 4D8B0C24                			mov r9, [r12 + 0 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
+   276 000000CA 4151                    			push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
+   277                                  
+   278 000000CC 415D                    			pop r13   ;r13 = левая часть сравнения   (src/write_tree_in_nasm.cpp:716)
+   279                                  
+   280 000000CE 415E                    			pop r14   ;r14 = правая часть сравнения  (src/write_tree_in_nasm.cpp:719)
+   281                                  
+   282 000000D0 4D39F5                  			cmp r13, r14 ;сравнение   (<левая> - <правая>)  (src/write_tree_in_nasm.cpp:722)
+   283                                  
+   284                                  			; <л> - <п> == 0    (!= то прыжок мимо - jne)
+   285 000000D3 750A                    			jne skip_if_1    ;если условие не верно, то перепрыгни через тело if (src/write_tree_in_nasm.cpp:335)
+   286                                  
+   287                                  			;тело if  (src/write_tree_in_nasm.cpp:338)
+   288                                  
+   289                                  			;описание 11 оператора  (src/write_tree_in_nasm.cpp:482)
+   290                                  
+   291                                  								;завершение функции  (src/write_tree_in_nasm.cpp:878)
+   292                                  
+   293                                  				;вычисляет значение, возвращаемое функцией  (src/write_tree_in_nasm.cpp:881)
+   294                                  
+   295 000000D5 41B801000000            				mov r8, 1   ;временно сохраняет значение константы = 1   (src/write_tree_in_nasm.cpp:153)
+   296 000000DB 4150                    				push r8   ;кладёт значение константы в стек     (src/write_tree_in_nasm.cpp:158)
+   297                                  
+   298 000000DD 58                      				pop rax    ;записывает возвращаемое функцией значение  (src/write_tree_in_nasm.cpp:887)
+   299                                  
+   300 000000DE C3                      				ret    ;переход по метке к месту вызова функции   (src/write_tree_in_nasm.cpp:892)
+   301                                  
+   302                                  			skip_if_1:    ;метка для пропуска if    (src/write_tree_in_nasm.cpp:345)
+   303                                  
+   304                                  		;конец if   (src/write_tree_in_nasm.cpp:350)
+   305                                  
+   306                                  	;описание 12 оператора  (src/write_tree_in_nasm.cpp:482)
+   307                                  
+   308                                  				;завершение функции  (src/write_tree_in_nasm.cpp:878)
+   309                                  
+   310                                  		;вычисляет значение, возвращаемое функцией  (src/write_tree_in_nasm.cpp:881)
+   311                                  
+   312                                  		;начало выполнения арифметической операции с двумя аргументами   (src/write_tree_in_nasm.cpp:509)
+   313                                  
+   314                                  		;получение правого аргумента   (src/write_tree_in_nasm.cpp:512)
+   315                                  
+   316 000000DF 4D8B0C24                		mov r9, [r12 + 0 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
+   317 000000E3 4151                    		push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
+   318                                  
+   319                                  		;получение левого аргумента   (src/write_tree_in_nasm.cpp:518)
+   320                                  
+   321                                  		;начинает вызов функции   (src/write_tree_in_nasm.cpp:910)
+   322                                  
+   323 000000E5 4989E7                  		mov r15, rsp  ;сохраняем rsp   (src/write_tree_in_nasm.cpp:913)
+   324                                  
+   325 000000E8 4883EC08                		sub rsp, 8  ;место под rip от call   (src/write_tree_in_nasm.cpp:916)
+   326                                  
+   327 000000EC 4154                    		push r12    ;сохраняет значение старого стекового фрейма  (src/write_tree_in_nasm.cpp:920)
+   328                                  
+   329                                  		;записывает аргументы для функции (src/write_tree_in_nasm.cpp:924)
+   330                                  
+   331                                  		; начало записи значений аргументов, передаваемых функции (src/write_tree_in_nasm.cpp:1034)
+   332                                  
+   333                                  		; 3 аргумент   (src/write_tree_in_nasm.cpp:1053)
+   334                                  
+   335 000000EE 4D8B4C2410              		mov r9, [r12 + 2 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
+   336 000000F3 4151                    		push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
+   337                                  
+   338                                  		; 2 аргумент   (src/write_tree_in_nasm.cpp:1053)
+   339                                  
+   340 000000F5 4D8B4C2408              		mov r9, [r12 + 1 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
+   341 000000FA 4151                    		push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
+   342                                  
+   343                                  		; 1 аргумент   (src/write_tree_in_nasm.cpp:1053)
+   344                                  
+   345                                  		;начало выполнения арифметической операции с двумя аргументами   (src/write_tree_in_nasm.cpp:509)
+   346                                  
+   347                                  		;получение правого аргумента   (src/write_tree_in_nasm.cpp:512)
+   348                                  
+   349 000000FC 41B801000000            		mov r8, 1   ;временно сохраняет значение константы = 1   (src/write_tree_in_nasm.cpp:153)
+   350 00000102 4150                    		push r8   ;кладёт значение константы в стек     (src/write_tree_in_nasm.cpp:158)
+   351                                  
+   352                                  		;получение левого аргумента   (src/write_tree_in_nasm.cpp:518)
+   353                                  
+   354 00000104 4D8B0C24                		mov r9, [r12 + 0 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
+   355 00000108 4151                    		push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
+   356                                  
+   357 0000010A 58                      		pop rax   ;вытаскивает первый аргумент (в него же и сохранит результат)   (src/write_tree_in_nasm.cpp:529)
+   358 0000010B 5A                      		pop rdx   ;вытаскивает второй аргумент    (src/write_tree_in_nasm.cpp:532)
+   359                                  
+   360 0000010C 4829D0                  		sub rax, rdx     ;rax -= rdx     (src/write_tree_in_nasm.cpp:553)
+   361                                  
+   362 0000010F 50                      		push rax    ;кладёт в стек результат операции   (src/write_tree_in_nasm.cpp:581)
+   363                                  		;конец выполнения арифметической операции с двумя аргументами  (src/write_tree_in_nasm.cpp:587)
+   364                                  
+   365                                  		; конец записи значений аргументов, передаваемых функции  (src/write_tree_in_nasm.cpp:1062)
+   366                                  
+   367 00000110 4989E4                  		mov r12, rsp    ;(src/write_tree_in_nasm.cpp:932)
+   368                                  
+   369                                  		;вызывает функцию   (src/write_tree_in_nasm.cpp:989)
+   370                                  
+   371 00000113 4C89FC                  		mov rsp, r15    ;(src/write_tree_in_nasm.cpp:992)
+   372                                  
+   373 00000116 E887FFFFFF              		call чтоб_машину_отправить_в_полёт    ;вызов функции   (src/write_tree_in_nasm.cpp:1006)
+   374                                  
+   375 0000011B 50                      		push rax    ;кладёт в стек значение, которое вернула функция    (src/write_tree_in_nasm.cpp:1016)
+   376                                  
+   377                                  		;конец вызова функции    (src/write_tree_in_nasm.cpp:1019)
+   378                                  
+   379 0000011C 58                      		pop rax   ;вытаскивает первый аргумент (в него же и сохранит результат)   (src/write_tree_in_nasm.cpp:529)
+   380 0000011D 5A                      		pop rdx   ;вытаскивает второй аргумент    (src/write_tree_in_nasm.cpp:532)
+   381                                  
+   382 0000011E F7EA                    		imul edx  ;rdx:rax = rax * rdx (берём значения, что rdx:rax == rax)     (src/write_tree_in_nasm.cpp:560)
+   383                                  
+   384 00000120 50                      		push rax    ;кладёт в стек результат операции   (src/write_tree_in_nasm.cpp:581)
+   385                                  		;конец выполнения арифметической операции с двумя аргументами  (src/write_tree_in_nasm.cpp:587)
+   386                                  
+   387 00000121 58                      		pop rax    ;записывает возвращаемое функцией значение  (src/write_tree_in_nasm.cpp:887)
+   388                                  
+   389 00000122 C3                      		ret    ;переход по метке к месту вызова функции   (src/write_tree_in_nasm.cpp:892)
+   390                                  
+   391                                  	;конец функции   (src/write_tree_in_nasm.cpp:811)
+   392                                  
+   393 00000123 4983C418                	add r12, 8*3   ;  (src/write_tree_in_nasm.cpp:814)
+   394                                  
+   395 00000127 415C                    	pop r12    ;   (src/write_tree_in_nasm.cpp:817)
+   396                                  
+   397                                  	;--------------------------------------------------------------------------------------------
+   398                                  	;Завершение работы программы    (src/write_tree_in_nasm.cpp:114)
+   399                                  	;Возвращает значение, которое к этом моменту хранится в rax
+   400                                  	;--------------------------------------------------------------------------------------------
+   401 00000129 4889C7                  	mov rdi, rax     ;exit64 (rdi)
+   402 0000012C B83C000000              	mov rax, 0x3C
+   403 00000131 0F05                    	syscall
+   404                                  ;--------------------------------------------------------------------------------------------
+   405                                  
+   406                                  %INCLUDE "std_lib.s"
      1                              <1> ;------------------------------------------------------------------------------------------------------------------
      2                              <1> ;													scanf_number
      3                              <1> ;take number from stdio and push it in stack
@@ -54,17 +418,17 @@
     11                              <1> ;------------------------------------------------------------------------------------------------------------------
     12                              <1> scanf_number:
     13                              <1> 
-    14 0000001D 53                  <1> 	push rbx
-    15 0000001E 4154                <1> 	push r12
+    14 00000133 53                  <1> 	push rbx
+    15 00000134 4154                <1> 	push r12
     16                              <1> 
-    17 00000020 31C0                <1> 	xor eax, eax      		   ; номер syscall (0 = read)
-    18 00000022 83F700              <1>     xor edi, 0      		   ; файловый дескриптор (0 = stdin)
-    19 00000025 48BE-               <1> 	mov rsi, bytes_of_number   ; буфер для символа
-    19 00000027 [1E00000000000000]  <1>
-    20 0000002F BA14000000          <1>     mov rdx, 20     			   ; количество байт
-    21 00000034 0F05                <1>     syscall         		   ; вызов syscall
+    17 00000136 31C0                <1> 	xor eax, eax      		   ; номер syscall (0 = read)
+    18 00000138 83F700              <1>     xor edi, 0      		   ; файловый дескриптор (0 = stdin)
+    19 0000013B 48BE-               <1> 	mov rsi, bytes_of_number   ; буфер для символа
+    19 0000013D [2200000000000000]  <1>
+    20 00000145 BA14000000          <1>     mov rdx, 20     			   ; количество байт
+    21 0000014A 0F05                <1>     syscall         		   ; вызов syscall
     22                              <1> 
-    23 00000036 4889C1              <1> 	mov rcx, rax
+    23 0000014C 4889C1              <1> 	mov rcx, rax
     24                              <1> 
     25                              <1> 	;mov rax, 1          ; sys_write
     26                              <1>     ;mov rdi, 1          ; stdout
@@ -72,195 +436,594 @@
     28                              <1>     ;mov rdx, rcx         ; кол-во прочитанных байт
     29                              <1>     ;syscall
     30                              <1> 
-    31 00000039 31C0                <1> 	xor eax, eax
-    32 0000003B 31DB                <1> 	xor ebx, ebx
-    33                              <1> 
-    34                              <1> 	prepare_next_byte:
-    35                              <1> 
-    36 0000003D 8A1E                <1> 	mov bl, byte [rsi]
-    37 0000003F 48FFC6              <1> 	inc rsi
+    31 0000014F 31C0                <1> 	xor eax, eax
+    32 00000151 31DB                <1> 	xor ebx, ebx
+    33 00000153 4D31ED              <1> 	xor r13, r13
+    34                              <1> 
+    35 00000156 8A1E                <1> 	mov bl, byte [rsi]
+    36 00000158 80FB2D              <1> 	cmp bl, '-'
+    37 0000015B 7509                <1> 	jnz skip_minus
     38                              <1> 
-    39 00000042 80FB0A              <1> 	cmp bl, 0x0A 
-    40 00000045 7411                <1> 	jz end_scanf
+    39 0000015D 48FFC6              <1> 	inc rsi
+    40 00000160 41BD01000000        <1> 	mov r13, 1
     41                              <1> 
-    42 00000047 80EB30              <1> 	sub bl, '0'
+    42                              <1> 	skip_minus:
     43                              <1> 
-    44 0000004A 41B80A000000        <1> 	mov r8, 10
-    45 00000050 49F7E0              <1> 	mul r8
-    46 00000053 4801D8              <1> 	add rax, rbx
-    47                              <1> 
-    48 00000056 E2E5                <1> 	loop prepare_next_byte
-    49                              <1> 
-    50                              <1> 	end_scanf:
+    44                              <1> 	prepare_next_byte:
+    45                              <1> 
+    46 00000166 8A1E                <1> 	mov bl, byte [rsi]
+    47 00000168 48FFC6              <1> 	inc rsi
+    48                              <1> 
+    49 0000016B 80FB0A              <1> 	cmp bl, 0x0A 
+    50 0000016E 7411                <1> 	jz end_scanf
     51                              <1> 
-    52 00000058 415C                <1> 	pop r12
-    53 0000005A 5B                  <1> 	pop rbx
-    54                              <1> 
-    55 0000005B C3                  <1> 	ret
-    56                              <1> 
-    57                              <1> ;------------------------------------------------------------------------------------------------------------------
-    58                              <1> 
+    52 00000170 80EB30              <1> 	sub bl, '0'
+    53                              <1> 
+    54 00000173 41B80A000000        <1> 	mov r8, 10
+    55 00000179 49F7E0              <1> 	mul r8
+    56 0000017C 4801D8              <1> 	add rax, rbx
+    57                              <1> 
+    58 0000017F E2E5                <1> 	loop prepare_next_byte
     59                              <1> 
-    60                              <1> 
+    60                              <1> 	end_scanf:
     61                              <1> 
-    62                              <1> 
-    63                              <1> ;------------------------------------------------------------------------------------------------------------------
-    64                              <1> ;													printf_number
-    65                              <1> ;print number in stdio
-    66                              <1> ;
-    67                              <1> ;entry: rdi = number for print
-    68                              <1> ;
-    69                              <1> ;exit: NO
-    70                              <1> ;
-    71                              <1> ;destr:
-    72                              <1> ;	
-    73                              <1> ;------------------------------------------------------------------------------------------------------------------
-    74                              <1> printf_number:
+    62 00000181 4983FD01            <1> 	cmp r13, 1
+    63 00000185 7504                <1> 	jnz not_do_neg
+    64                              <1> 
+    65                              <1> 	;neg eax
+    66                              <1> 
+    67 00000187 F7D0                <1> 	not eax
+    68 00000189 FFC0                <1> 	inc eax
+    69                              <1> 
+    70                              <1> 	not_do_neg:
+    71 0000018B 415C                <1> 	pop r12
+    72 0000018D 5B                  <1> 	pop rbx
+    73                              <1> 
+    74 0000018E C3                  <1> 	ret
     75                              <1> 
-    76                              <1> 	;mov rcx, [len_buffer]       ;rcx = index of count free places in buffer
-    77 0000005C 48BE-               <1> 	mov rsi, buffer_for_printf   ;rsi = address of buffer
-    77 0000005E [0000000000000000]  <1>
-    78 00000066 31C9                <1> 	xor ecx, ecx                 ;rcx = index_in_buffer = 0
+    76                              <1> ;------------------------------------------------------------------------------------------------------------------
+    77                              <1> 
+    78                              <1> 
     79                              <1> 
-    80 00000068 E81A000000          <1> 	call print_argument
+    80                              <1> 
     81                              <1> 
-    82                              <1> 	;---------------------------------------------------------------------------------------------------------	;print_buffer:
-    84                              <1>     ;interrupt rax = 0x01: print buffer (address = rsi) with len (len = rdx) on flow (flow = rdi) 
-    85 0000006D B801000000          <1>     mov rax, 0x01                ;int  
-    86                              <1> 
-    87 00000072 4889CA              <1>     mov rdx, rcx                 ;rdx == len
-    88                              <1> 
-    89 00000075 48BE-               <1>     mov rsi, buffer_for_printf   ;rsi == const char* buffer
-    89 00000077 [0000000000000000]  <1>
-    90 0000007F BF01000000          <1>     mov rdi, 1                   ;rdi == 1 => stdout
-    91 00000084 0F05                <1>     syscall ;!!! change r10, r11
-    92                              <1> 	;---------------------------------------------------------------------------------------------------------
-    93                              <1> 
-    94 00000086 C3                  <1> 	ret
-    95                              <1> ;------------------------------------------------------------------------------------------------------------------
-    96                              <1> 
+    82                              <1> ;------------------------------------------------------------------------------------------------------------------
+    83                              <1> ;													printf_number
+    84                              <1> ;print number in stdio
+    85                              <1> ;
+    86                              <1> ;entry: rdi = number for print
+    87                              <1> ;
+    88                              <1> ;exit: NO
+    89                              <1> ;
+    90                              <1> ;destr:
+    91                              <1> ;	
+    92                              <1> ;------------------------------------------------------------------------------------------------------------------
+    93                              <1> ; printf_number:
+    94                              <1> 
+    95                              <1> ; 	;mov rcx, [len_buffer]       ;rcx = index of count free places in buffer
+    96                              <1> ; 	mov rsi, buffer_for_printf   ;rsi = address of buffer
     97                              <1> 
-    98                              <1> ;------------------------------------------------------------------------------------------------------------------
-    99                              <1> ;													print_argument
-   100                              <1> ;print argument %d (int)
-   101                              <1> ;
-   102                              <1> ;entry: rdi = number for print
-   103                              <1> ;       rcx = index_in_buffer
-   104                              <1> ;       rsi = address of buffer
-   105                              <1> ;
-   106                              <1> ;exit: NO
-   107                              <1> ;
-   108                              <1> ;destr:
-   109                              <1> ;	
-   110                              <1> ;------------------------------------------------------------------------------------------------------------------
-   111                              <1> print_argument:    ;%d   (for int)
-   112                              <1> 
-   113 00000087 4889F8              <1> 	mov rax, rdi
-   114                              <1> 	
-   115 0000008A 4C8B2C25[3C000000]  <1> 	mov r13, [mask_for_sign]   ;r13 = mask_for_sign
-   116 00000092 4C21EF              <1> 	and rdi, r13   ;rdx = eax and r13
-   117                              <1> 
-   118 00000095 740B                <1> 	jz continue_write_int_10  ;rdx == 0 --> unsigned value
-   119                              <1> 							  ;rdx != 0 -->   signed value
-   120                              <1> 
-   121 00000097 F7D8                <1> 	neg eax   ;eax *= -1  ;rax = 0...0not(eax)
-   122                              <1> 
-   123 00000099 C6062D              <1> 	mov [rsi], byte '-'   ;put '-' in buffer         
-   124 0000009C 48FFC2              <1> 	inc rdx         ;+1 - next free symbol in buffer
-   125 0000009F 48FFC1              <1> 	inc rcx         
-   126                              <1> 
-   127                              <1> 	;----------------------------------------------------------------------------------
+    98                              <1> ; 	mov rcx, 30
+    99                              <1> 
+   100                              <1> ; 	null_buffer:
+   101                              <1> 
+   102                              <1> ; 		mov [rsi], byte 0
+   103                              <1> ; 		inc rsi
+   104                              <1> 
+   105                              <1> ; 	loop null_buffer
+   106                              <1> 
+   107                              <1> ; 	mov rsi, buffer_for_printf   ;rsi = address of buffer
+   108                              <1> ; 	xor ecx, ecx                 ;rcx = index_in_buffer = 0
+   109                              <1> 
+   110                              <1> ; 	call print_argument
+   111                              <1> 
+   112                              <1> ; 	mov al, 0x0A
+   113                              <1> ; 	mov [rsi], al
+   114                              <1> ; 	inc rsi
+   115                              <1> ; 	inc rcx
+   116                              <1> 
+   117                              <1> ; 	;---------------------------------------------------------------------------------------------------------; 	;print_buffer:
+   119                              <1> ;     ;interrupt rax = 0x01: print buffer (address = rsi) with len (len = rdx) on flow (flow = rdi) 
+   120                              <1> ;     mov rax, 0x01                ;int  
+   121                              <1> 
+   122                              <1> ;     mov rdx, rcx                 ;rdx == len
+   123                              <1> 
+   124                              <1> ;     mov rsi, buffer_for_printf   ;rsi == const char* buffer
+   125                              <1> ;     mov rdi, 1                   ;rdi == 1 => stdout
+   126                              <1> ;     syscall ;!!! change r10, r11
+   127                              <1> ; 	;---------------------------------------------------------------------------------------------------------
    128                              <1> 
-   129                              <1> 	continue_write_int_10:
-   130                              <1> 
-   131 000000A2 4D31C0              <1> 	xor r8, r8  ;r8 = 0 (count of numbers in value symbols for number_10)
+   129                              <1> 
+   130                              <1> ; 	ret
+   131                              <1> ;------------------------------------------------------------------------------------------------------------------
    132                              <1> 
-   133                              <1> 	count_next_symbol_in_number_10:  ;take number from value and put it in stack
+   133                              <1> 
    134                              <1> 
-   135 000000A5 4899                <1> 	cqo          ;rax --> rdx:rax
-   136 000000A7 41B90A000000        <1> 	mov r9, 10   ;r9  = footing of 10 calculus system 
-   137 000000AD 49F7F1              <1> 	div r9       ;rax = rax // 10
-   138                              <1> 				 ;rdx = rax %  10
-   139 000000B0 49FFC0              <1> 	inc r8       ;+1 count of numbers in stack
-   140 000000B3 4883C230            <1> 	add rdx, '0' ;numbers --> 'numbers' (ascii)
-   141 000000B7 52                  <1> 	push rdx     ;put number in stack
-   142                              <1> 
-   143 000000B8 4883F800            <1> 	cmp rax, 0
-   144 000000BC 75E7                <1> 	jne count_next_symbol_in_number_10 ;rax != 0 --> can put number from rax in stack
-   145                              <1> 
-   146                              <1> 	;all numbers from value in stack
-   147                              <1> 	;mov rax, r8    ;rax = count of numbers in stack (count of writing symbols will be counted in print_symbols_from_stack)
-   148                              <1> 	;mov rdx, r12   ;rdx = address on the next free place in buffer 
-   149                              <1> 
-   150                              <1> 	;---------------------------------------------------------------
+   135                              <1> 
+   136                              <1> 
+   137                              <1> ;------------------------------------------------------------------------------------------------------------------
+   138                              <1> ;													print_argument
+   139                              <1> ;print argument %d (int)
+   140                              <1> ;
+   141                              <1> ;entry: rdi = number for print
+   142                              <1> ;       rcx = index_in_buffer
+   143                              <1> ;       rsi = address of buffer
+   144                              <1> ;
+   145                              <1> ;exit: NO
+   146                              <1> ;
+   147                              <1> ;destr:
+   148                              <1> ;	
+   149                              <1> ;------------------------------------------------------------------------------------------------------------------
+   150                              <1> ; print_argument:    ;%d   (for int)
    151                              <1> 
-   152 000000BE E801000000          <1> 	call print_symbols_from_stack        
+   152                              <1> ; 	mov rax, rdi
    153                              <1> 
-   154 000000C3 C3                  <1> 	ret
-   155                              <1> ;------------------------------------------------------------------------------------------------------------------
-   156                              <1> 
-   157                              <1> ;---------------------------------------------------------------------------------------------------------
-   158                              <1> ;                                       print_symbols_from_stack
-   159                              <1> ;value --> (calculus system) --> array of numbers in stack (little end)
-   160                              <1> ;print this numbers from stack
-   161                              <1> ;
-   162                              <1> ;entry: rsi = address of buffer
-   163                              <1> ;		rcx = index_in_buffer
-   164                              <1> ;		r8  = count of numbers in value symbols for number_10
-   165                              <1> ;exit:  
-   166                              <1> ;
-   167                              <1> ;destr: 
-   168                              <1> ;---------------------------------------------------------------------------------------------------------
-   169                              <1> print_symbols_from_stack:
-   170                              <1> 
-   171 000000C4 415D                <1>     pop r13  ;save address of return for this func
-   172                              <1>     ;in stack - all numbers
+   154                              <1> ; 	;mov edi, eax
+   155                              <1> 	
+   156                              <1> ; 	mov r13, [mask_for_sign]   ;r13 = mask_for_sign
+   157                              <1> ; 	and rdi, r13   ;rdx = eax and r13
+   158                              <1> 
+   159                              <1> ; 	jz continue_write_int_10  ;rdx == 0 --> unsigned value
+   160                              <1> ; 							  ;rdx != 0 -->   signed value
+   161                              <1> 
+   162                              <1> ; 	neg eax   ;eax *= -1  ;rax = 0...0not(eax)
+   163                              <1> 
+   164                              <1> ; 	mov [rsi], byte '-'   ;put '-' in buffer         
+   165                              <1> ; 	inc rsi         ;+1 - next free symbol in buffer
+   166                              <1> ; 	inc rcx         
+   167                              <1> 
+   168                              <1> ; 	;----------------------------------------------------------------------------------
+   169                              <1> 
+   170                              <1> ; 	continue_write_int_10:
+   171                              <1> 
+   172                              <1> ; 	xor r8, r8  ;r8 = 0 (count of numbers in value symbols for number_10)
    173                              <1> 
-   174                              <1>     print_symbol:
+   174                              <1> ; 	count_next_symbol_in_number_10:  ;take number from value and put it in stack
    175                              <1> 
-   176 000000C6 58                  <1>         pop rax         ;take symbol from stack to bl
-   177 000000C7 8806                <1>         mov [rsi], al   ;put symbol in buffer         
-   178 000000C9 48FFC6              <1>         inc rsi        ;+1 - next free symbol in buffer
-   179 000000CC 48FFC1              <1>         inc rcx      
-   180 000000CF 49FFC8              <1>         dec r8          ;-1 number in stack
-   181                              <1> 
-   182 000000D2 4983F800            <1>         cmp r8, 0     
-   183 000000D6 75EE                <1>         jne print_symbol ;r8 != 0 --> print the next number from stack
-   184                              <1> 
-   185                              <1>     ;r8 == 0 --> all numbers in stack are printed   
+   176                              <1> ; 	cqo          ;rax --> rdx:rax
+   177                              <1> ; 	mov r9, 10   ;r9  = footing of 10 calculus system 
+   178                              <1> ; 	div r9       ;rax = rax // 10
+   179                              <1> ; 				 ;rdx = rax %  10
+   180                              <1> ; 	inc r8       ;+1 count of numbers in stack
+   181                              <1> ; 	add rdx, '0' ;numbers --> 'numbers' (ascii)
+   182                              <1> ; 	push rdx     ;put number in stack
+   183                              <1> 
+   184                              <1> ; 	cmp rax, 0
+   185                              <1> ; 	jne count_next_symbol_in_number_10 ;rax != 0 --> can put number from rax in stack
    186                              <1> 
-   187 000000D8 4155                <1>     push r13   ;save address of return for this func
-   188                              <1> 
-   189 000000DA C3                  <1>     ret
-   190                              <1> ;---------------------------------------------------------------------------------------------------------
-   191                              <1> 
+   187                              <1> ; 	;all numbers from value in stack
+   188                              <1> ; 	;mov rax, r8    ;rax = count of numbers in stack (count of writing symbols will be counted in print_symbols_from_stack)
+   189                              <1> ; 	;mov rdx, r12   ;rdx = address on the next free place in buffer 
+   190                              <1> 
+   191                              <1> ; 	;---------------------------------------------------------------
    192                              <1> 
-   193                              <1> 
+   193                              <1> ; 	call print_symbols_from_stack        
    194                              <1> 
-   195                              <1> 
-   196                              <1> 
-   197                              <1> ;------------------------------------------------------------------------------------------------------------------
-   198                              <1> ;													end_program
-   199                              <1> ;abort program
-   200                              <1> ;
-   201                              <1> ;entry: NO
+   195                              <1> ; 	ret
+   196                              <1> ;------------------------------------------------------------------------------------------------------------------
+   197                              <1> 
+   198                              <1> ;---------------------------------------------------------------------------------------------------------
+   199                              <1> ;                                       print_symbols_from_stack
+   200                              <1> ;value --> (calculus system) --> array of numbers in stack (little end)
+   201                              <1> ;print this numbers from stack
    202                              <1> ;
-   203                              <1> ;exit: NO
-   204                              <1> ;
-   205                              <1> ;destr: rdi = code for ending program
-   206                              <1> ;		rax = number of interrupt
-   207                              <1> ;	
-   208                              <1> ;------------------------------------------------------------------------------------------------------------------
-   209                              <1> end_program:
-   210                              <1> 
-   211 000000DB 31FF                <1> 	xor edi, edi     ;exit64 (0)
-   212 000000DD B83C000000          <1> 	mov rax, 0x3C
-   213 000000E2 0F05                <1> 	syscall
+   203                              <1> ;entry: rsi = address of buffer
+   204                              <1> ;		rcx = index_in_buffer
+   205                              <1> ;		r8  = count of numbers in value symbols for number_10
+   206                              <1> ;exit:  
+   207                              <1> ;
+   208                              <1> ;destr: 
+   209                              <1> ;---------------------------------------------------------------------------------------------------------
+   210                              <1> ; print_symbols_from_stack:
+   211                              <1> 
+   212                              <1> ;     pop r13  ;save address of return for this func
+   213                              <1> ;     ;in stack - all numbers
    214                              <1> 
-   215                              <1> ;------------------------------------------------------------------------------------------------------------------
+   215                              <1> ;     print_symbol:
    216                              <1> 
-   217                              <1> 
-   218                              <1> section .data   ;has data
-   219 00000000 00<rep 1Eh>         <1> buffer_for_printf: times 30 db 0  ;buffer for symbols
-   220 0000001E 00<rep 1Eh>         <1> bytes_of_number: times 30 db 0
-   221 0000003C 00000080            <1> mask_for_sign dd 1<<31   ;mask_for_sign in int (for %d)
+   217                              <1> ;         pop rax         ;take symbol from stack to bl
+   218                              <1> ;         mov [rsi], al   ;put symbol in buffer         
+   219                              <1> ;         inc rsi        ;+1 - next free symbol in buffer
+   220                              <1> ;         inc rcx      
+   221                              <1> ;         dec r8          ;-1 number in stack
+   222                              <1> 
+   223                              <1> ;         cmp r8, 0     
+   224                              <1> ;         jne print_symbol ;r8 != 0 --> print the next number from stack
+   225                              <1> 
+   226                              <1> ;     ;r8 == 0 --> all numbers in stack are printed   
+   227                              <1> 
+   228                              <1> ;     push r13   ;save address of return for this func
+   229                              <1> 
+   230                              <1> ;     ret
+   231                              <1> ;---------------------------------------------------------------------------------------------------------
+   232                              <1> 
+   233                              <1> 
+   234                              <1> 
+   235                              <1> 
+   236                              <1> 
+   237                              <1> 
+   238                              <1> 
+   239                              <1> ;==============================================================================
+   240                              <1> ;	Prints string to stdout
+   241                              <1> ;	Entry:		RSI - address of string
+   242                              <1> ;				... - other arguments
+   243                              <1> ;	Exit:		None
+   244                              <1> ;	Destroy:	None
+   245                              <1> ;==============================================================================
+   246                              <1> printf_number:											;printf(char* string, ...)
+   247 0000018F 415A                <1> 	pop r10											;returning address
+   248 00000191 4151                <1> 	push r9											;6th argument
+   249 00000193 4150                <1> 	push r8											;5th argument
+   250 00000195 51                  <1> 	push rcx										;4th argument
+   251 00000196 52                  <1> 	push rdx										;3th argument
+   252 00000197 56                  <1> 	push rsi										;2th argument
+   253 00000198 57                  <1> 	push rdi										;1th argument
+   254 00000199 4989E3              <1> 	mov r11, rsp									;start of parameters in stack
+   255                              <1> 
+   256 0000019C 55                  <1> 	push rbp
+   257 0000019D 53                  <1> 	push rbx
+   258 0000019E 4154                <1> 	push r12
+   259 000001A0 4155                <1> 	push r13										;saved registers
+   260 000001A2 4156                <1> 	push r14
+   261 000001A4 4157                <1> 	push r15
+   262                              <1> 
+   263 000001A6 498B33              <1> 	mov rsi, [r11]									;first format string
+   264 000001A9 4983C308            <1> 	add r11, 8										;next argument
+   265                              <1> 
+   266 000001AD 48BF-               <1> 	mov rdi, Buffer									;copy destination
+   266 000001AF [0000000000000000]  <1>
+   267                              <1> 	copy_to_buffer:									;<------------------------------|
+   268 000001B7 AC                  <1> 		lodsb										;mov al, ds:[rsi] / inc rsi		|
+   269                              <1> 													;								|
+   270 000001B8 3C25                <1> 		cmp al, '%'									;if (al == '%') zf = 1			|
+   271 000001BA 0F8497000000        <1> 		je GetArg									;if (zf == 1) goto GetArg		|
+   272                              <1> 													;								|
+   273 000001C0 3C00                <1> 		cmp al, 0									;if (al == 0) zf = 1			|
+   274 000001C2 7407                <1>  		je end_printf								;if (zf == 1) goto end_printf---|---|
+   275                              <1> 													;								|	|
+   276 000001C4 E818000000          <1> 		call check_buffer							;flush buffer before put symbol?|	|
+   277 000001C9 EBEC                <1> 	jmp copy_to_buffer								;-------------------------------|	|
+   278                              <1> 													;									|
+   279                              <1> 	end_printf:										;<----------------------------------|
+   280 000001CB E83A000000          <1> 	call flush_buffer								;flush the buffer
+   281                              <1> 
+   282 000001D0 415F                <1> 	pop r15
+   283 000001D2 415E                <1> 	pop r14
+   284 000001D4 415D                <1> 	pop r13
+   285 000001D6 415C                <1> 	pop r12											;return saved registers
+   286 000001D8 5B                  <1> 	pop rbx
+   287 000001D9 5D                  <1> 	pop rbp
+   288                              <1> 
+   289 000001DA 4883C430            <1> 	add rsp, 48										;return rsp above the 6th arguments
+   290                              <1> 
+   291 000001DE 4152                <1> 	push r10										;put return address
+   292 000001E0 C3                  <1> 	ret
+   293                              <1> ;==============================================================================
+   294                              <1> 
+   295                              <1> ;==============================================================================
+   296                              <1> ;	Check buffer on overflow
+   297                              <1> ;	Entry:		RDI - current ip in buffer
+   298                              <1> ;	Exit:		None
+   299                              <1> ;	Destroy:	RDI
+   300                              <1> ;==============================================================================
+   301                              <1> check_buffer:
+   302 000001E1 53                  <1> 	push rbx										;save rbx
+   303 000001E2 4831DB              <1> 	xor rbx, rbx									;rbx = 0
+   304 000001E5 4801FB              <1> 	add rbx, rdi									;rbx += rdi
+   305 000001E8 4881EB[00000000]    <1> 	sub rbx, Buffer									;rbx -= Buffer
+   306                              <1> 
+   307 000001EF 4881FB80000000      <1> 	cmp rbx, buffer_size							;if (rbx == buffer_size) zf = 1
+   308 000001F6 720F                <1> 	jb skip_flush									;if (zf < 0) goto skip_flush ---|
+   309 000001F8 E80D000000          <1> 		call flush_buffer							;call buffer flush				|
+   310 000001FD 48BF-               <1> 		mov rdi, Buffer								;set rdi on buffer start		|
+   310 000001FF [0000000000000000]  <1>
+   311                              <1> 													;								|
+   312                              <1> 	skip_flush:										;<------------------------------|
+   313 00000207 AA                  <1> 	stosb											;mov [rdi], al / inc rdi
+   314 00000208 5B                  <1> 	pop rbx											;return rbx
+   315 00000209 C3                  <1> 	ret
+   316                              <1> ;==============================================================================
+   317                              <1> 
+   318                              <1> ;==============================================================================
+   319                              <1> ;	Flush buffer
+   320                              <1> ;	Entry:		None
+   321                              <1> ;	Exit:		None
+   322                              <1> ;	Destroy:	RSI, RDX, RAX, RDI
+   323                              <1> ;==============================================================================
+   324                              <1> flush_buffer:
+   325 0000020A 56                  <1> 	push rsi										;save rsi
+   326 0000020B 52                  <1> 	push rdx										;save rdx
+   327 0000020C 50                  <1> 	push rax										;save rax
+   328 0000020D 51                  <1> 	push rcx										;save rcx
+   329 0000020E 4153                <1> 	push r11										;save r11 which is changed by syscall
+   330 00000210 48BE-               <1> 	mov rsi, Buffer									;rsi = &Buffer
+   330 00000212 [0000000000000000]  <1>
+   331 0000021A BA80000000          <1> 	mov rdx, buffer_size							;rdx = buffer len
+   332 0000021F B801000000          <1> 	mov rax, 0x01									;write
+   333 00000224 BF01000000          <1> 	mov rdi, Stdout									;output descriptor
+   334 00000229 0F05                <1> 	syscall				 							;system instruction
+   335                              <1> 
+   336 0000022B B980000000          <1> 	mov rcx, buffer_size							;rcx = size of buffer
+   337 00000230 48BF-               <1> 	mov rdi, Buffer									;rdi = buffer start
+   337 00000232 [0000000000000000]  <1>
+   338 0000023A 4831C0              <1> 	xor rax, rax									;rax = 0
+   339 0000023D F3AA                <1> 	rep stosb										;while (rcx--) stosb
+   340 0000023F 415B                <1> 	pop r11											;return r11
+   341 00000241 59                  <1> 	pop rcx											;return rcx
+   342 00000242 58                  <1> 	pop rax											;return rax
+   343 00000243 5A                  <1> 	pop rdx											;return rdx
+   344 00000244 5E                  <1> 	pop rsi											;return rsi
+   345 00000245 C3                  <1> 	ret
+   346                              <1> ;==============================================================================
+   347                              <1> ;	Calculate string length
+   348                              <1> ;	Entry:		RSI - address of string
+   349                              <1> ;	Exit:		RCX - string length
+   350                              <1> ;	Destroy:	RCX, AL
+   351                              <1> ;==============================================================================
+   352                              <1> strlen:												;strlen(rsi)
+   353 00000246 56                  <1> 	push rsi										;save rsi
+   354 00000247 4831C9              <1> 	xor rcx, rcx									;rcx = 0
+   355                              <1> 	count:											;<----------------------------------|
+   356 0000024A AC                  <1> 		lodsb										;mov al, ds:[rsi] / inc rsi			|
+   357 0000024B 3C00                <1> 		cmp al, 0									;if (al == 0) zf = 1				|
+   358 0000024D 7406                <1> 		je end_count								;if (zf == 1) goto end_count----|	|
+   359 0000024F 4883C101            <1> 		add rcx, 1									;rcx += 2						|	|
+   360 00000253 EBF5                <1> 	jmp count										;-------------------------------|---|
+   361                              <1> 	end_count:										;<------------------------------|
+   362 00000255 5E                  <1> 	pop rsi											;back rsi | string start
+   363 00000256 C3                  <1> ret
+   364                              <1> ;==============================================================================
+   365                              <1> 
+   366                              <1> ;==============================================================================
+   367                              <1> ;	Get argument for printf
+   368                              <1> ;	Entry:		RSI - current position in printf string
+   369                              <1> ;	Exit:		None
+   370                              <1> ;	Destroy:	RCX, AL
+   371                              <1> ;==============================================================================
+   372                              <1> GetArg:
+   373 00000257 AC                  <1> 	lodsb											;mov al, ds:[rsi] / inc rsi
+   374                              <1> 
+   375 00000258 3C25                <1> 	cmp al, '%'										;if (al == '%') zf = 1
+   376 0000025A 7507                <1> 	jne skip_percent								;if (zf != 1) goto skip_percent	----|
+   377 0000025C E880FFFFFF          <1> 	call check_buffer								;call buffer checking				|
+   378 00000261 EB5F                <1> 	jmp _default_									;goto _default_						|
+   379                              <1> 													;									|
+   380                              <1> 	skip_percent:									;<----------------------------------|
+   381 00000263 2C62                <1> 	sub al, 'b'										;al -= 'b'
+   382 00000265 3C16                <1> 	cmp al, 'x' - 'b'								;if (al == 'x' - 'b') zf = 1
+   383 00000267 7759                <1> 	ja _default_									;if (>) goto _default_
+   384 00000269 4825FF000000        <1> 	and rax, 0xFF									;rax &= 0xFF
+   385 0000026F 48C1E003            <1> 	shl rax, 3										;rax *= 8
+   386 00000273 4805[00000000]      <1> 	add rax, jump_table								;rax += &jump_table
+   387                              <1> 
+   388 00000279 56                  <1> 	push rsi										;save rsi
+   389 0000027A 498B33              <1> 	mov rsi, [r11]									;rsi = new arg
+   390 0000027D 4983C308            <1> 	add r11, 8
+   391                              <1> 
+   392 00000281 FF20                <1> 	jmp [rax]										;goto jump_table + al * 8
+   393                              <1> ;==============================================================================
+   394                              <1> 
+   395                              <1> ;==============================================================================
+   396                              <1> ;	Handler of parameters
+   397                              <1> ;	Entry:		None
+   398                              <1> ;	Exit:		None
+   399                              <1> ;	Destroy:	None
+   400                              <1> ;==============================================================================
+   401                              <1> _s_:
+   402 00000283 E8BEFFFFFF          <1> 	call strlen										;calc len of string
+   403                              <1> 	str_to_buffer:									;put str symbol to Buffer <---------|
+   404 00000288 AC                  <1> 		lodsb										;mov al, [rsi] / inc rsi			|
+   405 00000289 E853FFFFFF          <1> 		call check_buffer							;check buffer overflow / put symbol	|
+   406 0000028E E2F8                <1> 	loop str_to_buffer								;-----------------------------------|
+   407 00000290 5E                  <1> 	pop rsi											;return rsi to format string
+   408 00000291 EB2F                <1> 	jmp _default_									;goto _default_
+   409                              <1> 
+   410                              <1> _c_:
+   411 00000293 4889F0              <1> 	mov rax, rsi									;rax = rsi | put symbol to rax
+   412 00000296 E846FFFFFF          <1> 	call check_buffer								;check buffer overflow / put symbol
+   413 0000029B 5E                  <1> 	pop rsi											;return rsi to format string
+   414 0000029C EB24                <1> 	jmp _default_									;goto _default_
+   415                              <1> 
+   416                              <1> _b_:
+   417 0000029E B901000000          <1> 	mov rcx, 1										;amount of bytes per one symbol
+   418 000002A3 BB01000000          <1> 	mov rbx, 0x01									;mask for binary
+   419 000002A8 EB6D                <1> 	jmp _numbers_2_systems_							;goto _numbers_2_systems_
+   420                              <1> 
+   421                              <1> _o_:
+   422 000002AA B903000000          <1> 	mov rcx, 3										;amount of bytes per one symbol
+   423 000002AF BB07000000          <1> 	mov rbx, 0x07									;mask for oct
+   424 000002B4 EB61                <1> 	jmp _numbers_2_systems_							;goto _numbers_2_systems_
+   425                              <1> 
+   426                              <1> _x_:
+   427 000002B6 B904000000          <1> 	mov rcx, 4										;amount of bytes per one symbol
+   428 000002BB BB0F000000          <1> 	mov rbx, 0x0F									;mask for hex
+   429 000002C0 EB55                <1> 	jmp _numbers_2_systems_							;goto _numbers_2_systems_
+   430                              <1> 
+   431                              <1> _default_:
+   432 000002C2 E9F0FEFFFF          <1> 	jmp copy_to_buffer								;goto copy_to_buffer
+   433                              <1> ;==============================================================================
+   434                              <1> 
+   435                              <1> ;==============================================================================
+   436                              <1> ;	Handler %d parameter
+   437                              <1> ;	Entry:		RSI - number to transform
+   438                              <1> ;	Exit:		None
+   439                              <1> ;	Destroy:	None
+   440                              <1> ;==============================================================================
+   441                              <1> _d_:
+   442 000002C7 4889F0              <1> 	mov rax, rsi									;rax = rsi | put number to rax
+   443                              <1> 
+   444 000002CA 4155                <1> 	push r13										;save r13
+   445 000002CC 4C8B2C25[44000000]  <1> 	mov r13, [sign_mask]							;r13 = 1 << 31
+   446 000002D4 4C21E8              <1> 	and rax, r13									;rax &= 1 << 31
+   447 000002D7 7412                <1> 	jz unsigned										;if (zf != 0) goto unsigned	--------|
+   448 000002D9 B82D000000          <1> 	mov rax, '-'									;rax = '-'							|
+   449 000002DE E8FEFEFFFF          <1> 	call check_buffer								;check buffer overflow | put symbol	|
+   450 000002E3 4889F0              <1> 	mov rax, rsi									;prepare number to negative			|
+   451 000002E6 F7D8                <1> 	neg eax											;rax *= -1							|
+   452 000002E8 4889C6              <1> 	mov rsi, rax									;rsi = rax							|
+   453                              <1> 													;									|
+   454                              <1> 	unsigned:										;<----------------------------------|
+   455 000002EB 415D                <1> 		pop r13										;return r13
+   456 000002ED 57                  <1> 		push rdi									;save current Buffer ip
+   457 000002EE 48BF-               <1> 		mov rdi, trans_buffer						;rdi = &trans_buffer
+   457 000002F0 [8000000000000000]  <1>
+   458 000002F8 B90A000000          <1> 		mov rcx, 10									;rcx = 10 | ss base
+   459 000002FD 4889F0              <1> 		mov rax, rsi								;rax = rsi
+   460                              <1> 
+   461                              <1> 	division:										;<----------------------------------------------|
+   462 00000300 4899                <1> 		cqo											;dd rax -> dq rdx:rax by sign bit duplicating	|
+   463 00000302 48F7F1              <1> 		div rcx										;rdx:rax /= rcx // rax - result // rdx - part	|
+   464 00000305 4883C230            <1> 		add rdx, '0'								;rdx += 30										|
+   465 00000309 488917              <1> 		mov [rdi], rdx								;trans_buffer[i] = 'c'							|
+   466 0000030C 48FFC7              <1> 		inc rdi										;rdi++											|
+   467 0000030F 4883F800            <1> 		cmp rax, 0									;if (rax == 0) zf = 0							|
+   468 00000313 77EB                <1> 	ja division										;if (zf > 0) goto division ---------------------|
+   469                              <1> 
+   470 00000315 EB2C                <1> 	jmp _to_printf_buffer_							;goto _to_printf_buffer_
+   471                              <1> ;==============================================================================
+   472                              <1> 
+   473                              <1> ;==============================================================================
+   474                              <1> ;	Handler of binary system parameter
+   475                              <1> ;	Entry:		RCX - binary base
+   476                              <1> ;				RBX - mask
+   477                              <1> ;				RSI - number
+   478                              <1> ;	Exit:		None
+   479                              <1> ;	Destroy:	None
+   480                              <1> ;==============================================================================
+   481                              <1> _numbers_2_systems_:
+   482 00000317 57                  <1> 	push rdi										;save current Buffer ip
+   483 00000318 48BF-               <1> 	mov rdi, trans_buffer							;rdi = &trans_buffer_
+   483 0000031A [8000000000000000]  <1>
+   484                              <1> 
+   485                              <1> 	transform:										;<----------------------------------|
+   486 00000322 4889F0              <1> 		mov rax, rsi								;rax = rsi							|
+   487 00000325 4821D8              <1> 		and rax, rbx								;use mask							|
+   488 00000328 48BA-               <1> 		mov rdx, symbols_array						;rdx = &symbols_array				|
+   488 0000032A [B800000000000000]  <1>
+   489 00000332 4801C2              <1> 		add rdx, rax								;rdx += rax | get symbol ASCII code	|
+   490 00000335 8A02                <1> 		mov al, [rdx]								;al = [rdx] | symbol				|
+   491 00000337 AA                  <1> 		stosb										;mov [rdi], al / inc rdi			|
+   492 00000338 48D3EE              <1> 		shr rsi, cl									;rsi >> cl							|
+   493 0000033B 4883FE00            <1> 		cmp rsi, 0									;if (rsi == 0) zf = 0				|
+   494 0000033F 77E1                <1> 	ja transform									;if (zf > 0) goto transform --------|
+   495                              <1> 
+   496 00000341 EB00                <1> 	jmp _to_printf_buffer_							;goto _to_printf_buffer_
+   497                              <1> ;==============================================================================
+   498                              <1> 
+   499                              <1> ;==============================================================================
+   500                              <1> ;	From transform buffer to printf buffer
+   501                              <1> ;	Entry:		RDI - pointer to end of transform buffer
+   502                              <1> ;	Exit:		None
+   503                              <1> ;	Destroy:	None
+   504                              <1> ;==============================================================================
+   505                              <1> _to_printf_buffer_:
+   506 00000343 4889FE              <1> 	mov rsi, rdi									;rsi = rdi
+   507 00000346 5F                  <1> 	pop rdi											;return current Buffer ip
+   508                              <1> 
+   509 00000347 4889F1              <1> 	mov rcx, rsi									;rcx = rsi
+   510 0000034A 4881E9[80000000]    <1> 	sub rcx, trans_buffer							;rcx = rsi - trans_buffer
+   511 00000351 48FFC1              <1> 	inc rcx											;rcx++
+   512                              <1> 
+   513                              <1> 	put_to_buffer:									;<--------------------------------------|
+   514 00000354 8A06                <1> 		mov al, [rsi]								;al = [rsi] | symbol from trans_buffer	|
+   515 00000356 E886FEFFFF          <1> 		call check_buffer							;check Buffer overflow | put symbol		|
+   516 0000035B C70600000000        <1> 		mov [rsi], dword 0							;[rsi] = 0								|
+   517 00000361 48FFCE              <1> 		dec rsi										;rsi--									|
+   518 00000364 E2EE                <1> 	loop put_to_buffer								;while(rcx--) goto put_to_buffer -------|
+   519                              <1> 
+   520 00000366 5E                  <1> 	pop rsi											;return current format string ip
+   521 00000367 E956FFFFFF          <1> 	jmp _default_									;goto _default_
+   522                              <1> ;==============================================================================
+   523                              <1> 
+   524                              <1> 
+   525                              <1> 
+   526                              <1> 
+   527                              <1> 
+   528                              <1> 
+   529                              <1> ;------------------------------------------------------------------------------------------------------------------
+   530                              <1> ;													end_program
+   531                              <1> ;abort program
+   532                              <1> ;
+   533                              <1> ;entry: NO
+   534                              <1> ;
+   535                              <1> ;exit: NO
+   536                              <1> ;
+   537                              <1> ;destr: rdi = code for ending program
+   538                              <1> ;		rax = number of interrupt
+   539                              <1> ;	
+   540                              <1> ;------------------------------------------------------------------------------------------------------------------
+   541                              <1> end_program:
+   542                              <1> 
+   543 0000036C 31FF                <1> 	xor edi, edi     ;exit64 (0)
+   544 0000036E B83C000000          <1> 	mov rax, 0x3C
+   545 00000373 0F05                <1> 	syscall
+   546                              <1> 
+   547                              <1> ;------------------------------------------------------------------------------------------------------------------
+   548                              <1> 
+   549                              <1> 
+   550                              <1> ;------------------------------------------------------------------------------------------------------------------
+   551                              <1> ;													sqrt_number
+   552                              <1> ;
+   553                              <1> ;
+   554                              <1> ;entry: rdi = number for sqrt
+   555                              <1> ;
+   556                              <1> ;exit: NO
+   557                              <1> ;
+   558                              <1> ;destr:
+   559                              <1> ;	
+   560                              <1> ;------------------------------------------------------------------------------------------------------------------
+   561                              <1> sqrt_number:
+   562                              <1> 
+   563 00000375 F2480F2AC7          <1> 	cvtsi2sd xmm0, rdi
+   564 0000037A F20F51C0            <1>     sqrtsd xmm0, xmm0
+   565 0000037E F2480F2DC0          <1>     cvtsd2si rax, xmm0
+   566                              <1> 
+   567 00000383 C3                  <1> 	ret
+   568                              <1> ;------------------------------------------------------------------------------------------------------------------
+   569                              <1> 
+   570                              <1> 
+   571                              <1> section .data   ;has data
+   572 00000000 00<rep 1Eh>         <1> buffer_for_printf: times 30 db 0  ;buffer for symbols
+   573                              <1> 
+   574 0000001E 25640A00            <1> str_for_printf db "%d", 0x0A, 0x00
+   575                              <1> 
+   576 00000022 00<rep 1Eh>         <1> bytes_of_number: times 30 db 0
+   577 00000040 00000080            <1> mask_for_sign dd 1<<31   ;mask_for_sign in int (for %d)
+   578                              <1> 
+   579                              <1> Stdout 			equ 0x01							;descriptor of stdout
+   580                              <1> buffer_size 	equ 128								;size of buffer
+   581                              <1> trans_buff_size	equ 64								;size of translator buffer
+   582 00000044 00000080            <1> sign_mask		dd 1<<31
+   583                              <1> 
+   584                              <1> section .rodata
+   585 00000000 [9E02000000000000]  <1> jump_table 	dq 	_b_
+   586 00000008 [9302000000000000]  <1> 			dq	_c_
+   587 00000010 [C702000000000000]  <1> 			dq 	_d_
+   588 00000018 [C202000000000000]- <1> 			times 'o' - 'd' - 1 dq _default_
+   588 00000018 <rep Ah>            <1>
+   589 00000068 [AA02000000000000]  <1> 			dq 	_o_
+   590 00000070 [C202000000000000]- <1> 			times 's' - 'o' - 1 dq _default_
+   590 00000070 <rep 3h>            <1>
+   591 00000088 [8302000000000000]  <1> 			dq	_s_
+   592 00000090 [C202000000000000]- <1> 			times 'x' - 's' - 1 dq _default_
+   592 00000090 <rep 4h>            <1>
+   593 000000B0 [B602000000000000]  <1> 			dq	_x_
+   594 000000B8 303132333435363738- <1> symbols_array db '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'
+   594 000000C1 39616263646566      <1>
+   595                              <1> 
+   596                              <1> section .bss										;start non-prog segment
+   597 00000000 <res 80h>           <1> Buffer 			resb buffer_size					;Init buffer
+   598 00000080 <res 40h>           <1> trans_buffer 	resb trans_buff_size				;Init trans buffer
+   599                              <1> 
+   600                              <1> 
+   601                              <1> 
+   602                              <1> 
+   603                              <1> 
+   604                              <1> 
+   605                              <1> 
+   606                              <1> 
+   607                              <1> 
+   608                              <1> 
+   609                              <1> 
+   610                              <1> 
+   611                              <1> 

@@ -5,7 +5,7 @@ _start:
 	;--------------------------------------------------------------------------------------------
 	;Выделение места под глобальные переменные  (src/write_tree_in_nasm.cpp:98)
 	;--------------------------------------------------------------------------------------------
-	sub rsp, 8 * 8    ;выделение места под глобальные переменные (их количество == 8)
+	sub rsp, 6 * 8    ;выделение места под глобальные переменные (их количество == 6)
 	mov rbx, rsp        ;rbx = указатель на глобальные переменные
 	mov r12, rsp
 	;--------------------------------------------------------------------------------------------
@@ -32,13 +32,8 @@ _start:
 
 		;начало expression   (src/write_tree_in_nasm.cpp:418)
 
-		;начало сканирования числа  (src/write_tree_in_nasm.cpp:678)
-
-		call scanf_number    ;считывает число и кладёт его в rax  (src/write_tree_in_nasm.cpp:681)
-
-		push rax       ;кладёт считанное число в стек   (src/write_tree_in_nasm.cpp:684)
-
-		;конец сканирования числа   (src/write_tree_in_nasm.cpp:687)
+		mov r8, 700000   ;временно сохраняет значение константы = 700000   (src/write_tree_in_nasm.cpp:153)
+		push r8   ;кладёт значение константы в стек     (src/write_tree_in_nasm.cpp:158)
 
 		;конец expression  (src/write_tree_in_nasm.cpp:424)
 
@@ -61,7 +56,7 @@ _start:
 
 		;начало expression   (src/write_tree_in_nasm.cpp:418)
 
-		mov r8, 0   ;временно сохраняет значение константы = 0   (src/write_tree_in_nasm.cpp:153)
+		mov r8, 7   ;временно сохраняет значение константы = 7   (src/write_tree_in_nasm.cpp:153)
 		push r8   ;кладёт значение константы в стек     (src/write_tree_in_nasm.cpp:158)
 
 		;конец expression  (src/write_tree_in_nasm.cpp:424)
@@ -103,84 +98,131 @@ _start:
 
 	;описание 4 оператора  (src/write_tree_in_nasm.cpp:482)
 
-		;начало assign <variable> = <expression>   (src/write_tree_in_nasm.cpp:415)
+		;начало while   (src/write_tree_in_nasm.cpp:364)
 
-		;начало expression   (src/write_tree_in_nasm.cpp:418)
+			repeat_while_0:    ;метка для повторного запуска while   (src/write_tree_in_nasm.cpp:373)
 
-		;начало выполнения арифметической операции с двумя аргументами   (src/write_tree_in_nasm.cpp:509)
+			;условие while    (src/write_tree_in_nasm.cpp:376)
 
-		;получение правого аргумента   (src/write_tree_in_nasm.cpp:512)
+			;начало печати сравнения   (src/write_tree_in_nasm.cpp:701)
 
-		mov r8, 1000   ;временно сохраняет значение константы = 1000   (src/write_tree_in_nasm.cpp:153)
-		push r8   ;кладёт значение константы в стек     (src/write_tree_in_nasm.cpp:158)
+			;правая часть сравнения   (src/write_tree_in_nasm.cpp:704)
 
-		;получение левого аргумента   (src/write_tree_in_nasm.cpp:518)
+			mov r8, 0   ;временно сохраняет значение константы = 0   (src/write_tree_in_nasm.cpp:153)
+			push r8   ;кладёт значение константы в стек     (src/write_tree_in_nasm.cpp:158)
 
-		;начинает вызов функции   (src/write_tree_in_nasm.cpp:910)
+			;левая часть сравнения   (src/write_tree_in_nasm.cpp:710)
 
-		mov r15, rsp  ;сохраняем rsp   (src/write_tree_in_nasm.cpp:913)
+			mov r9, [r12 + 0 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
+			push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
 
-		sub rsp, 8  ;место под rip от call   (src/write_tree_in_nasm.cpp:916)
+			pop r13   ;r13 = левая часть сравнения   (src/write_tree_in_nasm.cpp:716)
 
-		push r12    ;сохраняет значение старого стекового фрейма  (src/write_tree_in_nasm.cpp:920)
+			pop r14   ;r14 = правая часть сравнения  (src/write_tree_in_nasm.cpp:719)
 
-		;записывает аргументы для функции (src/write_tree_in_nasm.cpp:924)
+			cmp r13, r14 ;сравнение   (<левая> - <правая>)  (src/write_tree_in_nasm.cpp:722)
 
-		; начало записи значений аргументов, передаваемых функции (src/write_tree_in_nasm.cpp:1034)
+			; <л> - <п> != 0    (== то прыжок мимо - je)
+			je skip_while_0   ;если условие не верно, то перепрыгни через тело while   (src/write_tree_in_nasm.cpp:382)
 
-		; 3 аргумент   (src/write_tree_in_nasm.cpp:1053)
+			;тело while    (src/write_tree_in_nasm.cpp:385)
 
-		mov r9, [r12 + 2 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
-		push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
+			;описание 5 оператора  (src/write_tree_in_nasm.cpp:482)
 
-		; 2 аргумент   (src/write_tree_in_nasm.cpp:1053)
+				;начало assign <variable> = <expression>   (src/write_tree_in_nasm.cpp:415)
 
-		mov r9, [r12 + 1 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
-		push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
+				;начало expression   (src/write_tree_in_nasm.cpp:418)
 
-		; 1 аргумент   (src/write_tree_in_nasm.cpp:1053)
+				;начинает вызов функции   (src/write_tree_in_nasm.cpp:910)
 
-		mov r9, [r12 + 0 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
-		push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
+				mov r15, rsp  ;сохраняем rsp   (src/write_tree_in_nasm.cpp:913)
 
-		; конец записи значений аргументов, передаваемых функции  (src/write_tree_in_nasm.cpp:1062)
+				sub rsp, 8  ;место под rip от call   (src/write_tree_in_nasm.cpp:916)
 
-		mov r12, rsp    ;(src/write_tree_in_nasm.cpp:932)
+				push r12    ;сохраняет значение старого стекового фрейма  (src/write_tree_in_nasm.cpp:920)
 
-		;вызывает функцию   (src/write_tree_in_nasm.cpp:989)
+				;записывает аргументы для функции (src/write_tree_in_nasm.cpp:924)
 
-		mov rsp, r15    ;(src/write_tree_in_nasm.cpp:992)
+				; начало записи значений аргументов, передаваемых функции (src/write_tree_in_nasm.cpp:1034)
 
-		call чтоб_машину_отправить_в_полёт    ;вызов функции   (src/write_tree_in_nasm.cpp:1006)
+				; 1 аргумент   (src/write_tree_in_nasm.cpp:1053)
 
-		push rax    ;кладёт в стек значение, которое вернула функция    (src/write_tree_in_nasm.cpp:1016)
+				mov r9, [r12 + 1 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
+				push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
 
-		;конец вызова функции    (src/write_tree_in_nasm.cpp:1019)
+				; конец записи значений аргументов, передаваемых функции  (src/write_tree_in_nasm.cpp:1062)
 
-		pop rax   ;вытаскивает первый аргумент (в него же и сохранит результат)   (src/write_tree_in_nasm.cpp:529)
-		pop rdx   ;вытаскивает второй аргумент    (src/write_tree_in_nasm.cpp:532)
+				mov r12, rsp    ;(src/write_tree_in_nasm.cpp:932)
 
-		add rax, rdx     ;rax += rdx   (src/write_tree_in_nasm.cpp:547)
+				;вызывает функцию   (src/write_tree_in_nasm.cpp:989)
 
-		push rax    ;кладёт в стек результат операции   (src/write_tree_in_nasm.cpp:581)
-		;конец выполнения арифметической операции с двумя аргументами  (src/write_tree_in_nasm.cpp:587)
+				mov rsp, r15    ;(src/write_tree_in_nasm.cpp:992)
 
-		;конец expression  (src/write_tree_in_nasm.cpp:424)
+				call чтоб_машину_отправить_в_полёт    ;вызов функции   (src/write_tree_in_nasm.cpp:1006)
 
-		;начало присваивания переменной   (src/write_tree_in_nasm.cpp:429)
+				push rax    ;кладёт в стек значение, которое вернула функция    (src/write_tree_in_nasm.cpp:1016)
 
-		pop r8   ;вытащил константу из стека    (src/write_tree_in_nasm.cpp:226)
-		mov [r12 + 0 * 8], r8   ;присвоил значение локальной переменной    (src/write_tree_in_nasm.cpp:231)
+				;конец вызова функции    (src/write_tree_in_nasm.cpp:1019)
 
-		;конец присваивания переменной   (src/write_tree_in_nasm.cpp:435)
+				;конец expression  (src/write_tree_in_nasm.cpp:424)
 
-		;конец assign   (src/write_tree_in_nasm.cpp:438)
+				;начало присваивания переменной   (src/write_tree_in_nasm.cpp:429)
 
-	;описание 5 оператора  (src/write_tree_in_nasm.cpp:482)
+				pop r8   ;вытащил константу из стека    (src/write_tree_in_nasm.cpp:226)
+				mov [r12 + 2 * 8], r8   ;присвоил значение локальной переменной    (src/write_tree_in_nasm.cpp:231)
+
+				;конец присваивания переменной   (src/write_tree_in_nasm.cpp:435)
+
+				;конец assign   (src/write_tree_in_nasm.cpp:438)
+
+			;описание 6 оператора  (src/write_tree_in_nasm.cpp:482)
+
+				;начало assign <variable> = <expression>   (src/write_tree_in_nasm.cpp:415)
+
+				;начало expression   (src/write_tree_in_nasm.cpp:418)
+
+				;начало выполнения арифметической операции с двумя аргументами   (src/write_tree_in_nasm.cpp:509)
+
+				;получение правого аргумента   (src/write_tree_in_nasm.cpp:512)
+
+				mov r8, 1   ;временно сохраняет значение константы = 1   (src/write_tree_in_nasm.cpp:153)
+				push r8   ;кладёт значение константы в стек     (src/write_tree_in_nasm.cpp:158)
+
+				;получение левого аргумента   (src/write_tree_in_nasm.cpp:518)
+
+				mov r9, [r12 + 0 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
+				push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
+
+				pop rax   ;вытаскивает первый аргумент (в него же и сохранит результат)   (src/write_tree_in_nasm.cpp:529)
+				pop rdx   ;вытаскивает второй аргумент    (src/write_tree_in_nasm.cpp:532)
+
+				sub rax, rdx     ;rax -= rdx     (src/write_tree_in_nasm.cpp:553)
+
+				push rax    ;кладёт в стек результат операции   (src/write_tree_in_nasm.cpp:581)
+				;конец выполнения арифметической операции с двумя аргументами  (src/write_tree_in_nasm.cpp:587)
+
+				;конец expression  (src/write_tree_in_nasm.cpp:424)
+
+				;начало присваивания переменной   (src/write_tree_in_nasm.cpp:429)
+
+				pop r8   ;вытащил константу из стека    (src/write_tree_in_nasm.cpp:226)
+				mov [r12 + 0 * 8], r8   ;присвоил значение локальной переменной    (src/write_tree_in_nasm.cpp:231)
+
+				;конец присваивания переменной   (src/write_tree_in_nasm.cpp:435)
+
+				;конец assign   (src/write_tree_in_nasm.cpp:438)
+
+			jmp repeat_while_0    ;прыжок на повторный запуск while   (src/write_tree_in_nasm.cpp:392)
+
+			skip_while_0:    ;метка для пропуска while   (src/write_tree_in_nasm.cpp:396)
+
+		;конец while  (src/write_tree_in_nasm.cpp:401)
+
+	;описание 7 оператора  (src/write_tree_in_nasm.cpp:482)
 
 		;начало печати числа   (src/write_tree_in_nasm.cpp:651)
 
-		mov r9, [r12 + 0 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
+		mov r9, [r12 + 2 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
 		push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
 
 		mov rdi, str_for_printf    ;   (src/write_tree_in_nasm.cpp:657)
@@ -191,7 +233,7 @@ _start:
 
 		;конец печати числа    (src/write_tree_in_nasm.cpp:666)
 
-	;описание 6 оператора  (src/write_tree_in_nasm.cpp:482)
+	;описание 8 оператора  (src/write_tree_in_nasm.cpp:482)
 
 				;завершение функции  (src/write_tree_in_nasm.cpp:878)
 
@@ -210,7 +252,7 @@ _start:
 
 	call end_program  ;завершает работу программу  (src/write_tree_in_nasm.cpp:826)
 
-;описание 7 оператора  (src/write_tree_in_nasm.cpp:482)
+;описание 9 оператора  (src/write_tree_in_nasm.cpp:482)
 
 ;-----------------------------------------------------------------------
 ;описание функции    (src/write_tree_in_nasm.cpp:766)
@@ -220,7 +262,7 @@ _start:
 
 	;тело функции   (src/write_tree_in_nasm.cpp:805)
 
-	;описание 8 оператора  (src/write_tree_in_nasm.cpp:482)
+	;описание 10 оператора  (src/write_tree_in_nasm.cpp:482)
 
 		;начало if  (src/write_tree_in_nasm.cpp:320)
 
@@ -249,7 +291,7 @@ _start:
 
 			;тело if  (src/write_tree_in_nasm.cpp:338)
 
-			;описание 9 оператора  (src/write_tree_in_nasm.cpp:482)
+			;описание 11 оператора  (src/write_tree_in_nasm.cpp:482)
 
 				call end_program  ;завершает работу программу  (src/write_tree_in_nasm.cpp:745)
 
@@ -257,7 +299,7 @@ _start:
 
 		;конец if   (src/write_tree_in_nasm.cpp:350)
 
-	;описание 10 оператора  (src/write_tree_in_nasm.cpp:482)
+	;описание 12 оператора  (src/write_tree_in_nasm.cpp:482)
 
 		;начало if  (src/write_tree_in_nasm.cpp:320)
 
@@ -286,7 +328,7 @@ _start:
 
 			;тело if  (src/write_tree_in_nasm.cpp:338)
 
-			;описание 11 оператора  (src/write_tree_in_nasm.cpp:482)
+			;описание 13 оператора  (src/write_tree_in_nasm.cpp:482)
 
 								;завершение функции  (src/write_tree_in_nasm.cpp:878)
 
@@ -303,7 +345,7 @@ _start:
 
 		;конец if   (src/write_tree_in_nasm.cpp:350)
 
-	;описание 12 оператора  (src/write_tree_in_nasm.cpp:482)
+	;описание 14 оператора  (src/write_tree_in_nasm.cpp:482)
 
 				;завершение функции  (src/write_tree_in_nasm.cpp:878)
 
@@ -329,16 +371,6 @@ _start:
 		;записывает аргументы для функции (src/write_tree_in_nasm.cpp:924)
 
 		; начало записи значений аргументов, передаваемых функции (src/write_tree_in_nasm.cpp:1034)
-
-		; 3 аргумент   (src/write_tree_in_nasm.cpp:1053)
-
-		mov r9, [r12 + 2 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
-		push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
-
-		; 2 аргумент   (src/write_tree_in_nasm.cpp:1053)
-
-		mov r9, [r12 + 1 * 8]      ;вытащил значение локальной переменной   (src/write_tree_in_nasm.cpp:239)
-		push r9    ;сохранил значение локальной переменной в стеке   (src/write_tree_in_nasm.cpp:243)
 
 		; 1 аргумент   (src/write_tree_in_nasm.cpp:1053)
 
@@ -390,7 +422,7 @@ _start:
 
 	;конец функции   (src/write_tree_in_nasm.cpp:811)
 
-	add r12, 8*3   ;  (src/write_tree_in_nasm.cpp:814)
+	add r12, 8*1   ;  (src/write_tree_in_nasm.cpp:814)
 
 	pop r12    ;   (src/write_tree_in_nasm.cpp:817)
 

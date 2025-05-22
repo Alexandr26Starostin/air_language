@@ -35,7 +35,7 @@ static language_error_t write_constant_node                  (node_t* node, tree
 static language_error_t write_identifier_node                (node_t* node, tree_in_asm_t* tree_in_asm);
 static language_error_t write_keyword_node                   (node_t* node, tree_in_asm_t* tree_in_asm);
 static language_error_t write_function_definition_node       (node_t* node, tree_in_asm_t* tree_in_asm);
-static language_error_t write_parameters_node                (node_t* node, tree_in_asm_t* tree_in_asm);
+//static language_error_t write_parameters_node                (node_t* node, tree_in_asm_t* tree_in_asm);
 static language_error_t write_call_node                      (node_t* node, tree_in_asm_t* tree_in_asm);
 
 static language_error_t write_parameters_for_call            (node_t* node, tree_in_asm_t* tree_in_asm);
@@ -45,7 +45,7 @@ static language_error_t write_while_in_file                  (node_t* node, tree
 static language_error_t write_assign_in_file                 (node_t* node, tree_in_asm_t* tree_in_asm); 
 static language_error_t write_var_declaration_node           (node_t* node, tree_in_asm_t* tree_in_asm); 
 static language_error_t write_operator_in_file               (node_t* node, tree_in_asm_t* tree_in_asm);   
-// static language_error_t write_base_func_with_one_arg_in_file (node_t* node, tree_in_asm_t* tree_in_asm);
+static language_error_t write_base_func_with_one_arg_in_file (node_t* node, tree_in_asm_t* tree_in_asm);
 static language_error_t write_base_func_with_two_arg_in_file (node_t* node, tree_in_asm_t* tree_in_asm); 
 static language_error_t write_printf_in_file                 (node_t* node, tree_in_asm_t* tree_in_asm);
 static language_error_t write_scanf_in_file                  (node_t* node, tree_in_asm_t* tree_in_asm);  
@@ -93,6 +93,7 @@ language_error_t write_tree_in_nasm (int argc, char** argv, node_t* root_node, n
 						   "\t;--------------------------------------------------------------------------------------------\n"
 						   "\tsub rsp, %ld * 8    ;выделение места под глобальные переменные (их количество == %ld)\n"
 						   "\tmov rbx, rsp        ;rbx = указатель на глобальные переменные\n" 
+						   "\tmov r12, rsp\n"
 						   "\t;--------------------------------------------------------------------------------------------\n\n",
 						   	__FILE__, __LINE__, name_table -> free_index, name_table -> free_index);
 	//fprintf (file_for_asm, "push %ld    #начальная позиция стекового фрейма\npop BX\n\n", name_table -> free_index);
@@ -235,7 +236,7 @@ static language_error_t write_identifier_node (node_t* node, tree_in_asm_t* tree
 	{
 		//fprintf (tree_in_asm -> file_for_asm, "push [BX+%ld]    #вернул значение локальной переменной\n\n", index_id_in_scope);
 		fprintf (file_for_asm, "mov r9, [r12 + %ld * 8]      ;вытащил значение локальной переменной   (%s:%d)\n", 
-								index_id_in_name_table, __FILE__, __LINE__);
+								index_id_in_scope, __FILE__, __LINE__);
 
 		print_tabulation_in_file (tree_in_asm);
 
@@ -285,7 +286,7 @@ static language_error_t write_keyword_node (node_t* node, tree_in_asm_t* tree_in
 	// WRITE_NODE_(node -> value.value_keyword, COS,      write_base_func_with_one_arg_in_file);
 	// //WRITE_NODE_(node -> value.value_keyword, FLOOR,     write_base_func_with_one_arg_in_file);
 	// //WRITE_NODE_(node -> value.value_keyword, DIFF,      write_base_func_with_one_arg_in_file);
-	// WRITE_NODE_(node -> value.value_keyword, SQRT,     write_base_func_with_one_arg_in_file);
+	WRITE_NODE_(node -> value.value_keyword, SQRT,     write_base_func_with_one_arg_in_file);
 	// WRITE_NODE_(node -> value.value_keyword, SH,       write_base_func_with_one_arg_in_file);
 	// WRITE_NODE_(node -> value.value_keyword, CH,       write_base_func_with_one_arg_in_file);
 	// WRITE_NODE_(node -> value.value_keyword, LN,       write_base_func_with_one_arg_in_file);
@@ -521,8 +522,8 @@ static language_error_t write_base_func_with_two_arg_in_file (node_t* node, tree
 
 	long  value_in_node = node        -> value.value_keyword;
 
-	print_tabulation_in_file (tree_in_asm);
-	fprintf (file_for_asm, "mov r10, rax      ;сохраняет rax   (%s:%d)\n", __FILE__, __LINE__);
+	// print_tabulation_in_file (tree_in_asm);
+	// fprintf (file_for_asm, "mov r10, rax      ;сохраняет rax   (%s:%d)\n", __FILE__, __LINE__);
 
 	print_tabulation_in_file (tree_in_asm);
 	fprintf (file_for_asm, "pop rax   ;вытаскивает первый аргумент (в него же и сохранит результат)   (%s:%d)\n", __FILE__, __LINE__);
@@ -555,7 +556,7 @@ static language_error_t write_base_func_with_two_arg_in_file (node_t* node, tree
 
 		if (value_in_node == MUL)                  				
 		{                     													
-			fprintf (file_for_asm, "mul rdx  ;rdx:rax = rax * rdx (берём значения, что rdx:rax == rax)     (%s:%d)\n\n", 
+			fprintf (file_for_asm, "imul edx  ;rdx:rax = rax * rdx (берём значения, что rdx:rax == rax)     (%s:%d)\n\n", 
 									__FILE__, __LINE__);							
 			break;																
 		}
@@ -565,20 +566,22 @@ static language_error_t write_base_func_with_two_arg_in_file (node_t* node, tree
 			fprintf (file_for_asm, "mov r11, rdx   ;сохраняет rdx   (%s:%d)\n", __FILE__, __LINE__);
 
 			print_tabulation_in_file (tree_in_asm);
-			fprintf (file_for_asm, "cqo    ;rax -> rdx:rax   (%s:%d)\n", __FILE__, __LINE__);
+			fprintf (file_for_asm, "cdq    ;rax -> rdx:rax   (%s:%d)\n", __FILE__, __LINE__);
 
 			print_tabulation_in_file (tree_in_asm);
-			fprintf (file_for_asm, "div r11     ;rax = rdx:rax / r11       rdx = rdx:rax %% r11   (%s:%d)\n\n", __FILE__, __LINE__);							
+			fprintf (file_for_asm, "idiv r11d     ;rax = rdx:rax / r11       rdx = rdx:rax %% r11   (%s:%d)\n\n", __FILE__, __LINE__);							
 
 			break;																
 		}
+
+		break;
 	}
 
 	print_tabulation_in_file (tree_in_asm);
 	fprintf (file_for_asm, "push rax    ;кладёт в стек результат операции   (%s:%d)\n", __FILE__, __LINE__);
 
-	print_tabulation_in_file (tree_in_asm);
-	fprintf (file_for_asm, "mov rax, r10    ;возвращает старое значение rax   (%s:%d)\n\n", __FILE__, __LINE__);
+	// print_tabulation_in_file (tree_in_asm);
+	// fprintf (file_for_asm, "mov rax, r10    ;возвращает старое значение rax   (%s:%d)\n\n", __FILE__, __LINE__);
 
 	print_tabulation_in_file (tree_in_asm);
 	fprintf (tree_in_asm -> file_for_asm, ";конец выполнения арифметической операции с двумя аргументами  (%s:%d)\n\n", __FILE__, __LINE__);
@@ -586,40 +589,55 @@ static language_error_t write_base_func_with_two_arg_in_file (node_t* node, tree
 	return NOT_ERROR;
 }
 
-// static language_error_t write_base_func_with_one_arg_in_file (node_t* node, tree_in_asm_t* tree_in_asm)
-// {
-// 	assert (node);
-// 	assert (tree_in_asm);
+static language_error_t write_base_func_with_one_arg_in_file (node_t* node, tree_in_asm_t* tree_in_asm)
+{
+	assert (node);
+	assert (tree_in_asm);
 
-// 	language_error_t status = NOT_ERROR;
+	language_error_t status = NOT_ERROR;
 
-// 	fprintf (tree_in_asm -> file_for_asm, "#начало выполнения арифметической операции с один аргументом\n\n");
+	fprintf (tree_in_asm -> file_for_asm, ";начало выполнения арифметической операции с один аргументом\n\n");
 
-// 	status = write_node_in_asm (node -> right, tree_in_asm);
-// 	if (status) {return status;}
+	status = write_node_in_asm (node -> right, tree_in_asm);
+	if (status) {return status;}
 
-// 	FILE* file_for_asm  = tree_in_asm -> file_for_asm;
-// 	long  value_in_node = node        -> value.value_keyword;
+	FILE* file_for_asm  = tree_in_asm -> file_for_asm;
+	long  value_in_node = node        -> value.value_keyword;
 
-// 	print_tabulation_in_file (tree_in_asm);
+	print_tabulation_in_file (tree_in_asm);
 
-// 	for (;;)
-// 	{
-// 		WRITE_ARITHMETIC_OPERATION_(SIN,   "sin    # sin exp\n\n");
-// 		WRITE_ARITHMETIC_OPERATION_(COS,   "cos    # cos exp\n\n");
-// 		WRITE_ARITHMETIC_OPERATION_(SQRT,  "sqrt    # sqrt exp\n\n");
-// 		WRITE_ARITHMETIC_OPERATION_(SH,    "sh    # sh exp\n\n");
-// 		WRITE_ARITHMETIC_OPERATION_(CH,    "ch    # ch exp\n\n");
-// 		WRITE_ARITHMETIC_OPERATION_(LN,    "ln    # ln exp\n\n");
-// 		//WRITE_ARITHMETIC_OPERATION_(FLOOR, "floor    # floor exp\n\n");
-// 		//WRITE_ARITHMETIC_OPERATION_(DIFF,  "diff    # diff exp\n\n");
-// 	}
+	for (;;)
+	{
+		//WRITE_ARITHMETIC_OPERATION_(SIN,   "sin    # sin exp\n\n");
+		// WRITE_ARITHMETIC_OPERATION_(COS,   "cos    # cos exp\n\n");
+		// WRITE_ARITHMETIC_OPERATION_(SQRT,  "sqrt    # sqrt exp\n\n");
+		// WRITE_ARITHMETIC_OPERATION_(SH,    "sh    # sh exp\n\n");
+		// WRITE_ARITHMETIC_OPERATION_(CH,    "ch    # ch exp\n\n");
+		// WRITE_ARITHMETIC_OPERATION_(LN,    "ln    # ln exp\n\n");
+		//WRITE_ARITHMETIC_OPERATION_(FLOOR, "floor    # floor exp\n\n");
+		//WRITE_ARITHMETIC_OPERATION_(DIFF,  "diff    # diff exp\n\n");
 
-// 	print_tabulation_in_file (tree_in_asm);
-// 	fprintf (tree_in_asm -> file_for_asm, "#конец выполнения арифметической операции с один аргументом\n\n");
+		if (value_in_node == SQRT)
+		{
+			fprintf (file_for_asm, "pop rdi   ;   (%s:%d)\n", __FILE__, __LINE__);
 
-// 	return NOT_ERROR;
-// }
+			print_tabulation_in_file (tree_in_asm);
+			fprintf (file_for_asm, "call sqrt_number    ;   (%s:%d)\n", __FILE__, __LINE__);
+
+			print_tabulation_in_file (tree_in_asm);
+			fprintf (file_for_asm, "push rax   ;   (%s:%d)\n", __FILE__, __LINE__);		
+
+			break;
+		}
+
+		break;
+	}
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (tree_in_asm -> file_for_asm, ";конец выполнения арифметической операции с один аргументом\n\n");
+
+	return NOT_ERROR;
+}
 
 static language_error_t write_printf_in_file (node_t* node, tree_in_asm_t* tree_in_asm)
 {
@@ -636,7 +654,10 @@ static language_error_t write_printf_in_file (node_t* node, tree_in_asm_t* tree_
 	if (status) {return status;}
 
 	print_tabulation_in_file (tree_in_asm);
-	fprintf (file_for_asm, "pop rdi    ;получает число для печати из стека   (%s:%d)\n\n", __FILE__, __LINE__);
+	fprintf (file_for_asm, "mov rdi, str_for_printf    ;   (%s:%d)\n\n", __FILE__, __LINE__);
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (file_for_asm, "pop rsi    ;получает число для печати из стека   (%s:%d)\n\n", __FILE__, __LINE__);  
 
 	print_tabulation_in_file (tree_in_asm);
 	fprintf (file_for_asm, "call printf_number    ;печатает число в rdi    (%s:%d)\n\n", __FILE__, __LINE__);
@@ -758,13 +779,27 @@ static language_error_t write_function_definition_node (node_t* node, tree_in_as
 	long old_scope       = tree_in_asm -> scope;
 	tree_in_asm -> scope = index_id_in_name_table;
 
-	print_tabulation_in_file (tree_in_asm);
-	fprintf (file_for_asm, ";вытаскивает параметры функции     (%s:%d)\n\n", __FILE__, __LINE__);  
+	size_t index_local_table_in_list = find_position_of_local_table (tree_in_asm -> list_of_local_name_tables, index_id_in_name_table);
+
+	local_name_table_t* array_of_local_name_table = tree_in_asm -> list_of_local_name_tables -> array_of_local_name_table;
+	size_t              count_local_arg_in_func   = array_of_local_name_table[index_local_table_in_list].free_index_in_local_name_table;
+
+	if (tree_in_asm -> status_of_func == MAIN_FUNC)
+	{
+		print_tabulation_in_file (tree_in_asm);
+		fprintf (file_for_asm, "sub r12, %ld * 8  ;(%s:%d)\n\n", count_local_arg_in_func, __FILE__, __LINE__);
+
+		print_tabulation_in_file (tree_in_asm);
+		fprintf (file_for_asm, "mov rsp, r12  ;(%s:%d)\n\n", __FILE__, __LINE__);
+	}
+
+	// print_tabulation_in_file (tree_in_asm);
+	// fprintf (file_for_asm, ";вытаскивает параметры функции     (%s:%d)\n\n", __FILE__, __LINE__);  
 
 	node = node -> right;
 
-	status = write_parameters_node (node -> left, tree_in_asm);
-	if (status) {return status;}
+	// status = write_parameters_node (node -> left, tree_in_asm);
+	// if (status) {return status;}
 
 	print_tabulation_in_file (tree_in_asm);
 	fprintf (file_for_asm, ";тело функции   (%s:%d)\n\n", __FILE__, __LINE__);
@@ -775,7 +810,13 @@ static language_error_t write_function_definition_node (node_t* node, tree_in_as
 	print_tabulation_in_file (tree_in_asm);
 	fprintf (file_for_asm, ";конец функции   (%s:%d)\n\n", __FILE__, __LINE__);
 
-	tree_in_asm -> depth_of_tabulation -= 1;
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (file_for_asm, "add r12, 8*%ld   ;  (%s:%d)\n\n", count_local_arg_in_func, __FILE__, __LINE__);
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (file_for_asm, "pop r12    ;   (%s:%d)\n\n", __FILE__, __LINE__);
+
+	//tree_in_asm -> depth_of_tabulation -= 1;
 
 	tree_in_asm -> scope = old_scope;
 
@@ -783,47 +824,46 @@ static language_error_t write_function_definition_node (node_t* node, tree_in_as
 	{
 		print_tabulation_in_file (tree_in_asm);
 		fprintf (file_for_asm, "call end_program  ;завершает работу программу  (%s:%d)\n\n", __FILE__, __LINE__);
-
 		tree_in_asm -> status_of_func = CALL_FUNC;
 	}
 
 	return NOT_ERROR;
 }
 
-static language_error_t write_parameters_node (node_t* node, tree_in_asm_t* tree_in_asm)
-{
-	assert (tree_in_asm);
+// static language_error_t write_parameters_node (node_t* node, tree_in_asm_t* tree_in_asm)
+// {
+// 	assert (tree_in_asm);
 
-	if (node == NULL) {return NOT_ERROR;}
+// 	if (node == NULL) {return NOT_ERROR;}
 
-	language_error_t status = NOT_ERROR;
+// 	language_error_t status = NOT_ERROR;
 
-	FILE* file_for_asm = tree_in_asm  -> file_for_asm;
+// 	FILE* file_for_asm = tree_in_asm  -> file_for_asm;
 
-	//print_tabulation_in_file (tree_in_asm);
-	//fprintf (tree_in_asm -> file_for_asm, "#присваивание значений локальных параметрам функции из стека в оперативную память\n\n");
+// 	//print_tabulation_in_file (tree_in_asm);
+// 	//fprintf (tree_in_asm -> file_for_asm, "#присваивание значений локальных параметрам функции из стека в оперативную память\n\n");
 
-	size_t index_of_parameter = 1;
+// 	size_t index_of_parameter = 1;
 
-	tree_in_asm -> position_in_assign = IN_ASSIGN;
+// 	tree_in_asm -> position_in_assign = IN_ASSIGN;
 
-	while (node != NULL)
-	{
-		print_tabulation_in_file (tree_in_asm);
-		fprintf (file_for_asm, "; %ld параметр (%s:%d)\n\n", index_of_parameter, __FILE__, __LINE__);
+// 	while (node != NULL)
+// 	{
+// 		print_tabulation_in_file (tree_in_asm);
+// 		fprintf (file_for_asm, "; %ld параметр (%s:%d)\n\n", index_of_parameter, __FILE__, __LINE__);
 
-		index_of_parameter += 1; 
+// 		index_of_parameter += 1; 
 
-		status = write_identifier_node (node -> right, tree_in_asm);
-		if (status) {return status;}
+// 		status = write_identifier_node (node -> right, tree_in_asm);
+// 		if (status) {return status;}
 
-		node = node -> left;
-	}
+// 		node = node -> left;
+// 	}
 
-	tree_in_asm -> position_in_assign = NOT_IN_ASSIGN;
+// 	tree_in_asm -> position_in_assign = NOT_IN_ASSIGN;
 
-	return NOT_ERROR;
-}
+// 	return NOT_ERROR;
+// }
 
 static language_error_t write_return_in_asm (node_t* node, tree_in_asm_t* tree_in_asm)
 {
@@ -870,7 +910,26 @@ static language_error_t write_call_node (node_t* node, tree_in_asm_t* tree_in_as
 	fprintf (file_for_asm, ";начинает вызов функции   (%s:%d)\n\n", __FILE__, __LINE__);
 
 	print_tabulation_in_file (tree_in_asm);
+	fprintf (file_for_asm, "mov r15, rsp  ;сохраняем rsp   (%s:%d)\n\n", __FILE__, __LINE__);
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (file_for_asm, "sub rsp, 8  ;место под rip от call   (%s:%d)\n\n", __FILE__, __LINE__);
+
+
+	print_tabulation_in_file (tree_in_asm);
 	fprintf (file_for_asm, "push r12    ;сохраняет значение старого стекового фрейма  (%s:%d)\n\n", __FILE__, __LINE__);
+
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (file_for_asm, ";записывает аргументы для функции (%s:%d)\n\n", __FILE__, __LINE__);
+
+	status = write_parameters_for_call (node -> left, tree_in_asm);
+	if (status) {return status;}
+
+
+
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (file_for_asm, "mov r12, rsp    ;(%s:%d)\n\n", __FILE__, __LINE__);
 
 	// print_tabulation_in_file (tree_in_asm);
 	// fprintf (file_for_asm, ";записывает аргументы для функции (%s:%d)\n\n", __FILE__, __LINE__);
@@ -878,19 +937,43 @@ static language_error_t write_call_node (node_t* node, tree_in_asm_t* tree_in_as
 	// status = write_parameters_for_call (node -> left, tree_in_asm);
 	// if (status) {return status;}
 
-	print_tabulation_in_file (tree_in_asm);
-	fprintf (file_for_asm, ";смещение начала локальной области видимости: изменение стекового фрейма (%s:%d)\n\n", __FILE__, __LINE__);
 
+
+
+
+
+	// print_tabulation_in_file (tree_in_asm);
+	// fprintf (file_for_asm, ";смещение начала локальной области видимости: изменение стекового фрейма (%s:%d)\n\n", __FILE__, __LINE__);
+
+	// size_t index_local_table_in_list = find_position_of_local_table (tree_in_asm -> list_of_local_name_tables, index_id_in_name_table);
+
+	// local_name_table_t* array_of_local_name_table    = tree_in_asm -> list_of_local_name_tables -> array_of_local_name_table;
+	// size_t              count_local_arg_in_call_func = array_of_local_name_table[index_local_table_in_list].free_index_in_local_name_table;
+
+	// print_tabulation_in_file (tree_in_asm);
+	// fprintf (file_for_asm, "sub r12, %ld * 8    ;(%s:%d)\n\n", count_local_arg_in_call_func, __FILE__, __LINE__);
+	
+
+
+
+
+
+
+
+
+	// print_tabulation_in_file (tree_in_asm);
+	// fprintf (file_for_asm, "add r12, 8    ;(%s:%d)\n\n", __FILE__, __LINE__);
+
+
+
+	
 	// print_tabulation_in_file (tree_in_asm);
 	// fprintf (file_for_asm, "push BX   #начало старого стекового фрейма\n\n");
 
-	size_t index_local_table_in_list = find_position_of_local_table (tree_in_asm -> list_of_local_name_tables, index_id_in_name_table);
+			
 
-	local_name_table_t* array_of_local_name_table = tree_in_asm -> list_of_local_name_tables -> array_of_local_name_table;
-	size_t              count_local_arg_in_func   = array_of_local_name_table[index_local_table_in_list].free_index_in_local_name_table;
-
-	print_tabulation_in_file (tree_in_asm);
-	fprintf (file_for_asm, "sub r12, %ld * 8   ;смещение начала локальной области видимости   (%s:%d)\n\n", count_local_arg_in_func, __FILE__, __LINE__);
+			// print_tabulation_in_file (tree_in_asm);
+			// fprintf (file_for_asm, "sub r12, %ld * 8   ;смещение начала локальной области видимости   (%s:%d)\n\n", count_local_arg_in_call_func, __FILE__, __LINE__);
 
 	// print_tabulation_in_file (tree_in_asm);
 	// fprintf (file_for_asm, "push %ld    #записывает количество локальных переменных в функции\n\n", 
@@ -903,13 +986,10 @@ static language_error_t write_call_node (node_t* node, tree_in_asm_t* tree_in_as
 	// fprintf (file_for_asm, "pop BX    #сохраняет новое старого стекового фрейма\n\n");
 
 	print_tabulation_in_file (tree_in_asm);
-	fprintf (file_for_asm, ";записывает аргументы для функции (%s:%d)\n\n", __FILE__, __LINE__);
-
-	status = write_parameters_for_call (node -> left, tree_in_asm);
-	if (status) {return status;}
-
-	print_tabulation_in_file (tree_in_asm);
 	fprintf (file_for_asm, ";вызывает функцию   (%s:%d)\n\n", __FILE__, __LINE__);
+	
+	print_tabulation_in_file (tree_in_asm);
+	fprintf (file_for_asm, "mov rsp, r15    ;(%s:%d)\n\n", __FILE__, __LINE__);
 
 	print_tabulation_in_file (tree_in_asm);
 	fprintf (file_for_asm, "call ");
@@ -925,8 +1005,12 @@ static language_error_t write_call_node (node_t* node, tree_in_asm_t* tree_in_as
 
 	fprintf (file_for_asm, "    ;вызов функции   (%s:%d)\n\n", __FILE__, __LINE__);
 
-	print_tabulation_in_file (tree_in_asm);
-	fprintf (file_for_asm, "pop r12    ;возвращает предыдущее значение начала стекового фрейма   (%s:%d)\n\n", __FILE__, __LINE__);
+
+	// print_tabulation_in_file (tree_in_asm);
+	// fprintf (file_for_asm, "add rsp, %ld * 8    ;  (%s:%d)\n\n", count_local_arg_in_call_func, __FILE__, __LINE__);
+
+	// print_tabulation_in_file (tree_in_asm);
+	// fprintf (file_for_asm, "pop r12    ;возвращает предыдущее значение начала стекового фрейма   (%s:%d)\n\n", __FILE__, __LINE__);
 
 	print_tabulation_in_file (tree_in_asm);
 	fprintf (file_for_asm, "push rax    ;кладёт в стек значение, которое вернула функция    (%s:%d)\n\n", __FILE__, __LINE__);	
